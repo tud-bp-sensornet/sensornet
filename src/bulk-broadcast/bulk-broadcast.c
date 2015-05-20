@@ -16,14 +16,15 @@ typedef struct {
   unsigned short a;
 } my_struct2;
 
-//Example list memb
-MEMB(node_memory, my_struct2, 100);
-
 //Example struct
 typedef struct {
   LIST_STRUCT (a);
   unsigned short b;
 } my_struct;
+
+//Example memb
+MEMB(node_memory2, my_struct2, 100);
+MEMB(node_memory, my_struct, 100);
 
 /*---------------------------------------------------------------------------*/
 PROCESS(example_broadcast_process, "Broadcast example");
@@ -72,15 +73,20 @@ PROCESS_THREAD(example_broadcast_process, ev, data)
     packetbuf_clear ();
     //packetbuf_set_datalen (sizeof (test) * sizeof (uint8_t));
 
-    my_struct my;// = (my_struct*)memb_alloc(&node_memory);
-    LIST_STRUCT_INIT(&my, a);
-    list_init(my.a);
-    my.b = 1;
-    my_struct2 number;// = (my_struct2*)memb_alloc(&node_memory);
-    number.a = 1;
-    list_add(my.a, &number);
+    my_struct* my = (my_struct*)memb_alloc(&node_memory);
+    LIST_STRUCT_INIT(my, a);
+    list_init(my->a);
+    my->b = 1;
+    my_struct2* number = (my_struct2*)memb_alloc(&node_memory2);
+    number->a = 2;
 
-    packetbuf_copyfrom((void *)&my, sizeof(my_struct));
+    printf("will send: value in struct1: %d value in struct2: %d", my->b, number->a);
+
+    list_add(my->a, number);
+    
+    printf(" value in struct2 through list: %d value in struct2 after adding to list: %d\n", ((my_struct2*)list_head(my->a))->a, number->a);
+    
+    packetbuf_copyfrom(my, sizeof(my_struct));
 
     broadcast_send(&broadcast);
     printf("broadcast message sent\n");
