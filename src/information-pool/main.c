@@ -16,6 +16,8 @@ PROCESS_THREAD(example_broadcast_process, ev, data) {
 	
 	p_node_t *n1, *n2, *n3, *n4;
 	p_edge_t *e1, *e2, *e3;
+	uint16_t maxNodes,  maxEdges;
+	uint16_t *countNode, *countEdge;
 	
 	n1 = (p_node_t*) malloc(sizeof(p_node_t));
 	n2 = (p_node_t*) malloc(sizeof(p_node_t));
@@ -26,12 +28,18 @@ PROCESS_THREAD(example_broadcast_process, ev, data) {
 	e2 = (p_edge_t*) malloc(sizeof(p_edge_t));
 	e3 = (p_edge_t*) malloc(sizeof(p_edge_t));
 
+	maxNodes = 4;
+	maxEdges = 3;
+	countNode = (uint16_t*) malloc(sizeof(uint16_t));
+	countEdge = (uint16_t*) malloc(sizeof(uint16_t));
 
+	//Give nodes IDs
 	n1->addr.u8[0] = 0x01;
 	n2->addr.u8[0] = 0x02;
 	n3->addr.u8[0] = 0x03;
 	n4->addr.u8[0] = 0x04;
 
+	//Build Graph, root = n1
 	//n1->n2,n1->n3,n2->n4
 	n1->edges = e1;
 	e1->next = e2;
@@ -44,7 +52,11 @@ PROCESS_THREAD(example_broadcast_process, ev, data) {
 	n3->edges = NULL;
 	n4->edges = NULL;
 
-	void* testptr = serialize(n1,2);
+	//serialize
+	void* testptr = serialize(n1,2, maxNodes,  maxEdges, countNode, countEdge);
+
+	//Check if the entire Graph was iterated and counted correctly
+	printf("%d:%d;%d:%d\n", maxNodes, *countNode, maxEdges, *countEdge);
 
 	//get the serialized graph
 	void* sn1 = testptr;
@@ -55,7 +67,22 @@ PROCESS_THREAD(example_broadcast_process, ev, data) {
 	void* se3 = (void*)testptr+(uint16_t)((p_node_t*)sn2)->edges;
 	void* sn4 = (void*)testptr+(uint16_t)((p_edge_t*)se3)->drain;
 
-	//printf("%d,%d,%d\n", testptr,testptr+(uint16_t)((p_node_t*)testptr)->edges, sizeof(p_edge_t));
+	//deserialize
+	p_node_t *nD = deserialize(testptr);
+
+	printf("Deserialized:Serialized\n");
+	//memory addresses
+	printf("%d:%d\n", nD, sn1);
+	//node1 id
+	printf("node1: %d:%d\n", nD->addr.u8[0], ((p_node_t*)sn1)->addr.u8[0]);
+	//node2 id
+	printf("node2: %d:%d\n", nD->edges->drain->addr.u8[0], ((p_node_t*)sn2)->addr.u8[0]);
+	//node3 id
+	printf("node3: %d:%d\n", nD->edges->next->drain->addr.u8[0], ((p_node_t*)sn3)->addr.u8[0]);
+	//node4 id
+	printf("node4: %d:%d\n", nD->edges->drain->edges->drain->addr.u8[0], ((p_node_t*)sn4)->addr.u8[0]);
+
+	printf("Normal:Serialized\n");
 	//memory addresses
 	printf("%d:%d\n", n1, sn1);
 	//node1 id
