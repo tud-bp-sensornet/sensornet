@@ -1,4 +1,5 @@
 #include "net/rime.h"
+#include "graph.h"
 
 #ifndef __SERIALIZE_H__
 #define __SERIALIZE_H__

@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "serialize.h"
+#include "graph.h"
 
 /**
  * serializes the k-view of the known tree
@@ -56,6 +57,9 @@ void* serializeNode(p_node_t * p_node, unsigned short k, unsigned short current_
 			((p_node_t*)tempptr)->edges = (p_edge_t*)(currentPointer-startPointer);
 			currentPointer = serializeEdge(p_node->edges, k, current_k+1, currentPointer, startPointer, countNode, countEdge);
 		}
+	} else {
+		//don't send the edges of the k-level nodes or deserialization doesn't work properly
+		((p_node_t*)tempptr)->edges = NULL;
 	}
 
 	return currentPointer;
