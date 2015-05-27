@@ -2,6 +2,7 @@
 #include "unit-test.h"
 #include "serialize.h"
 #include "graph.h"
+#include <stdlib.h>
 
 /**
  * Register unit tests that will be executed by using
@@ -27,18 +28,18 @@ UNIT_TEST(seriDeseri_root)
 	UNIT_TEST_BEGIN();
 
 	root = (p_node_t*) malloc(sizeof(p_node_t));
-	root->addr = rimeaddr_node_addr;
+	root->addr.u8[0] = 0x01;
 	root->last_seen = 0;
 	root->edges = NULL;
 
 	serializeptr = serialize(root,99,1,0,countNode,countEdge);
 
-	UNIT_TEST_ASSERT(root->addr == ((p_node_t*)serializeptr)->addr);
+	UNIT_TEST_ASSERT(root->addr.u8[0] == ((p_node_t*)serializeptr)->addr.u8[0]);
 	UNIT_TEST_ASSERT(root->edges == ((p_node_t*)serializeptr)->edges);
 
 	deserialized = deserialize(serializeptr);
 
-	UNIT_TEST_ASSERT(root->addr == deserialized->addr);
+	UNIT_TEST_ASSERT(root->addr.u8[0] == deserialized->addr.u8[0]);
 	UNIT_TEST_ASSERT(root->edges == deserialized->edges);
 
 
@@ -117,8 +118,8 @@ UNIT_TEST(seriDeseri_0_hop)
 	UNIT_TEST_ASSERT(n1->edges->drain->edges->drain->addr.u8[0] == 4);
 
 	//Assert correct count
-	UNIT_TEST_ASSERT(&countNode == 1);
-	UNIT_TEST_ASSERT(&countEdge == 0);
+	UNIT_TEST_ASSERT(*countNode == 1);
+	UNIT_TEST_ASSERT(*countEdge == 0);
 
 	//Assert different pointers after serialization
 	UNIT_TEST_ASSERT(n1 != sn1);
@@ -209,8 +210,8 @@ UNIT_TEST(seriDeseri_1_hop)
 	UNIT_TEST_ASSERT(n1->edges->drain->edges->drain->addr.u8[0] == 4);
 
 	//Assert correct count
-	UNIT_TEST_ASSERT(&countNode == 3);
-	UNIT_TEST_ASSERT(&countEdge == 2);
+	UNIT_TEST_ASSERT(*countNode == 3);
+	UNIT_TEST_ASSERT(*countEdge == 2);
 
 	//Assert different pointers after serialization
 	UNIT_TEST_ASSERT(n1 != sn1);
@@ -313,8 +314,8 @@ UNIT_TEST(seriDeseri_2_hop)
 	UNIT_TEST_ASSERT(n1->edges->drain->edges->drain->addr.u8[0] == 4);
 
 	//Assert correct count
-	UNIT_TEST_ASSERT(&countNode == 4);
-	UNIT_TEST_ASSERT(&countEdge == 3);
+	UNIT_TEST_ASSERT(*countNode == 4);
+	UNIT_TEST_ASSERT(*countEdge == 3);
 
 	//Assert different pointers after serialization
 	UNIT_TEST_ASSERT(n1 != sn1);
@@ -344,9 +345,9 @@ UNIT_TEST(seriDeseri_2_hop)
 	UNIT_TEST_ASSERT(n1->edges->next->drain->addr.u8[0] == nD->edges->next->drain->addr.u8[0]);
 	UNIT_TEST_ASSERT(n1->edges->drain->edges->drain->addr.u8[0] == nD->edges->drain->edges->drain->addr.u8[0]);
 	UNIT_TEST_ASSERT(nD->edges->next->drain->edges == NULL);
-	UNIT_TEST_ASSERT(nD->edges->drain->edges->drain == NULL);
+	UNIT_TEST_ASSERT(nD->edges->drain->edges->drain->edges == NULL);
 	UNIT_TEST_ASSERT(nD->edges->next->next == NULL);
-	UNIT_TEST_ASSERT(nD->edges->drain->edges == NULL);
+	UNIT_TEST_ASSERT(nD->edges->drain->edges->next == NULL);
 
 	UNIT_TEST_END();
 }
@@ -423,8 +424,8 @@ UNIT_TEST(seriDeseri_3_hop)
 	UNIT_TEST_ASSERT(n1->edges->drain->edges->drain->addr.u8[0] == 4);
 
 	//Assert correct count
-	UNIT_TEST_ASSERT(&countNode == 4);
-	UNIT_TEST_ASSERT(&countEdge == 3);
+	UNIT_TEST_ASSERT(*countNode == 4);
+	UNIT_TEST_ASSERT(*countEdge == 3);
 
 	//Assert different pointers after serialization
 	UNIT_TEST_ASSERT(n1 != sn1);
@@ -454,9 +455,9 @@ UNIT_TEST(seriDeseri_3_hop)
 	UNIT_TEST_ASSERT(n1->edges->next->drain->addr.u8[0] == nD->edges->next->drain->addr.u8[0]);
 	UNIT_TEST_ASSERT(n1->edges->drain->edges->drain->addr.u8[0] == nD->edges->drain->edges->drain->addr.u8[0]);
 	UNIT_TEST_ASSERT(nD->edges->next->drain->edges == NULL);
-	UNIT_TEST_ASSERT(nD->edges->drain->edges->drain == NULL);
+	UNIT_TEST_ASSERT(nD->edges->drain->edges->drain->edges == NULL);
 	UNIT_TEST_ASSERT(nD->edges->next->next == NULL);
-	UNIT_TEST_ASSERT(nD->edges->drain->edges == NULL);
+	UNIT_TEST_ASSERT(nD->edges->drain->edges->next == NULL);
 
 	UNIT_TEST_END();
 }
