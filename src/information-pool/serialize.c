@@ -98,7 +98,7 @@ void* serializeEdge(p_edge_t * p_edge, unsigned short k, unsigned short current_
 }
 
 /**
- * deserializes a correctly serialized graph and frees the memory used by the serialized graph
+ * deserializes a correctly serialized graph
  * startPointer: pointer to the start of the serialized data
  * return: the root of the deserialized tree
  */
@@ -108,9 +108,6 @@ p_node_t* deserialize(void* startPointer){
 
 	p_node_t *this_node;
 	this_node = deserializeNode(startPointer, currentPointer);
-
-	//free the memory used by the serialized graph
-	free(startPointer);
 
 	return this_node;
 }
@@ -123,10 +120,9 @@ p_node_t* deserialize(void* startPointer){
  */
 p_node_t* deserializeNode(void* startPointer, void* currentPointer){
 
-	//copy the node to a newly allocated place
+	//cast the pointer to this node
 	p_node_t *this_node;
-	this_node = (p_node_t*) malloc(sizeof(p_node_t));
-	*this_node = *((p_node_t*)currentPointer);
+	this_node = (p_node_t*)currentPointer;
 
 	//go deeper into the tree if an edge exists (very error prone if the packet is damaged)
 	if(this_node->edges != NULL){
@@ -145,10 +141,9 @@ p_node_t* deserializeNode(void* startPointer, void* currentPointer){
  */
 p_edge_t* deserializeEdge(void* startPointer, void* currentPointer){
 
-	//copy the edge to a newly allocated place
+	//cast the pointer to this edge
 	p_edge_t *this_edge;
-	this_edge = (p_edge_t*) malloc(sizeof(p_edge_t));
-	*this_edge = *((p_edge_t*)currentPointer);
+	this_edge = (p_edge_t*)currentPointer;
 
 	//go deeper into the tree if an edge exists (very error prone if the packet is damaged)
 	if(this_edge->next != NULL){
