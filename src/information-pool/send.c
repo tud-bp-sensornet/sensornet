@@ -15,55 +15,60 @@
 #include "serialize.h"
 #include "serialize.c"
 #include "graph.h"
+#include "memory.c"
+
+static struct p_node_t *root;
+static struct p_node_t *neighbour;
+static struct p_edge_t *edge;
 
 /*---------------------------------------------------------------------------*/
 PROCESS(example_broadcast_process, "Broadcast example");
 AUTOSTART_PROCESSES(&example_broadcast_process);
 /*---------------------------------------------------------------------------*/
+
 static void
 broadcast_recv(struct broadcast_conn *c, const rimeaddr_t *from)
 {
 
+  printf("deserialize! paket is: %d\n", packetbuf_datalen());
+
   p_node_t* newroot = deserialize(packetbuf_dataptr());
-
-  printf("broadcast message received from %d.%d: %d.%d %d.%d\n",
-         from->u8[0], from->u8[1], newroot->addr.u8[0], newroot->last_seen, newroot->edges->drain->addr.u8[0], newroot->edges->drain->last_seen);
-
+  printf("broadcast message received from %d.%d: %d.%d\n", from->u8[0], from->u8[1], newroot->addr.u8[0], newroot->edges->drain->addr.u8[0]);
 }
+
+/*---------------------------------------------------------------------------*/
 static const struct broadcast_callbacks broadcast_call = {broadcast_recv};
 static struct broadcast_conn broadcast;
 /*---------------------------------------------------------------------------*/
+
 PROCESS_THREAD(example_broadcast_process, ev, data)
 {
-printf("start");
+
   static struct etimer et;
 
   PROCESS_EXITHANDLER(broadcast_close(&broadcast);)
 
   PROCESS_BEGIN();
 
-  printf("open!");
-
   broadcast_open(&broadcast, 129, &broadcast_call);
 
+  init_mem();
+
   //Example tree
-  p_node_t *root = (p_node_t*) malloc(sizeof(p_node_t));
-  root->addr = rimeaddr_node_addr;
-  root->last_seen = 0; 
+  root = get_node();
+  root->addr.u8[0] = 0x01;
 
-  p_node_t *neighbour = (p_node_t*) malloc(sizeof(p_node_t));
-  neighbour->addr.u8[0] = 2;
-  neighbour->last_seen = 1;
+  neighbour = get_node();
+  neighbour->addr.u8[0] = 0x02;
 
-  p_edge_t *edge = (p_edge_t*) malloc(sizeof(p_edge_t));
+  edge = get_edge();
   edge->drain = neighbour;
   edge->next = NULL;
 
   root->edges = edge;
   neighbour->edges = NULL;
 
-
-  while(1) {
+  while (1) {
 
     /* Delay 2-4 seconds */
     etimer_set(&et, CLOCK_SECOND * 4 + random_rand() % (CLOCK_SECOND * 4));
@@ -72,22 +77,15 @@ printf("start");
 
     //clear packet buffer and set packet size
     packetbuf_clear ();
-
-    packetbuf_set_datalen (sizeof(p_node_t) * 2 + sizeof(p_edge_t));
+    packetbuf_set_datalen (100);
 
     uint16_t * nodes;
     uint16_t * edges;
 
-    printf("serialize!");
-
     void * serializationptr = serialize(root, 1, 2, 1, nodes, edges);
 
-    printf("end serialize");
+    packetbuf_copyfrom(serializationptr, sizeof(p_node_t) * *nodes + sizeof(p_edge_t) * *edges);
 
-    packetbuf_copyfrom(serializationptr, sizeof(p_node_t) * 2 + sizeof(p_edge_t));
-
-    printf("send");
-    
     broadcast_send(&broadcast);
 
     free(serializationptr);
@@ -95,3 +93,5 @@ printf("start");
 
   PROCESS_END();
 }
+
+
