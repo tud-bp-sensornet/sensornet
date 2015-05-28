@@ -5,6 +5,7 @@
 #include "serialize.h"
 #include "graph.h"
 
+
 /**
  * serializes the k-view of the known tree
  * p_node: the pointer to the p_node of the node itself
