@@ -77,13 +77,13 @@ PROCESS_THREAD(example_broadcast_process, ev, data)
 
     //clear packet buffer and set packet size
     packetbuf_clear ();
-    packetbuf_set_datalen (100);
 
     uint16_t * nodes;
     uint16_t * edges;
 
     void * serializationptr = serialize(root, 1, 2, 1, nodes, edges);
 
+    packetbuf_set_datalen (sizeof(p_node_t) * *nodes + sizeof(p_edge_t) * *edges);
     packetbuf_copyfrom(serializationptr, sizeof(p_node_t) * *nodes + sizeof(p_edge_t) * *edges);
 
     broadcast_send(&broadcast);
