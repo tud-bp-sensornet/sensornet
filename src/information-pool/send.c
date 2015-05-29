@@ -61,6 +61,7 @@ PROCESS_THREAD(example_broadcast_process, ev, data)
 	root = get_node();
 	root->addr = rimeaddr_node_addr;
 	root->last_seen = clock_seconds();
+	root->edges = NULL;
 
 	while (1) {
 
