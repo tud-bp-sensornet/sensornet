@@ -1,6 +1,7 @@
 #include "contiki.h"
 #include "net/rime.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "graph.h"
 
@@ -13,7 +14,7 @@
  */
 void iterateUpdate(p_node_t * p_node, void* node_memory, void* edge_memory, p_node_t * this_mote_node){
 
-	p_node_t *this_node = iterateUpdateNode(p_node, node_memory, edge_memory);
+	p_node_t *this_node = iterateUpdateNode(p_node, node_memory, edge_memory, this_mote_node);
 
 	updateNeighbour(this_node, node_memory, edge_memory, this_mote_node);
 
@@ -32,7 +33,7 @@ void iterateUpdate(p_node_t * p_node, void* node_memory, void* edge_memory, p_no
 p_node_t* iterateUpdateNode(p_node_t * p_node, void* node_memory, void* edge_memory, p_node_t * this_mote_node){
 	p_node_t *this_node;
 
-	p_node->edges = iterateUpdateEdge(p_node->edges, p_node, node_memory, edge_memory, this_mote_node);
+	p_node->edges = iterateUpdateEdge(p_node->edges, *p_node, node_memory, edge_memory, this_mote_node);
 
 	p_node_t *search_node = findNodeAddr (this_mote_node, p_node->addr);
 	if(search_node != NULL){

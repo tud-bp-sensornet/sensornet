@@ -18,6 +18,16 @@ void init_mem()
 
 }
 
+void* get_node_memory()
+{
+	return &node_memory.mem;
+}
+
+void* get_edge_memory()
+{
+	return edge_memory.mem;
+}
+
 p_node_t* get_node()
 {
 	return (p_node_t*) memb_alloc(&node_memory);

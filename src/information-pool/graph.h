@@ -10,7 +10,7 @@ typedef struct p_node_t p_node_t;
 
 struct p_node_t {
 	rimeaddr_t addr;
-	unsigned short last_seen;
+	unsigned long last_seen;
 
 	//additional node data goes here
 	//...
@@ -32,7 +32,7 @@ void iterateUpdate(p_node_t * p_node, void* node_memory, void* edge_memory, p_no
 
 p_node_t* iterateUpdateNode(p_node_t * p_node, void* node_memory, void* edge_memory, p_node_t * this_mote_node);
 
-p_edge_t* iterateUpdateEdge(p_edge_t * p_edge, void* node_memory, void* edge_memory, p_node_t * this_mote_node);
+p_edge_t* iterateUpdateEdge(p_edge_t * p_edge, p_node_t source_node, void* node_memory, void* edge_memory, p_node_t * this_mote_node);
 
 void updateNeighbour(p_node_t * p_node, void* node_memory, void* edge_memory, p_node_t * this_mote_node);
 

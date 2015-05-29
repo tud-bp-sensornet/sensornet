@@ -12,14 +12,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "serialize.h"
-#include "serialize.c"
 #include "graph.h"
-#include "memory.c"
+#include "serialize.h"
+#include "memory.h"
+
+#define K 3;
 
 static struct p_node_t *root;
-static struct p_node_t *neighbour;
-static struct p_edge_t *edge;
 
 /*---------------------------------------------------------------------------*/
 PROCESS(example_broadcast_process, "Broadcast example");
@@ -30,10 +29,11 @@ static void
 broadcast_recv(struct broadcast_conn *c, const rimeaddr_t *from)
 {
 
-  printf("deserialize! paket is: %d\n", packetbuf_datalen());
+	printf("Got paket: %d size, from %d\n", packetbuf_datalen(), from->u8[0]);
 
-  p_node_t* newroot = deserialize(packetbuf_dataptr());
-  printf("broadcast message received from %d.%d: %d.%d\n", from->u8[0], from->u8[1], newroot->addr.u8[0], newroot->edges->drain->addr.u8[0]);
+	p_node_t* newroot = deserialize(packetbuf_dataptr());
+
+	iterateUpdate(newroot, (void*)get_node_memory(), (void*)get_edge_memory(), root);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -44,54 +44,49 @@ static struct broadcast_conn broadcast;
 PROCESS_THREAD(example_broadcast_process, ev, data)
 {
 
-  static struct etimer et;
+	static struct etimer et;
 
-  PROCESS_EXITHANDLER(broadcast_close(&broadcast);)
+	//TODO: Returns system time, all motes have to be started simultaneously
+	clock_init();
 
-  PROCESS_BEGIN();
+	PROCESS_EXITHANDLER(broadcast_close(&broadcast);)
 
-  broadcast_open(&broadcast, 129, &broadcast_call);
+	PROCESS_BEGIN();
 
-  init_mem();
+	broadcast_open(&broadcast, 129, &broadcast_call);
 
-  //Example tree
-  root = get_node();
-  root->addr.u8[0] = 0x01;
+	init_mem();
 
-  neighbour = get_node();
-  neighbour->addr.u8[0] = 0x02;
+	//We are root
+	root = get_node();
+	root->addr = rimeaddr_node_addr;
+	root->last_seen = clock_seconds();
 
-  edge = get_edge();
-  edge->drain = neighbour;
-  edge->next = NULL;
+	while (1) {
 
-  root->edges = edge;
-  neighbour->edges = NULL;
+		/* Delay 2-4 seconds */
+		etimer_set(&et, CLOCK_SECOND * 4 + random_rand() % (CLOCK_SECOND * 4));
 
-  while (1) {
+		PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
 
-    /* Delay 2-4 seconds */
-    etimer_set(&et, CLOCK_SECOND * 4 + random_rand() % (CLOCK_SECOND * 4));
+		//clear packet buffer and set packet size
+		packetbuf_clear ();
 
-    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
+		uint16_t nodes = 1;
+		uint16_t edges = 0;
 
-    //clear packet buffer and set packet size
-    packetbuf_clear ();
+		//TODO: Keep track over our tree size
+		void * serializationptr = serialize(root, 3, 10, 10, &nodes, &edges);
 
-    uint16_t * nodes;
-    uint16_t * edges;
+		packetbuf_set_datalen (sizeof(p_node_t) * nodes + sizeof(p_edge_t) * edges);
+		packetbuf_copyfrom(serializationptr, sizeof(p_node_t) * nodes + sizeof(p_edge_t) * edges);
 
-    void * serializationptr = serialize(root, 1, 2, 1, nodes, edges);
+		broadcast_send(&broadcast);
 
-    packetbuf_set_datalen (sizeof(p_node_t) * *nodes + sizeof(p_edge_t) * *edges);
-    packetbuf_copyfrom(serializationptr, sizeof(p_node_t) * *nodes + sizeof(p_edge_t) * *edges);
+		free(serializationptr);
+	}
 
-    broadcast_send(&broadcast);
-
-    free(serializationptr);
-  }
-
-  PROCESS_END();
+	PROCESS_END();
 }
 
 

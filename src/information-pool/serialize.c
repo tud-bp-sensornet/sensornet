@@ -1,10 +1,10 @@
 #include "contiki.h"
 #include "net/rime.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "serialize.h"
 #include "graph.h"
-
 
 /**
  * serializes the k-view of the known tree
