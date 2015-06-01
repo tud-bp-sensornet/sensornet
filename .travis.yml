@@ -1,0 +1,12 @@
+language: c
+
+script:
+  ## Build code
+  - echo "travis_fold:start:build"
+  - make -C src/information-pool/
+  - echo "travis_fold:end:build"
+
+  ## Build and run unit tests
+  - echo "travis_fold:start:unit"
+  - make -C src/information-pool/test run-unittests
+  - echo "travis_fold:end:unit"
