@@ -5,7 +5,6 @@
 #include <stdio.h>
 
 #include "serialize.h"
-#include "serialize.c"
 
 PROCESS(example_broadcast_process, "Broadcast example");
 AUTOSTART_PROCESSES(&example_broadcast_process);
