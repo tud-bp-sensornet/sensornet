@@ -70,9 +70,6 @@ PROCESS_THREAD(example_broadcast_process, ev, data)
 
 	static struct etimer et;
 
-	//TODO: Returns system time, all motes have to be started simultaneously
-	clock_init();
-
 	PROCESS_EXITHANDLER(rudolph0_close(&rudolph0);)
 
 	PROCESS_BEGIN();
