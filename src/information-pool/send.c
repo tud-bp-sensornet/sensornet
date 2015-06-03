@@ -16,9 +16,6 @@
 #include "serialize.h"
 #include "memory.h"
 
-#define K 3;
-
-static struct p_node_t *root;
 
 /*---------------------------------------------------------------------------*/
 PROCESS(example_broadcast_process, "Broadcast example");
@@ -33,7 +30,7 @@ broadcast_recv(struct broadcast_conn *c, const rimeaddr_t *from)
 
 	p_node_t* newroot = deserialize(packetbuf_dataptr());
 
-	iterateUpdate(newroot, (void*)get_node_memory(), (void*)get_edge_memory(), root);
+	iterateUpdate(newroot);
 }
 
 /*---------------------------------------------------------------------------*/
