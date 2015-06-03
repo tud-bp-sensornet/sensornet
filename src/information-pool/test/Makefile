@@ -6,9 +6,7 @@ TARGET=native
 APPS = unit-test
 
 #include all needed C files here
-PROJECT_SOURCEFILES+=../serialize.c
-PROJECT_SOURCEFILES+=../graph.c
-PROJECT_SOURCEFILES+=../memory.c
+PROJECT_SOURCEFILES+=../serialize.c ../buffer.c ../graph.c ../memory.c
 CFLAGS += -I../
 
 
