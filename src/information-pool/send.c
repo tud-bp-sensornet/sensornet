@@ -9,14 +9,21 @@
 #include "net/rime.h"
 #include "random.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "graph.h"
 #include "serialize.h"
 #include "memory.h"
-#include "net/rime/rudolph0.h"
+#include "bulk_broadcast.h"
+
+#define DEBUG 1
+#if DEBUG
+#include <stdio.h>
+#define PRINTF(...) printf(__VA_ARGS__)
+#else
+#define PRINTF(...)
+#endif
 
 static struct p_node_t *root;
 static void * serializationptr;
@@ -33,25 +40,27 @@ AUTOSTART_PROCESSES(&example_broadcast_process);
 /*---------------------------------------------------------------------------*/
 
 static void
-broadcast_chunk_recv(struct rudolph0_conn *c, int offset, int flag, uint8_t *data, int datalen)
+broadcast_chunk_recv(struct bulk_broadcast_conn *c, int offset, int flag, void *data, int datalen, const rimeaddr_t *sender)
 {
-	void* offset_ptr = recv_memory + (uint8_t) offset;
-	memcpy(offset_ptr, (void*)data, (size_t)datalen);
+	void* offset_ptr = recv_memory + offset;
+	memcpy(offset_ptr, data, datalen);
 
-	printf("Got paket: %d size\n", datalen);
+	PRINTF("Got paket: %d size from %d\n", datalen, sender->u8[0]);
 
 	//TODO: handle multiple senders
-	if (flag == RUDOLPH0_FLAG_LASTCHUNK)
+	if (flag == BULK_BROADCAST_FLAG_LASTCHUNK)
 	{
-		printf("got all pakets\n");
+		PRINTF("got all pakets\n");
 		p_node_t* newroot = deserialize(recv_memory);
 
-		iterateUpdate(newroot);
+		PRINTF("got info: node: %d lastseen: %d\n", newroot->addr.u8[0], newroot->last_seen);
+
+		//iterateUpdate(newroot);
 	}
 }
 
 static int
-broadcast_chunk_read(struct rudolph0_conn *c, int offset, uint8_t *to, int maxsize)
+broadcast_chunk_read(struct bulk_broadcast_conn *c, int offset, void *to, int maxsize)
 {
 	//return pointer to start
 	to = serializationptr + offset;
@@ -61,8 +70,8 @@ broadcast_chunk_read(struct rudolph0_conn *c, int offset, uint8_t *to, int maxsi
 }
 
 /*---------------------------------------------------------------------------*/
-static const struct rudolph0_callbacks rudolph0_call = {broadcast_chunk_recv, broadcast_chunk_read};
-static struct rudolph0_conn rudolph0;
+static const struct bulk_broadcast_callbacks bulk_broadcast_call = {broadcast_chunk_recv, broadcast_chunk_read};
+static struct bulk_broadcast_conn bulk_broadcast;
 /*---------------------------------------------------------------------------*/
 
 PROCESS_THREAD(example_broadcast_process, ev, data)
@@ -70,15 +79,16 @@ PROCESS_THREAD(example_broadcast_process, ev, data)
 
 	static struct etimer et;
 
-	PROCESS_EXITHANDLER(rudolph0_close(&rudolph0);)
+	PROCESS_EXITHANDLER(bulk_broadcast_close(&bulk_broadcast);)
 
 	PROCESS_BEGIN();
 
-	rudolph0_open(&rudolph0, 129, &rudolph0_call);
+	bulk_broadcast_open(&bulk_broadcast, 129, &bulk_broadcast_call);
 
 	init_mem();
 
-	recv_memory = (void*) malloc (sizeof(p_node_t) * 50 + sizeof(p_edge_t) * 50);
+	//TODO: Worst case, find better way
+	recv_memory = (void*) malloc (sizeof(p_node_t) * MAX_NODES + sizeof(p_edge_t) * MAX_EDGES);
 
 	//We are root
 	root = get_node();
@@ -144,8 +154,8 @@ PROCESS_THREAD(example_broadcast_process, ev, data)
 
 	while (1) {
 
-		/* Delay 2-4 seconds */
-		etimer_set(&et, CLOCK_SECOND * 4 + random_rand() % (CLOCK_SECOND * 4));
+		/* Delay 1-10 seconds */
+		etimer_set(&et, CLOCK_SECOND * 1 + random_rand() % (CLOCK_SECOND * 10));
 
 		PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
 
@@ -153,12 +163,11 @@ PROCESS_THREAD(example_broadcast_process, ev, data)
 		packetbuf_clear ();
 
 		//TODO: Keep track over our tree size
-		//TODO: Worst case, find better way
 		void * serializationptr = serialize(root, 3, 15, 15, &nodes, &edges);
 
-		printf("Start sending size: %d\n", sizeof(p_node_t) * nodes + sizeof(p_edge_t) * edges);
+		PRINTF("Start sending size: %d\n", sizeof(p_node_t) * nodes + sizeof(p_edge_t) * edges);
 
-		rudolph0_send(&rudolph0, CLOCK_SECOND / 4);
+		bulk_broadcast_send(&bulk_broadcast);
 
 		//free(serializationptr);
 
@@ -166,4 +175,5 @@ PROCESS_THREAD(example_broadcast_process, ev, data)
 
 	PROCESS_END();
 }
-
+/*---------------------------------------------------------------------------*/
+/** @} */

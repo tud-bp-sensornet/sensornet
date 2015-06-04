@@ -5,6 +5,7 @@ APPS = unit-test
 PROJECT_SOURCEFILES+=serialize.c
 PROJECT_SOURCEFILES+=memory.c
 PROJECT_SOURCEFILES+=graph.c
+PROJECT_SOURCEFILES+=bulk_broadcast.c
 
 all: main send
 
