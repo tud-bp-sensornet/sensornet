@@ -1,6 +1,9 @@
 #include "net/rime.h"
 #include "graph.h"
 
+#define MAX_NODES 50
+#define MAX_EDGES 50
+
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 

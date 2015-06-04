@@ -4,9 +4,7 @@
 #include <stdlib.h>
 
 #include "graph.h"
-
-#define MAX_NODES 50
-#define MAX_EDGES 50
+#include "memory.h"
 
 MEMB(node_memory, p_node_t, MAX_NODES);
 MEMB(edge_memory, p_edge_t, MAX_EDGES);
@@ -15,7 +13,6 @@ void init_mem()
 {
 	memb_init(&node_memory);
 	memb_init(&edge_memory);
-
 }
 
 void* get_node_memory()
