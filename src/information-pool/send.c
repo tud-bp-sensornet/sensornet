@@ -25,7 +25,6 @@
 #define PRINTF(...)
 #endif
 
-static struct p_node_t *root;
 static void * serializationptr;
 
 //Last serialization amount
@@ -76,6 +75,7 @@ static struct bulk_broadcast_conn bulk_broadcast;
 
 PROCESS_THREAD(example_broadcast_process, ev, data)
 {
+	root = &root_data;
 
 	static struct etimer et;
 
