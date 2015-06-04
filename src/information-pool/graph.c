@@ -33,24 +33,33 @@ p_node_t* iterateUpdateNode(p_node_t * p_node, unsigned short current_k){
 	p_node_t *this_node;
 
 	//only save a maximum of K edges from the start node down into the tree. At the very least always save the direct neighbours (first node)
-	if(current_k >= K){
-		//Don't save outgoing edges from the K nodes
-		p_node->edges = NULL;
-	}
+	if(current_k < K){
 
-	//check if the node already exists in the local tree.
-	//if it does, then merge the information, if it does not, then
-	p_node_t *search_node = findNodeAddr(p_node->addr);
-	if(search_node != NULL){
-		this_node = handleExistingNode(search_node, p_node, current_k+1);
-	} else {
-		//allocate space in MEMB and copy the contents
-		this_node = get_node();
-		//get the correct pointer to the next edge, if it isn't NULL, and go further down the tree
-		if(p_node->edges != NULL){
-			p_node->edges = iterateUpdateEdge(p_node->edges, current_k+1, true);
+		//check if the node already exists in the local tree.
+		//if it does, then merge the information, if it does not, then
+		p_node_t *search_node = findNodeAddr(p_node->addr);
+		if(search_node != NULL){
+			this_node = handleExistingNode(search_node, p_node, current_k);
+		} else {
+			//allocate space in MEMB and copy the contents
+			this_node = get_node();
+			//get the correct pointer to the next edge, if it isn't NULL, and go further down the tree
+			if(p_node->edges != NULL){
+				p_node->edges = iterateUpdateEdge(p_node->edges, current_k+1, true);
+			}
+			memcpy(this_node, p_node, sizeof(p_node_t));
 		}
-		memcpy(this_node, p_node, sizeof(p_node_t));
+	} else {
+		//Don't save outgoing edges from the K nodes
+		//If the node already exists, just let handleExistingNode do everything, if not make a new node and set edges = NULL
+		p_node_t *search_node = findNodeAddr(p_node->addr);
+		if(search_node != NULL){
+			this_node = handleExistingNode(search_node, p_node, current_k);
+		} else {
+			this_node = get_node();
+			memcpy(this_node, p_node, sizeof(p_node_t));
+			this_node->edges = NULL;
+		}
 	}
 
 	return this_node;
@@ -65,6 +74,7 @@ p_node_t* iterateUpdateNode(p_node_t * p_node, unsigned short current_k){
  */
 p_edge_t* iterateUpdateEdge(p_edge_t * p_edge, unsigned short current_k, bool alloc_required){
 	p_edge_t *this_edge;
+
 	//allocate memory if required
 	if(alloc_required){
 		this_edge = get_edge();
@@ -74,10 +84,19 @@ p_edge_t* iterateUpdateEdge(p_edge_t * p_edge, unsigned short current_k, bool al
 	//update the pointers to the new positions inside MEMB inside of the allocated memory of deserialize
 	if(alloc_required){
 		this_edge->drain = iterateUpdateNode(p_edge->drain, current_k);
-		this_edge->next = iterateUpdateEdge(p_edge->next, current_k, alloc_required);
+		if(p_edge->next != NULL){
+			this_edge->next = iterateUpdateEdge(p_edge->next, current_k, alloc_required);
+		} else {
+			this_edge->next = NULL;
+		}
+
 	} else {
 		p_edge->drain = iterateUpdateNode(p_edge->drain, current_k);
-		p_edge->next = iterateUpdateEdge(p_edge->next, current_k, alloc_required);
+		if(p_edge->next != NULL){
+			p_edge->next = iterateUpdateEdge(p_edge->next, current_k, alloc_required);
+		} else {
+			this_edge->next = NULL;
+		}
 		this_edge = p_edge;
 	}
 
@@ -101,7 +120,7 @@ void updateNeighbour(p_node_t * p_node){
 
 	if(root->edges == NULL){
 		root->edges = new_edge;
-	} else {
+	} else if(edgeAlreadyExists(new_edge, root) == false){
 		//if the edge does not already exist...
 		updateEdgeList(root->edges, new_edge);
 	}
@@ -138,15 +157,17 @@ p_node_t* handleExistingNode(p_node_t * old_p_node, p_node_t * new_p_node, unsig
 		old_p_node->last_seen = new_p_node->last_seen;
 	}
 
-	//handle the outgoing edges
+	//handle the outgoing edges if the new node isn't in K depth (no new edges will be saved for them)
 	//both edgelists empty -> do nothing
 	//no new edges -> do nothing
-	if(old_p_node->edges == NULL && new_p_node->edges != NULL){
-		//the node does currently not have edges -> all edges have to be allocated
-		old_p_node->edges = iterateUpdateEdge(new_p_node->edges, current_k, true);
-	} else if(old_p_node->edges != NULL && new_p_node->edges != NULL) {
-		//merge lists
-		handleExistingNode_Edgelist(old_p_node->edges, new_p_node->edges, old_p_node, current_k);
+	if(current_k < K){
+		if(old_p_node->edges == NULL && new_p_node->edges != NULL){
+			//the node does currently not have edges -> all edges have to be allocated
+			old_p_node->edges = iterateUpdateEdge(new_p_node->edges, current_k+1, true);
+		} else if(old_p_node->edges != NULL && new_p_node->edges != NULL) {
+			//merge lists
+			handleExistingNode_Edgelist(old_p_node->edges, new_p_node->edges, old_p_node, current_k+1);
+		}
 	}
 
 	return old_p_node;
@@ -227,11 +248,14 @@ p_node_t* findNodeAddr_Node(p_node_t * p_node, rimeaddr_t addr, unsigned short c
 	if(rimeaddr_cmp(&(p_node->addr), &addr)){		//is p_node the searched node?
 		found_node = p_node;
 	} else if (current_k < K){		//is it ok to go deeper into the tree?
-		found_node = findNodeAddr_Edge(p_node->edges, addr, current_k+1);
+		if(p_node->edges != NULL){
+			found_node = findNodeAddr_Edge(p_node->edges, addr, current_k+1);
+		} else {
+			found_node = NULL;
+		}
 	} else {
 		found_node = NULL;	//reached a leaf node that wasn't the searched node
 	}
-
 	return found_node;
 }
 
@@ -248,7 +272,9 @@ p_node_t* findNodeAddr_Edge(p_edge_t * p_edge, rimeaddr_t addr, unsigned short c
 	found_node = findNodeAddr_Node(p_edge->drain, addr, current_k);
 
 	if(found_node == NULL){	//still not found? try the other edges
-		found_node = findNodeAddr_Edge(p_edge->next, addr, current_k);
+		if(p_edge->next != NULL){
+			found_node = findNodeAddr_Edge(p_edge->next, addr, current_k);
+		}
 	}
 
 	return found_node;
@@ -272,7 +298,8 @@ bool edgeAlreadyExists(p_edge_t * p_edge, p_node_t * source_node){
 		//check if the node even has outgoing edges
 		if(source_node->edges != NULL){
 			//check if the first edge in the list points to the same drain
-			if(source_node->edges->drain == p_edge->drain){
+			//if(source_node->edges->drain == p_edge->drain){
+			if(rimeaddr_cmp(&(source_node->edges->drain->addr), &(p_edge->drain->addr))){
 				eval = true;
 			} else {
 				eval = edgeAlreadyExists_EdgeList(p_edge, source_node->edges);
@@ -293,7 +320,8 @@ bool edgeAlreadyExists_EdgeList(p_edge_t * p_edge, p_edge_t * edgelist_elem){
 	bool eval = false;
 
 	//check if this edge in the list points to the same drain
-	if(edgelist_elem->drain == p_edge->drain){
+	//if(edgelist_elem->drain == p_edge->drain){
+	if(rimeaddr_cmp(&(edgelist_elem->drain->addr), &(p_edge->drain->addr))){
 		eval = true;
 	} else if(edgelist_elem->next != NULL) {	//does the list continue?
 		eval = edgeAlreadyExists_EdgeList(p_edge, edgelist_elem->next);

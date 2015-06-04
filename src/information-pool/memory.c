@@ -38,4 +38,10 @@ p_edge_t* get_edge()
 	return (p_edge_t*) memb_alloc(&edge_memory);
 }
 
+void free_node_memory(p_node_t * p_node){
+	memb_free (&node_memory, p_node);
+}
 
+void free_edge_memory(p_edge_t * p_edge){
+	memb_free (&edge_memory, p_edge);
+}

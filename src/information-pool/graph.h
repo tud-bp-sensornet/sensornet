@@ -9,7 +9,8 @@ typedef struct p_edge_t p_edge_t;
 typedef struct p_node_t p_node_t;
 
 #define K 3		//The K of the K-Hop algorithm. Will only update the local tree to a depth of K, so serializing and sending more than K-1 is wasted effort
-static struct p_node_t *root;	//The root of the local node information tree
+//static struct p_node_t root_data;
+//static struct p_node_t *root;	//The root of the local node information tree
 
 struct p_node_t {
 	rimeaddr_t addr;
@@ -20,7 +21,7 @@ struct p_node_t {
 
 	//points to the first directed edge
 	p_edge_t* edges;
-};
+} *root, root_data;
 
 struct p_edge_t {
 	p_node_t* drain;
@@ -55,6 +56,6 @@ bool edgeAlreadyExists(p_edge_t * p_edge, p_node_t * source_node);
 
 bool edgeAlreadyExists_EdgeList(p_edge_t * p_edge, p_edge_t * edgelist_elem);
 
-//p_node_t* findNodePos(p_node_t * this_mote_node, PosX, PosY);
+//p_node_t* findNodePos(PosX, PosY);
 
 #endif

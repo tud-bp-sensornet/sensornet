@@ -14,4 +14,8 @@ p_node_t* get_node(void);
 
 p_edge_t* get_edge(void);
 
+void free_node_memory(p_node_t * p_node);
+
+void free_edge_memory(p_edge_t * p_edge);
+
 #endif
