@@ -12,7 +12,7 @@ PROJECT_SOURCEFILES+=../memory.c
 CFLAGS += -I../
 
 
-all: graph.test
+all: serialize.test graph.test
 
 run-unittests: all
 	../../../scripts/run-unittest.sh ./*.test.native
