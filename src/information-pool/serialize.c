@@ -6,17 +6,22 @@
 #include "serialize.h"
 #include "graph.h"
 
+void* serializeNode(p_node_t * p_node, unsigned short k, unsigned short current_k, void* currentPointer, void* startPointer, uint16_t* countNode, uint16_t* countEdge);
+void* serializeEdge(p_edge_t * p_edge, unsigned short k, unsigned short current_k, void* currentPointer, void* startPointer, uint16_t* countNode, uint16_t* countEdge);
+p_node_t* deserializeNode(void* startPointer, void* currentPointer);
+p_edge_t* deserializeEdge(void* startPointer, void* currentPointer);
+
 /**
  * serializes the k-view of the known tree
  * p_node: the pointer to the p_node of the node itself
- * k: how deep the tree should be crawled
+ * hop_count: how deep the tree should be crawled
  * maxNodes: the currently known amount of nodes
  * maxEdges: the currently known amount of edges
  * countNode: uint16_t* which will point to the counted amount of nodes in the serialized k depth of the graph
  * countEdge: uint16_t* which will point to the counted amount of edges in the serialized k depth of the graph
  * return: void* to the start of the allocated memory
  */
-void* serialize(p_node_t * p_node, unsigned short k, uint16_t maxNodes, uint16_t maxEdges, uint16_t* countNode, uint16_t* countEdge) {
+void* serialize(p_graph_t* graph, uint8_t hop_count, size_t* bytes, uint8_t* num_nodes, uint8_t* num_edges) {
 
 	//allocate enough memory to fit in all information the node knows
 	void* startPointer = malloc(sizeof(p_node_t)*maxNodes+sizeof(p_edge_t)*maxEdges);
@@ -26,7 +31,7 @@ void* serialize(p_node_t * p_node, unsigned short k, uint16_t maxNodes, uint16_t
 	*countNode = 0;
 	*countEdge = 0;
 
-	currentPointer = serializeNode(p_node, k, 0, currentPointer, startPointer, countNode, countEdge);
+	currentPointer = serializeNode(p_node, hop_count, 0, currentPointer, startPointer, countNode, countEdge);
 
 	return startPointer;
 }

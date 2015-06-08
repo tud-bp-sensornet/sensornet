@@ -27,6 +27,8 @@
 
 static void * serializationptr;
 
+static p_node_t* root;
+
 //Last serialization amount
 static uint16_t nodes = 1;
 static uint16_t edges = 0;
@@ -54,7 +56,9 @@ broadcast_chunk_recv(struct bulk_broadcast_conn *c, int offset, int flag, void *
 
 		PRINTF("got info: node: %d lastseen: %d\n", newroot->addr.u8[0], newroot->last_seen);
 
-		//iterateUpdate(newroot);
+		updateGraph(root, newroot);
+		//free the allocated space from the deserialization
+		free((void*) newroot);
 	}
 }
 
@@ -75,8 +79,6 @@ static struct bulk_broadcast_conn bulk_broadcast;
 
 PROCESS_THREAD(example_broadcast_process, ev, data)
 {
-	root = &root_data;
-
 	static struct etimer et;
 
 	PROCESS_EXITHANDLER(bulk_broadcast_close(&bulk_broadcast);)

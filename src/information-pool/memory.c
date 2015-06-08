@@ -15,30 +15,20 @@ void init_mem()
 	memb_init(&edge_memory);
 }
 
-void* get_node_memory()
-{
-	return &node_memory.mem;
-}
-
-void* get_edge_memory()
-{
-	return edge_memory.mem;
-}
-
-p_node_t* get_node()
+p_node_t* new_node()
 {
 	return (p_node_t*) memb_alloc(&node_memory);
 }
 
-p_edge_t* get_edge()
+p_edge_t* new_edge()
 {
 	return (p_edge_t*) memb_alloc(&edge_memory);
 }
 
-void free_node_memory(p_node_t * p_node){
+void free_node(p_node_t * p_node){
 	memb_free (&node_memory, p_node);
 }
 
-void free_edge_memory(p_edge_t * p_edge){
+void free_edge(p_edge_t * p_edge){
 	memb_free (&edge_memory, p_edge);
 }
