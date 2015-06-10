@@ -8,40 +8,30 @@
 #include "memory.h"
 #include <string.h>
 
+p_node_t* iterateUpdateNode(p_graph_t* graph, p_node_t* node, uint8_t current_k);
+p_edge_t* iterateUpdateEdge(p_graph_t* graph, p_edge_t * p_edge, uint8_t current_k, bool alloc_required);
+void updateNeighbour(p_graph_t* graph, p_node_t * p_node);
+void updateEdgeList(p_edge_t * edgelist_elem, p_edge_t * new_edge);
+p_node_t* handleExistingNode(p_graph_t* graph, p_node_t * old_p_node, p_node_t * new_p_node, uint8_t current_k);
+void handleExistingNode_Edgelist(p_graph_t* graph, p_edge_t * edgelist_elem_MEMB, p_edge_t * edgelist_elem_UPDATE, p_node_t * source_node, uint8_t current_k);
+p_node_t* findNodeAddr_Node(p_node_t * p_node, rimeaddr_t addr, uint8_t current_k);
+p_node_t* findNodeAddr_Edge(p_edge_t * p_edge, rimeaddr_t addr, uint8_t current_k);
+bool edgeAlreadyExists(p_edge_t * p_edge, p_node_t * source_node);
+bool edgeAlreadyExists_EdgeList(p_edge_t * p_edge, p_edge_t * edgelist_elem);
 
-//p_node_t* iterateUpdateNode(p_node_t * p_node, unsigned short current_k);
-
-//p_edge_t* iterateUpdateEdge(p_edge_t * p_edge, unsigned short current_k, bool alloc_required);
-
-//void updateNeighbour(p_node_t * p_node);
-
-//void updateEdgeList(p_edge_t * edgelist_elem, p_edge_t * new_edge);
-
-//p_node_t* handleExistingNode(p_node_t * old_p_node, p_node_t * new_p_node, unsigned short current_k);
-
-//void handleExistingNode_Edgelist(p_edge_t * edgelist_elem_MEMB, p_edge_t * edgelist_elem_UPDATE,  p_node_t * source_node, unsigned short current_k);
-//p_node_t* findNodeAddr_Node(p_node_t* p_node, rimeaddr_t addr, unsigned short current_k);
-
-//p_node_t* findNodeAddr_Edge(p_edge_t* p_edge, rimeaddr_t addr, unsigned short current_k);
-
-//bool edgeAlreadyExists(p_edge_t* p_edge, p_node_t* source_node);
-
-//bool edgeAlreadyExists_EdgeList(p_edge_t* p_edge, p_edge_t* edgelist_elem);
-
-//p_node_t* findNodePos(PosX, PosY);
 
 /**
  * Updates Node info from a deserialized graph
  * root: pointer to the root p_node_t
  * other: pointer to the deserialized space
  */
-void updateGraph(p_node_t* root, p_node_t* other){
+void updateGraph(p_graph_t* graph, p_node_t* other){
 
 	//current_k = 1, because the first edge will be created by updateNeighbour
-	p_node_t *this_node = iterateUpdateNode(other, 1);
+	p_node_t *this_node = iterateUpdateNode(graph, other, 1);
 
 	//the first node is the neighbour and it's treated differently
-	updateNeighbour(this_node);
+	updateNeighbour(graph, this_node);
 }
 
 /**
@@ -50,7 +40,7 @@ void updateGraph(p_node_t* root, p_node_t* other){
  * current_k: the current depth of the update tree
  * return: the address of the node inside MEMB
  */
-p_node_t* iterateUpdateNode(p_node_t* node, unsigned short current_k){
+p_node_t* iterateUpdateNode(p_graph_t* graph, p_node_t* p_node, uint8_t current_k){
 	p_node_t *this_node;
 
 	//only save a maximum of K edges from the start node down into the tree. At the very least always save the direct neighbours (first node)
@@ -58,26 +48,26 @@ p_node_t* iterateUpdateNode(p_node_t* node, unsigned short current_k){
 
 		//check if the node already exists in the local tree.
 		//if it does, then merge the information, if it does not, then
-		p_node_t *search_node = findNodeByAddr(node->addr);
+		p_node_t *search_node = findNodeByAddr(graph->root, p_node->addr);
 		if(search_node != NULL){
-			this_node = handleExistingNode(search_node, node, current_k);
+			this_node = handleExistingNode(graph, search_node, p_node, current_k);
 		} else {
 			//allocate space in MEMB and copy the contents
-			this_node = get_node();
+			this_node = new_node(&(graph->num_nodes));
 			//get the correct pointer to the next edge, if it isn't NULL, and go further down the tree
-			if(node->edges != NULL){
-				node->edges = iterateUpdateEdge(node->edges, current_k+1, true);
+			if(p_node->edges != NULL){
+				p_node->edges = iterateUpdateEdge(graph, p_node->edges, current_k+1, true);
 			}
-			memcpy(this_node, node, sizeof(p_node_t));
+			memcpy(this_node, p_node, sizeof(p_node_t));
 		}
 	} else {
 		//Don't save outgoing edges from the K nodes
 		//If the node already exists, just let handleExistingNode do everything, if not make a new node and set edges = NULL
-		p_node_t *search_node = findNodeAddr(p_node->addr);
+		p_node_t *search_node = findNodeByAddr(graph->root, p_node->addr);
 		if(search_node != NULL){
-			this_node = handleExistingNode(search_node, p_node, current_k);
+			this_node = handleExistingNode(graph, search_node, p_node, current_k);
 		} else {
-			this_node = get_node();
+			this_node = new_node(&(graph->num_nodes));
 			memcpy(this_node, p_node, sizeof(p_node_t));
 			this_node->edges = NULL;
 		}
@@ -90,31 +80,31 @@ p_node_t* iterateUpdateNode(p_node_t* node, unsigned short current_k){
  * iterate over the edges of the update and adjust the MEMB when necessary
  * p_edge: pointer to the current node in the deserialized update
  * current_k: the current depth of the update tree
- * alloc_required: bool that decides if memory is allocated for the edge with get_edge()
+ * alloc_required: bool that decides if memory is allocated for the edge with new_edge(&(graph->num_edges))
  * return: the address of the edge inside MEMB
  */
-p_edge_t* iterateUpdateEdge(p_edge_t * p_edge, unsigned short current_k, bool alloc_required){
+p_edge_t* iterateUpdateEdge(p_graph_t* graph, p_edge_t * p_edge, uint8_t current_k, bool alloc_required){
 	p_edge_t *this_edge;
 
 	//allocate memory if required
 	if(alloc_required){
-		this_edge = get_edge();
+		this_edge = new_edge(&(graph->num_edges));
 		memcpy(this_edge, p_edge, sizeof(p_edge_t));
 	}
 
 	//update the pointers to the new positions inside MEMB inside of the allocated memory of deserialize
 	if(alloc_required){
-		this_edge->drain = iterateUpdateNode(p_edge->drain, current_k);
+		this_edge->drain = iterateUpdateNode(graph, p_edge->drain, current_k);
 		if(p_edge->next != NULL){
-			this_edge->next = iterateUpdateEdge(p_edge->next, current_k, alloc_required);
+			this_edge->next = iterateUpdateEdge(graph, p_edge->next, current_k, alloc_required);
 		} else {
 			this_edge->next = NULL;
 		}
 
 	} else {
-		p_edge->drain = iterateUpdateNode(p_edge->drain, current_k);
+		p_edge->drain = iterateUpdateNode(graph, p_edge->drain, current_k);
 		if(p_edge->next != NULL){
-			p_edge->next = iterateUpdateEdge(p_edge->next, current_k, alloc_required);
+			p_edge->next = iterateUpdateEdge(graph, p_edge->next, current_k, alloc_required);
 		} else {
 			this_edge->next = NULL;
 		}
@@ -128,22 +118,25 @@ p_edge_t* iterateUpdateEdge(p_edge_t * p_edge, unsigned short current_k, bool al
  * the direct neighbours of root need to be handled differently to create new edges and update last_seen
  * p_node: pointer to the current node in the deserialized update
  */
-void updateNeighbour(p_node_t * p_node){
-	//reset the timeout of the neighbour node
-	//TODO: reset the timeout
-	//p_node->last_seen = ??;
+void updateNeighbour(p_graph_t* graph, p_node_t * p_node){
 
 	//create a new edge, allocate memory and fill it
-	p_edge_t *new_edge;
-	new_edge = get_edge();
-	new_edge->drain = p_node;
-	new_edge->next = NULL;
+	p_edge_t *new_p_edge;
+	new_p_edge = new_edge(&(graph->num_edges));
+	new_p_edge->drain = p_node;
+	new_p_edge->next = NULL;
 
-	if(root->edges == NULL){
-		root->edges = new_edge;
-	} else if(edgeAlreadyExists(new_edge, root) == false){
+	if(graph->root->edges == NULL){
+		graph->root->edges = new_p_edge;
+	} else if(edgeAlreadyExists(new_p_edge, graph->root) == false){
 		//if the edge does not already exist...
-		updateEdgeList(root->edges, new_edge);
+		updateEdgeList(graph->root->edges, new_p_edge);
+	} else {
+		//Could be solved more elegantly than allocating space in edge_memory and freeing it immediately again if unneeded
+		//reset the timeout of the neighbour node
+		//TODO: reset the timeout
+		//p_node->last_seen = ??;
+		free_edge(new_p_edge, &(graph->num_edges));
 	}
 }
 
@@ -152,11 +145,11 @@ void updateNeighbour(p_node_t * p_node){
  * edgelist_elem: the current edge
  * new_edge: the edge to be inserted
  */
-void updateEdgeList(p_edge_t * edgelist_elem, p_edge_t * new_edge){
+void updateEdgeList(p_edge_t * edgelist_elem, p_edge_t * new_p_edge){
 	if(edgelist_elem->next == NULL){
-		edgelist_elem->next = new_edge;
+		edgelist_elem->next = new_p_edge;
 	} else {
-		updateEdgeList(edgelist_elem->next, new_edge);
+		updateEdgeList(edgelist_elem->next, new_p_edge);
 	}
 }
 
@@ -171,12 +164,14 @@ void updateEdgeList(p_edge_t * edgelist_elem, p_edge_t * new_edge){
  * new_p_node: the node inside the update
  * current_k: the current depth of the update tree
  */
-p_node_t* handleExistingNode(p_node_t * old_p_node, p_node_t * new_p_node, unsigned short current_k){
+p_node_t* handleExistingNode(p_graph_t* graph, p_node_t * old_p_node, p_node_t * new_p_node, uint8_t current_k){
 
 	//save the better timeout time
+	//TODO: implement timeout updates, if the timeout is handled by edges, use handleExistingNode_Edgelist
+	/*
 	if(old_p_node->last_seen < new_p_node->last_seen){
 		old_p_node->last_seen = new_p_node->last_seen;
-	}
+	}*/
 
 	//handle the outgoing edges if the new node isn't in K depth (no new edges will be saved for them)
 	//both edgelists empty -> do nothing
@@ -184,10 +179,10 @@ p_node_t* handleExistingNode(p_node_t * old_p_node, p_node_t * new_p_node, unsig
 	if(current_k < K){
 		if(old_p_node->edges == NULL && new_p_node->edges != NULL){
 			//the node does currently not have edges -> all edges have to be allocated
-			old_p_node->edges = iterateUpdateEdge(new_p_node->edges, current_k+1, true);
+			old_p_node->edges = iterateUpdateEdge(graph, new_p_node->edges, current_k+1, true);
 		} else if(old_p_node->edges != NULL && new_p_node->edges != NULL) {
 			//merge lists
-			handleExistingNode_Edgelist(old_p_node->edges, new_p_node->edges, old_p_node, current_k+1);
+			handleExistingNode_Edgelist(graph, old_p_node->edges, new_p_node->edges, old_p_node, current_k+1);
 		}
 	}
 
@@ -202,7 +197,7 @@ p_node_t* handleExistingNode(p_node_t * old_p_node, p_node_t * new_p_node, unsig
  * source_node: pointer to the source of the edge
  * current_k: the current depth of the update tree
  */
-void handleExistingNode_Edgelist(p_edge_t * edgelist_elem_MEMB, p_edge_t * edgelist_elem_UPDATE, p_node_t * source_node, unsigned short current_k){
+void handleExistingNode_Edgelist(p_graph_t* graph, p_edge_t * edgelist_elem_MEMB, p_edge_t * edgelist_elem_UPDATE, p_node_t * source_node, uint8_t current_k){
 	p_edge_t *this_edge;
 
 	//check if the current list element of the update is already known
@@ -216,24 +211,24 @@ void handleExistingNode_Edgelist(p_edge_t * edgelist_elem_MEMB, p_edge_t * edgel
 		 */
 		//temporarily allocate a bit of memory and copy edgelist_elem_UPDATE, because the edge needs to have NULL
 		//as next, but edgelist_elem_UPDATE needs the correct next element to recursively call handleExistingNode_Edgelist later
-		this_edge = malloc(sizeof(p_node_t));
+		this_edge = malloc(sizeof(p_edge_t));
 		memcpy(this_edge, edgelist_elem_UPDATE, sizeof(p_edge_t));
 		this_edge->next = NULL;
-		iterateUpdateEdge(this_edge, current_k, false);
+		iterateUpdateEdge(graph, this_edge, current_k, false);
 		free(this_edge);
 	} else {
 		//the edge isn't known -> allocate memory and append at the end of the known edgelist after initiating
 		//the update of the drain Node
-		this_edge = get_edge();
+		this_edge = new_edge(&(graph->num_edges));
 		memcpy(this_edge, edgelist_elem_UPDATE, sizeof(p_edge_t));
 		this_edge->next = NULL;
-		iterateUpdateEdge(this_edge, current_k, false);
+		iterateUpdateEdge(graph, this_edge, current_k, false);
 		updateEdgeList(edgelist_elem_MEMB, this_edge);
 	}
 
 	//repeat recursively until the end of the list
 	if(edgelist_elem_UPDATE->next != NULL){
-		handleExistingNode_Edgelist(edgelist_elem_MEMB, edgelist_elem_UPDATE->next, source_node, current_k);
+		handleExistingNode_Edgelist(graph, edgelist_elem_MEMB, edgelist_elem_UPDATE->next, source_node, current_k);
 	}
 
 }
@@ -263,7 +258,7 @@ p_node_t* findNodeByAddr(p_node_t* root, rimeaddr_t addr){
  * current_k: the current depth of the update tree
  * return: pointer to the found node, if nothing was found NULL
  */
-p_node_t* findNodeAddr_Node(p_node_t * p_node, rimeaddr_t addr, unsigned short current_k){
+p_node_t* findNodeAddr_Node(p_node_t * p_node, rimeaddr_t addr, uint8_t current_k){
 	p_node_t *found_node;
 
 	if(rimeaddr_cmp(&(p_node->addr), &addr)){		//is p_node the searched node?
@@ -287,7 +282,7 @@ p_node_t* findNodeAddr_Node(p_node_t * p_node, rimeaddr_t addr, unsigned short c
  * current_k: the current depth of the update tree
  * return: pointer to the found node, if nothing was found NULL
  */
-p_node_t* findNodeAddr_Edge(p_edge_t * p_edge, rimeaddr_t addr, unsigned short current_k){
+p_node_t* findNodeAddr_Edge(p_edge_t * p_edge, rimeaddr_t addr, uint8_t current_k){
 	p_node_t *found_node;
 
 	found_node = findNodeAddr_Node(p_edge->drain, addr, current_k);

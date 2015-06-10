@@ -1,9 +1,10 @@
 #include "contiki.h"
 #include "unit-test.h"
-#include "serialize.h"
+//#include "serialize.h"
 #include "graph.h"
 #include "memory.h"
 #include <stdlib.h>
+#include <stdbool.h>
 
 
 /**
@@ -11,14 +12,14 @@
  * the UNIT_TEST_RUN macro.
  */
 UNIT_TEST_REGISTER(simpleMEMBtest, "Simple manually adding new Node+Edge to MEMB");
-UNIT_TEST_REGISTER(simple_findNodeAddr, "Simple manually adding new Node+Edge to MEMB and testing findNodeAddr on it");
-UNIT_TEST_REGISTER(complex_findNodeAddr, "Fill MEMB directly and test findNodeAddr on it for multiple nodes");
+UNIT_TEST_REGISTER(simple_findNodeByAddr, "Simple manually adding new Node+Edge to MEMB and testing findNodeByAddr on it");
+UNIT_TEST_REGISTER(complex_findNodeByAddr, "Fill MEMB directly and test findNodeByAddr on it for multiple nodes");
 UNIT_TEST_REGISTER(edgeAlreadyExists, "Fill MEMB directly and test edgeAlreadyExists on it for multiple edges");
 UNIT_TEST_REGISTER(handleExistingNode, "Test handle existing Node for a small update");
-UNIT_TEST_REGISTER(updateNeighbour, "Test if neighbours get correctly added to root");
+UNIT_TEST_REGISTER(updateNeighbour, "Test if neighbours get correctly added to graph.root");
 UNIT_TEST_REGISTER(simple_iterateUpdate, "Test if iterateUpdate works for simple things");
 UNIT_TEST_REGISTER(iterateUpdate, "Test if the complete update function works");
-UNIT_TEST_REGISTER(iterateUpdate_withSerialisation, "Test if the complete update function works in combination wioth (de)serialisation");
+//UNIT_TEST_REGISTER(iterateUpdate_withSerialisation, "Test if the complete update function works in combination wioth (de)serialisation");
 
 
 
@@ -26,15 +27,93 @@ UNIT_TEST_REGISTER(iterateUpdate_withSerialisation, "Test if the complete update
  * test if adding nodes and edges to node_memory and edge_memory works
  */
 UNIT_TEST(simpleMEMBtest)
+	{	
+		p_graph_t graph;
+        p_node_t *n2, *nS2;
+        p_edge_t *e1, *eS1;
+
+        UNIT_TEST_BEGIN();
+	
+        graph.num_edges = 0;
+        graph.num_nodes = 0;
+		graph.root = new_node(&(graph.num_nodes));
+    	graph.root->addr.u8[0] = 0x00;
+    	graph.root->addr.u8[1] = 0x00;
+    	graph.root->edges = NULL;
+
+        n2 = (p_node_t*) malloc(sizeof(p_node_t));
+
+        e1 = (p_edge_t*) malloc(sizeof(p_edge_t));
+
+        //Give nodes IDs
+        n2->addr.u8[0] = 0x02;
+        n2->addr.u8[1] = 0x02;
+
+        //Build Graph
+        //e1->n2
+        n2->edges = NULL;
+        e1->next = NULL;
+        e1->drain = n2;
+
+        //get static memory from MEMB
+        nS2 = new_node(&(graph.num_nodes));
+        eS1 = new_edge(&(graph.num_edges));
+
+        //copy content
+        memcpy(nS2, n2, sizeof(p_node_t));
+        memcpy(eS1, e1, sizeof(p_edge_t));
+
+        //set the new pointers correctly
+        graph.root->edges = eS1;
+        eS1->drain = nS2;
+
+        //Assert different pointers
+        UNIT_TEST_ASSERT(n2 != nS2);
+        UNIT_TEST_ASSERT(e1 != eS1);
+
+        //Assert rimeaddr
+        UNIT_TEST_ASSERT(rimeaddr_cmp(&(n2->addr), &(nS2->addr)));
+        UNIT_TEST_ASSERT(rimeaddr_cmp(&(e1->drain->addr), &(eS1->drain->addr)));
+        UNIT_TEST_ASSERT(rimeaddr_cmp(&(nS2->addr), &(graph.root->edges->drain->addr)));
+
+        //Assert NULL pointers
+        UNIT_TEST_ASSERT(e1->next == NULL);
+        UNIT_TEST_ASSERT(eS1->next == NULL);
+        UNIT_TEST_ASSERT(n2->edges == NULL);
+        UNIT_TEST_ASSERT(nS2->edges == NULL);
+
+        //Cleanup
+        free(n2);
+        free(e1);
+        free_node(nS2, &(graph.num_nodes));
+        free_edge(eS1, &(graph.num_edges));
+
+        free_node(graph.root, &(graph.num_nodes));
+
+        UNIT_TEST_ASSERT(graph.num_nodes == 0);
+        UNIT_TEST_ASSERT(graph.num_edges == 0);
+
+        UNIT_TEST_END();
+        }
+
+
+/**
+ * test findNodeByAddr on a small tree
+ */
+UNIT_TEST(simple_findNodeByAddr)
 	{
+		p_graph_t graph;
         p_node_t *n2, *nS2;
         p_edge_t *e1, *eS1;
 
         UNIT_TEST_BEGIN();
 
-    	root->addr.u8[0] = 0x00;
-    	root->addr.u8[1] = 0x01;
-    	root->edges = NULL;
+        graph.num_edges = 0;
+        graph.num_nodes = 0;
+		graph.root = new_node(&(graph.num_nodes));
+    	graph.root->addr.u8[0] = 0x00;
+    	graph.root->addr.u8[1] = 0x00;
+    	graph.root->edges = NULL;
 
         n2 = (p_node_t*) malloc(sizeof(p_node_t));
 
@@ -50,17 +129,25 @@ UNIT_TEST(simpleMEMBtest)
         e1->next = NULL;
         e1->drain = n2;
 
+        //Assert if graph.root can be found, but nS2 can't yet
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, graph.root->addr) == graph.root);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n2->addr) == NULL);
+
         //get static memory from MEMB
-        nS2 = get_node();
-        eS1 = get_edge();
+        nS2 = new_node(&(graph.num_nodes));
+        eS1 = new_edge(&(graph.num_edges));
 
         //copy content
         memcpy(nS2, n2, sizeof(p_node_t));
         memcpy(eS1, e1, sizeof(p_edge_t));
 
         //set the new pointers correctly
-        root->edges = eS1;
+        graph.root->edges = eS1;
         eS1->drain = nS2;
+
+        //Assert if graph.root can be found and nS2 too
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, graph.root->addr) == graph.root);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n2->addr) == nS2);
 
         //Assert different pointers
         UNIT_TEST_ASSERT(n2 != nS2);
@@ -69,8 +156,7 @@ UNIT_TEST(simpleMEMBtest)
         //Assert rimeaddr
         UNIT_TEST_ASSERT(rimeaddr_cmp(&(n2->addr), &(nS2->addr)));
         UNIT_TEST_ASSERT(rimeaddr_cmp(&(e1->drain->addr), &(eS1->drain->addr)));
-        UNIT_TEST_ASSERT(rimeaddr_cmp(&(nS2->addr), &(root->edges->drain->addr)));
-        UNIT_TEST_ASSERT(!rimeaddr_cmp(&(nS2->addr), &(root->addr)));
+        UNIT_TEST_ASSERT(rimeaddr_cmp(&(nS2->addr), &(graph.root->edges->drain->addr)));
 
         //Assert NULL pointers
         UNIT_TEST_ASSERT(e1->next == NULL);
@@ -81,119 +167,52 @@ UNIT_TEST(simpleMEMBtest)
         //Cleanup
         free(n2);
         free(e1);
-        free_node_memory(nS2);
-        free_edge_memory(eS1);
+        free_node(nS2, &(graph.num_nodes));
+        free_edge(eS1, &(graph.num_edges));
 
-        root->edges = NULL;
-
-        UNIT_TEST_END();
-        }
-
-
-/**
- * test findNodeAddr on a small tree
- */
-UNIT_TEST(simple_findNodeAddr)
-	{
-        p_node_t *n2, *nS2;
-        p_edge_t *e1, *eS1;
-
-        UNIT_TEST_BEGIN();
-
-    	root->addr.u8[0] = 0x00;
-    	root->addr.u8[1] = 0x01;
-    	root->edges = NULL;
-
-        n2 = (p_node_t*) malloc(sizeof(p_node_t));
-
-        e1 = (p_edge_t*) malloc(sizeof(p_edge_t));
-
-        //Give nodes IDs
-        n2->addr.u8[0] = 0x00;
-        n2->addr.u8[1] = 0x02;
-
-        //Build Graph
-        //e1->n2
-        n2->edges = NULL;
-        e1->next = NULL;
-        e1->drain = n2;
-
-        //Assert if root can be found, but nS2 can't yet
-        UNIT_TEST_ASSERT(findNodeAddr(root->addr) == root);
-        UNIT_TEST_ASSERT(findNodeAddr(n2->addr) == NULL);
-
-        //get static memory from MEMB
-        nS2 = get_node();
-        eS1 = get_edge();
-
-        //copy content
-        memcpy(nS2, n2, sizeof(p_node_t));
-        memcpy(eS1, e1, sizeof(p_edge_t));
-
-        //set the new pointers correctly
-        root->edges = eS1;
-        eS1->drain = nS2;
-
-        //Assert if root can be found and nS2 too
-        UNIT_TEST_ASSERT(findNodeAddr(root->addr) == root);
-        UNIT_TEST_ASSERT(findNodeAddr(n2->addr) == nS2);
-
-        //Assert different pointers
-        UNIT_TEST_ASSERT(n2 != nS2);
-        UNIT_TEST_ASSERT(e1 != eS1);
-
-        //Assert rimeaddr
-        UNIT_TEST_ASSERT(rimeaddr_cmp(&(n2->addr), &(nS2->addr)));
-        UNIT_TEST_ASSERT(rimeaddr_cmp(&(e1->drain->addr), &(eS1->drain->addr)));
-        UNIT_TEST_ASSERT(rimeaddr_cmp(&(nS2->addr), &(root->edges->drain->addr)));
-        UNIT_TEST_ASSERT(!rimeaddr_cmp(&(nS2->addr), &(root->addr)));
-
-        //Assert NULL pointers
-        UNIT_TEST_ASSERT(e1->next == NULL);
-        UNIT_TEST_ASSERT(eS1->next == NULL);
-        UNIT_TEST_ASSERT(n2->edges == NULL);
-        UNIT_TEST_ASSERT(nS2->edges == NULL);
-
-        //Cleanup
-        free(n2);
-        free(e1);
-        free_node_memory(nS2);
-        free_edge_memory(eS1);
+        free_node(graph.root, &(graph.num_nodes));
+		
+        UNIT_TEST_ASSERT(graph.num_nodes == 0);
+        UNIT_TEST_ASSERT(graph.num_edges == 0);
 
         UNIT_TEST_END();
         }
 
 /**
- * test findNodeAddr with a more complex tree
+ * test findNodeByAddr with a more complex tree
  */
-UNIT_TEST(complex_findNodeAddr)
+UNIT_TEST(complex_findNodeByAddr)
 	{
+		p_graph_t graph;
         p_node_t *n1, *n2, *n3, *n4, *n5, *n6;
         p_edge_t *e1, *e2, *e3, *e4, *e5, *e6;
         p_node_t *nX;
 
         UNIT_TEST_BEGIN();
 
-        //set root
-    	root->addr.u8[0] = 0x00;
-    	root->addr.u8[1] = 0x00;
-    	root->edges = NULL;
+        //set graph.root
+        graph.num_edges = 0;
+        graph.num_nodes = 0;
+		graph.root = new_node(&(graph.num_nodes));
+    	graph.root->addr.u8[0] = 0x00;
+    	graph.root->addr.u8[1] = 0x00;
+    	graph.root->edges = NULL;
 
     	//allocate nodes and edges in MEMB
-    	n1 = get_node();
-    	n2 = get_node();
-    	n3 = get_node();
-    	n4 = get_node();
-    	n5 = get_node();
-    	n6 = get_node();
-    	nX = get_node();
+    	n1 = new_node(&(graph.num_nodes));
+    	n2 = new_node(&(graph.num_nodes));
+    	n3 = new_node(&(graph.num_nodes));
+    	n4 = new_node(&(graph.num_nodes));
+    	n5 = new_node(&(graph.num_nodes));
+    	n6 = new_node(&(graph.num_nodes));
+    	nX = new_node(&(graph.num_nodes));
 
-    	e1 = get_edge();
-    	e2 = get_edge();
-    	e3 = get_edge();
-    	e4 = get_edge();
-    	e5 = get_edge();
-    	e6 = get_edge();
+    	e1 = new_edge(&(graph.num_edges));
+    	e2 = new_edge(&(graph.num_edges));
+    	e3 = new_edge(&(graph.num_edges));
+    	e4 = new_edge(&(graph.num_edges));
+    	e5 = new_edge(&(graph.num_edges));
+    	e6 = new_edge(&(graph.num_edges));
 
         //Give nodes IDs
         n1->addr.u8[0] = 0x01;
@@ -213,9 +232,9 @@ UNIT_TEST(complex_findNodeAddr)
         nX->addr.u8[1] = 0x99;
 
         //Build Graph
-        //root->n1
-        //root->n2,n2->n3, n3->n4, n4->n5, n5->n6
-        root->edges = e1;
+        //graph.root->n1
+        //graph.root->n2,n2->n3, n3->n4, n4->n5, n5->n6
+        graph.root->edges = e1;
         e1->next = e2;
         e2->next = NULL;
         e1->drain = n1;
@@ -240,36 +259,39 @@ UNIT_TEST(complex_findNodeAddr)
         e6->next = NULL;
 
         //Assert if every Node can be found
-        UNIT_TEST_ASSERT(findNodeAddr(root->addr) == root);
-        UNIT_TEST_ASSERT(findNodeAddr(n1->addr) == n1);
-        UNIT_TEST_ASSERT(findNodeAddr(n2->addr) == n2);
-        UNIT_TEST_ASSERT(findNodeAddr(n3->addr) == n3);
-        UNIT_TEST_ASSERT(findNodeAddr(n4->addr) == n4);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, graph.root->addr) == graph.root);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n1->addr) == n1);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n2->addr) == n2);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n3->addr) == n3);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n4->addr) == n4);
 
         //These nodes are too deep for K=3 and shouldn't be found
-        UNIT_TEST_ASSERT(findNodeAddr(n5->addr) == NULL);
-        UNIT_TEST_ASSERT(findNodeAddr(n6->addr) == NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n5->addr) == NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n6->addr) == NULL);
 
         //nX shouldn't be found since it isn't connected by an edge
-        UNIT_TEST_ASSERT(findNodeAddr(nX->addr) == NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, nX->addr) == NULL);
 
         //cleanup
-        free_node_memory(n1);
-        free_node_memory(n2);
-        free_node_memory(n3);
-        free_node_memory(n4);
-        free_node_memory(n5);
-        free_node_memory(n6);
-        free_node_memory(nX);
+        free_node(n1, &(graph.num_nodes));
+        free_node(n2, &(graph.num_nodes));
+        free_node(n3, &(graph.num_nodes));
+        free_node(n4, &(graph.num_nodes));
+        free_node(n5, &(graph.num_nodes));
+        free_node(n6, &(graph.num_nodes));
+        free_node(nX, &(graph.num_nodes));
 
-        free_edge_memory(e1);
-        free_edge_memory(e2);
-        free_edge_memory(e3);
-        free_edge_memory(e4);
-        free_edge_memory(e5);
-        free_edge_memory(e6);
+        free_edge(e1, &(graph.num_edges));
+        free_edge(e2, &(graph.num_edges));
+        free_edge(e3, &(graph.num_edges));
+        free_edge(e4, &(graph.num_edges));
+        free_edge(e5, &(graph.num_edges));
+        free_edge(e6, &(graph.num_edges));
 
-        root->edges = NULL;
+        free_node(graph.root, &(graph.num_nodes));
+		
+        UNIT_TEST_ASSERT(graph.num_nodes == 0);
+        UNIT_TEST_ASSERT(graph.num_edges == 0);
 
         UNIT_TEST_END();
         }
@@ -280,6 +302,7 @@ UNIT_TEST(complex_findNodeAddr)
  */
 UNIT_TEST(edgeAlreadyExists)
 	{
+		p_graph_t graph;
         p_node_t *n1, *n2, *n3, *n4, *n5, *n6;
         p_edge_t *er1, *er2, *er3, *e11, *e12, *e13, *e14, *e21, *e31, *e32, *e33, *e41, *e51;
         p_node_t *nX;
@@ -287,34 +310,37 @@ UNIT_TEST(edgeAlreadyExists)
 
         UNIT_TEST_BEGIN();
 
-        //set root
-    	root->addr.u8[0] = 0x00;
-    	root->addr.u8[1] = 0x00;
-    	root->edges = NULL;
+        //set graph.root
+        graph.num_edges = 0;
+        graph.num_nodes = 0;
+		graph.root = new_node(&(graph.num_nodes));
+    	graph.root->addr.u8[0] = 0x00;
+    	graph.root->addr.u8[1] = 0x00;
+    	graph.root->edges = NULL;
 
     	//allocate nodes and edges in MEMB
-    	n1 = get_node();
-    	n2 = get_node();
-    	n3 = get_node();
-    	n4 = get_node();
-    	n5 = get_node();
-    	n6 = get_node();
-    	nX = get_node();
+    	n1 = new_node(&(graph.num_nodes));
+    	n2 = new_node(&(graph.num_nodes));
+    	n3 = new_node(&(graph.num_nodes));
+    	n4 = new_node(&(graph.num_nodes));
+    	n5 = new_node(&(graph.num_nodes));
+    	n6 = new_node(&(graph.num_nodes));
+    	nX = new_node(&(graph.num_nodes));
 
-    	er1 = get_edge();
-    	er2 = get_edge();
-    	er3 = get_edge();
-    	e11 = get_edge();
-    	e12 = get_edge();
-    	e13 = get_edge();
-    	e14 = get_edge();
-    	e21 = get_edge();
-    	e31 = get_edge();
-    	e32 = get_edge();
-    	e33 = get_edge();
-    	e41 = get_edge();
-    	e51 = get_edge();
-    	eX = get_edge();
+    	er1 = new_edge(&(graph.num_edges));
+    	er2 = new_edge(&(graph.num_edges));
+    	er3 = new_edge(&(graph.num_edges));
+    	e11 = new_edge(&(graph.num_edges));
+    	e12 = new_edge(&(graph.num_edges));
+    	e13 = new_edge(&(graph.num_edges));
+    	e14 = new_edge(&(graph.num_edges));
+    	e21 = new_edge(&(graph.num_edges));
+    	e31 = new_edge(&(graph.num_edges));
+    	e32 = new_edge(&(graph.num_edges));
+    	e33 = new_edge(&(graph.num_edges));
+    	e41 = new_edge(&(graph.num_edges));
+    	e51 = new_edge(&(graph.num_edges));
+    	eX = new_edge(&(graph.num_edges));
 
         //Give nodes IDs
         n1->addr.u8[0] = 0x01;
@@ -334,14 +360,14 @@ UNIT_TEST(edgeAlreadyExists)
         nX->addr.u8[1] = 0x99;
 
         //Build Graph
-        //root->n1, n2, n3
-        //n1->root, n2, n3, n4
+        //graph.root->n1, n2, n3
+        //n1->graph.root, n2, n3, n4
         //n2->n3
-        //n3->root, n1, n2
+        //n3->graph.root, n1, n2
         //n4->n5
         //n5->n6
         //nX->NULL
-        root->edges = er1;
+        graph.root->edges = er1;
         er1->next = er2;
         er2->next = er3;
         er3->next = NULL;
@@ -354,7 +380,7 @@ UNIT_TEST(edgeAlreadyExists)
         e12->next = e13;
         e13->next = e14;
         e14->next = NULL;
-        e11->drain = root;
+        e11->drain = graph.root;
         e12->drain = n2;
         e13->drain = n3;
         e14->drain = n4;
@@ -367,7 +393,7 @@ UNIT_TEST(edgeAlreadyExists)
         e31->next = e32;
         e32->next = e33;
         e33->next = NULL;
-        e31->drain = root;
+        e31->drain = graph.root;
         e32->drain = n1;
         e33->drain = n2;
 
@@ -389,12 +415,12 @@ UNIT_TEST(edgeAlreadyExists)
         //!!! edges are identified by their drain, since their source is implicit. this leads if tested with the same source node to:
         //er1==e32; er2==e12==e33; er3==e13==e21; e11==e31;
         //so for ease of testing, just use e41,e51 and eX as negative for most nodes
-        UNIT_TEST_ASSERT(edgeAlreadyExists(er1, root) == true);
-        UNIT_TEST_ASSERT(edgeAlreadyExists(er2, root) == true);
-        UNIT_TEST_ASSERT(edgeAlreadyExists(er3, root) == true);
-        UNIT_TEST_ASSERT(edgeAlreadyExists(e41, root) == false);
-        UNIT_TEST_ASSERT(edgeAlreadyExists(e51, root) == false);
-        UNIT_TEST_ASSERT(edgeAlreadyExists(eX, root) == false);
+        UNIT_TEST_ASSERT(edgeAlreadyExists(er1, graph.root) == true);
+        UNIT_TEST_ASSERT(edgeAlreadyExists(er2, graph.root) == true);
+        UNIT_TEST_ASSERT(edgeAlreadyExists(er3, graph.root) == true);
+        UNIT_TEST_ASSERT(edgeAlreadyExists(e41, graph.root) == false);
+        UNIT_TEST_ASSERT(edgeAlreadyExists(e51, graph.root) == false);
+        UNIT_TEST_ASSERT(edgeAlreadyExists(eX, graph.root) == false);
 
         UNIT_TEST_ASSERT(edgeAlreadyExists(e11, n1) == true);
         UNIT_TEST_ASSERT(edgeAlreadyExists(e12, n1) == true);
@@ -462,30 +488,33 @@ UNIT_TEST(edgeAlreadyExists)
         UNIT_TEST_ASSERT(edgeAlreadyExists(eX, nX) == true);
 
         //cleanup
-        free_node_memory(n1);
-        free_node_memory(n2);
-        free_node_memory(n3);
-        free_node_memory(n4);
-        free_node_memory(n5);
-        free_node_memory(n6);
-        free_node_memory(nX);
+        free_node(n1, &(graph.num_nodes));
+        free_node(n2, &(graph.num_nodes));
+        free_node(n3, &(graph.num_nodes));
+        free_node(n4, &(graph.num_nodes));
+        free_node(n5, &(graph.num_nodes));
+        free_node(n6, &(graph.num_nodes));
+        free_node(nX, &(graph.num_nodes));
 
-        free_edge_memory(er1);
-        free_edge_memory(er2);
-        free_edge_memory(er3);
-        free_edge_memory(e11);
-        free_edge_memory(e12);
-        free_edge_memory(e13);
-        free_edge_memory(e14);
-        free_edge_memory(e21);
-        free_edge_memory(e31);
-        free_edge_memory(e32);
-        free_edge_memory(e33);
-        free_edge_memory(e41);
-        free_edge_memory(e51);
-        free_edge_memory(eX);
+        free_edge(er1, &(graph.num_edges));
+        free_edge(er2, &(graph.num_edges));
+        free_edge(er3, &(graph.num_edges));
+        free_edge(e11, &(graph.num_edges));
+        free_edge(e12, &(graph.num_edges));
+        free_edge(e13, &(graph.num_edges));
+        free_edge(e14, &(graph.num_edges));
+        free_edge(e21, &(graph.num_edges));
+        free_edge(e31, &(graph.num_edges));
+        free_edge(e32, &(graph.num_edges));
+        free_edge(e33, &(graph.num_edges));
+        free_edge(e41, &(graph.num_edges));
+        free_edge(e51, &(graph.num_edges));
+        free_edge(eX, &(graph.num_edges));
 
-        root->edges = NULL;
+        free_node(graph.root, &(graph.num_nodes));
+		
+        UNIT_TEST_ASSERT(graph.num_nodes == 0);
+        UNIT_TEST_ASSERT(graph.num_edges == 0);
 
         UNIT_TEST_END();
         }
@@ -496,6 +525,7 @@ UNIT_TEST(edgeAlreadyExists)
  */
 UNIT_TEST(handleExistingNode)
 	{
+		p_graph_t graph;
         p_node_t *n1, *n2, *n3, *n4, *n5, *n6;
         p_edge_t *e1, *e2, *e3, *e4, *e5, *e6;
         p_node_t *nX;
@@ -505,26 +535,29 @@ UNIT_TEST(handleExistingNode)
 
         UNIT_TEST_BEGIN();
 
-        //set root
-    	root->addr.u8[0] = 0x00;
-    	root->addr.u8[1] = 0x00;
-    	root->edges = NULL;
+        //set graph.root
+        graph.num_edges = 0;
+        graph.num_nodes = 0;
+		graph.root = new_node(&(graph.num_nodes));
+    	graph.root->addr.u8[0] = 0x00;
+    	graph.root->addr.u8[1] = 0x00;
+    	graph.root->edges = NULL;
 
     	//allocate nodes and edges in MEMB
-    	n1 = get_node();
-    	n2 = get_node();
-    	n3 = get_node();
-    	n4 = get_node();
-    	n5 = get_node();
-    	n6 = get_node();
-    	nX = get_node();
+    	n1 = new_node(&(graph.num_nodes));
+    	n2 = new_node(&(graph.num_nodes));
+    	n3 = new_node(&(graph.num_nodes));
+    	n4 = new_node(&(graph.num_nodes));
+    	n5 = new_node(&(graph.num_nodes));
+    	n6 = new_node(&(graph.num_nodes));
+    	nX = new_node(&(graph.num_nodes));
 
-    	e1 = get_edge();
-    	e2 = get_edge();
-    	e3 = get_edge();
-    	e4 = get_edge();
-    	e5 = get_edge();
-    	e6 = get_edge();
+    	e1 = new_edge(&(graph.num_edges));
+    	e2 = new_edge(&(graph.num_edges));
+    	e3 = new_edge(&(graph.num_edges));
+    	e4 = new_edge(&(graph.num_edges));
+    	e5 = new_edge(&(graph.num_edges));
+    	e6 = new_edge(&(graph.num_edges));
 
         un1 = (p_node_t*) malloc(sizeof(p_node_t));
         un2 = (p_node_t*) malloc(sizeof(p_node_t));
@@ -559,9 +592,9 @@ UNIT_TEST(handleExistingNode)
         un99->addr.u8[1] = 0x99;
 
         //Build Graph
-        //root->n1
-        //root->n2,n2->n3, n3->n4, n4->n5, n5->n6
-        root->edges = e1;
+        //graph.root->n1
+        //graph.root->n2,n2->n3, n3->n4, n4->n5, n5->n6
+        graph.root->edges = e1;
         e1->next = e2;
         e2->next = NULL;
         e1->drain = n1;
@@ -601,11 +634,11 @@ UNIT_TEST(handleExistingNode)
         un99->edges = NULL;
 
         //handleExistingNode
-        handleExistingNode(n1, un1, 1);
+        handleExistingNode(&graph, n1, un1, 1);
 
         //Assert if un99 can be found and the edges oh n1 and n2 are updated
-        UNIT_TEST_ASSERT(findNodeAddr(un99->addr) != NULL);
-        UNIT_TEST_ASSERT(findNodeAddr(un99->addr) != un99);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, un99->addr) != NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, un99->addr) != un99);
         UNIT_TEST_ASSERT(edgeAlreadyExists(ue1, n1));
         UNIT_TEST_ASSERT(edgeAlreadyExists(ue2, n1));
         UNIT_TEST_ASSERT(edgeAlreadyExists(ue3, n2));
@@ -631,54 +664,61 @@ UNIT_TEST(handleExistingNode)
         tempe2.next = NULL;
         tempe3.drain = n1->edges->next->drain;
         tempe3.next = NULL;
-        UNIT_TEST_ASSERT(findNodeAddr(tempaddr) != NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, tempaddr) != NULL);
         UNIT_TEST_ASSERT(edgeAlreadyExists(&tempe1, n1));
         UNIT_TEST_ASSERT(edgeAlreadyExists(&tempe2, n1));
         UNIT_TEST_ASSERT(edgeAlreadyExists(&tempe3, n2));
 
         //cleanup
         //new allocated memory from handleExistingNode
-        free_node_memory(n1->edges->next->drain);
-        free_edge_memory(n1->edges->next);
-        free_edge_memory(n1->edges);
-        free_edge_memory(n2->edges->next);
+        free_node(n1->edges->next->drain, &(graph.num_nodes));
+        free_edge(n1->edges->next, &(graph.num_edges));
+        free_edge(n1->edges, &(graph.num_edges));
+        free_edge(n2->edges->next, &(graph.num_edges));
 
-        free_node_memory(n1);
-        free_node_memory(n2);
-        free_node_memory(n3);
-        free_node_memory(n4);
-        free_node_memory(n5);
-        free_node_memory(n6);
-        free_node_memory(nX);
+        free_node(n1, &(graph.num_nodes));
+        free_node(n2, &(graph.num_nodes));
+        free_node(n3, &(graph.num_nodes));
+        free_node(n4, &(graph.num_nodes));
+        free_node(n5, &(graph.num_nodes));
+        free_node(n6, &(graph.num_nodes));
+        free_node(nX, &(graph.num_nodes));
 
-        free_edge_memory(e1);
-        free_edge_memory(e2);
-        free_edge_memory(e3);
-        free_edge_memory(e4);
-        free_edge_memory(e5);
-        free_edge_memory(e6);
+        free_edge(e1, &(graph.num_edges));
+        free_edge(e2, &(graph.num_edges));
+        free_edge(e3, &(graph.num_edges));
+        free_edge(e4, &(graph.num_edges));
+        free_edge(e5, &(graph.num_edges));
+        free_edge(e6, &(graph.num_edges));
 
-        root->edges = NULL;
+        free_node(graph.root, &(graph.num_nodes));
+		
+        UNIT_TEST_ASSERT(graph.num_nodes == 0);
+        UNIT_TEST_ASSERT(graph.num_edges == 0);
 
         UNIT_TEST_END();
         }
 
 /**
- * tests if updateNeighbour works correctly by creating 3 new edges from root
+ * tests if updateNeighbour works correctly by creating 3 new edges from graph.root
  */
 UNIT_TEST(updateNeighbour)
 	{
+		p_graph_t graph;
         p_node_t *n1, *n2, *n3;
 
         UNIT_TEST_BEGIN();
 
-    	root->addr.u8[0] = 0x00;
-    	root->addr.u8[1] = 0x00;
-    	root->edges = NULL;
+        graph.num_edges = 0;
+        graph.num_nodes = 0;
+		graph.root = new_node(&(graph.num_nodes));
+    	graph.root->addr.u8[0] = 0x00;
+    	graph.root->addr.u8[1] = 0x00;
+    	graph.root->edges = NULL;
 
-    	n1 = get_node();
-    	n2 = get_node();
-    	n3 = get_node();
+    	n1 = new_node(&(graph.num_nodes));
+    	n2 = new_node(&(graph.num_nodes));
+    	n3 = new_node(&(graph.num_nodes));
 
         //Give nodes IDs
         n1->addr.u8[0] = 0x01;
@@ -689,26 +729,29 @@ UNIT_TEST(updateNeighbour)
         n3->addr.u8[1] = 0x03;
 
         //update neighbours
-        updateNeighbour(n1);
-        updateNeighbour(n2);
-        updateNeighbour(n3);
+        updateNeighbour(&graph, n1);
+        updateNeighbour(&graph, n2);
+        updateNeighbour(&graph, n3);
 
         //Assert rimeaddr
-        UNIT_TEST_ASSERT(rimeaddr_cmp(&(root->edges->drain->addr), &(n1->addr)));
-        UNIT_TEST_ASSERT(rimeaddr_cmp(&(root->edges->next->drain->addr), &(n2->addr)));
-        UNIT_TEST_ASSERT(rimeaddr_cmp(&(root->edges->next->next->drain->addr), &(n3->addr)));
+        UNIT_TEST_ASSERT(rimeaddr_cmp(&(graph.root->edges->drain->addr), &(n1->addr)));
+        UNIT_TEST_ASSERT(rimeaddr_cmp(&(graph.root->edges->next->drain->addr), &(n2->addr)));
+        UNIT_TEST_ASSERT(rimeaddr_cmp(&(graph.root->edges->next->next->drain->addr), &(n3->addr)));
 
         //Cleanup
         //new allocated memory from updateNeighbour
-        free_edge_memory(root->edges->next->next);
-        free_edge_memory(root->edges->next);
-        free_edge_memory(root->edges);
+        free_edge(graph.root->edges->next->next, &(graph.num_edges));
+        free_edge(graph.root->edges->next, &(graph.num_edges));
+        free_edge(graph.root->edges, &(graph.num_edges));
 
-        free_node_memory(n1);
-        free_node_memory(n2);
-        free_node_memory(n3);
+        free_node(n1, &(graph.num_nodes));
+        free_node(n2, &(graph.num_nodes));
+        free_node(n3, &(graph.num_nodes));
 
-        root->edges = NULL;
+        free_node(graph.root, &(graph.num_nodes));
+		
+        UNIT_TEST_ASSERT(graph.num_nodes == 0);
+        UNIT_TEST_ASSERT(graph.num_edges == 0);
 
         UNIT_TEST_END();
         }
@@ -717,6 +760,7 @@ UNIT_TEST(updateNeighbour)
  */
 UNIT_TEST(simple_iterateUpdate)
 	{
+		p_graph_t graph;
 		//the already known tree
 		p_node_t *nS1, *nS2;
 		p_edge_t *eSr1, *eS11;
@@ -726,17 +770,20 @@ UNIT_TEST(simple_iterateUpdate)
 
         UNIT_TEST_BEGIN();
 
-        //set root
-    	root->addr.u8[0] = 0x00;
-    	root->addr.u8[1] = 0x00;
-    	root->edges = NULL;
+        //set graph.root
+        graph.num_edges = 0;
+        graph.num_nodes = 0;
+		graph.root = new_node(&(graph.num_nodes));
+    	graph.root->addr.u8[0] = 0x00;
+    	graph.root->addr.u8[1] = 0x00;
+    	graph.root->edges = NULL;
 
     	//allocate nodes and edges
-    	nS1 = get_node();
-    	nS2 = get_node();
+    	nS1 = new_node(&(graph.num_nodes));
+    	nS2 = new_node(&(graph.num_nodes));
 
-    	eSr1 = get_edge();
-    	eS11 = get_edge();
+    	eSr1 = new_edge(&(graph.num_edges));
+    	eS11 = new_edge(&(graph.num_edges));
 
         n1 = (p_node_t*) malloc(sizeof(p_node_t));
         n2 = (p_node_t*) malloc(sizeof(p_node_t));
@@ -764,7 +811,7 @@ UNIT_TEST(simple_iterateUpdate)
         n4->addr.u8[1] = 0x04;
 
         //Build Graph (MEMB)
-        root->edges = eSr1;
+        graph.root->edges = eSr1;
         eSr1->next = NULL;
         eSr1->drain = nS1;
 
@@ -775,11 +822,8 @@ UNIT_TEST(simple_iterateUpdate)
         nS2->edges = NULL;
 
         //Build Graph (Update)
-        //n1->root, n2, n3, n4
+        //n1->n2, n3, n4
         //n2->n3
-        //n3->root, n1, n2
-        //n4->n5
-        //n5->n6
         n1->edges = e11;
         e11->next = e12;
         e11->drain = n2;
@@ -792,38 +836,35 @@ UNIT_TEST(simple_iterateUpdate)
         e21->next = NULL;
         e21->drain = n3;
 
-        //nX shouldn't be found since it isn't connected by an edge
-        printf("%d \n", n2->addr);
-        printf("%d \n", nS2->addr);
-        printf("pointer %d \n", findNodeAddr(n2->addr));
-
         //update
-        iterateUpdate(n1);
-
+        updateGraph(&graph, n1);
 
         //Assert if every Node can be found
-        UNIT_TEST_ASSERT(findNodeAddr(root->addr) == root);
-        UNIT_TEST_ASSERT(findNodeAddr(nS1->addr) == nS1); //n1 got freed at the end of iterateUpdate
-        UNIT_TEST_ASSERT(findNodeAddr(nS2->addr) == nS2);
-        UNIT_TEST_ASSERT(findNodeAddr(n2->addr) == nS2);
-        UNIT_TEST_ASSERT(findNodeAddr(n3->addr) == nS1->edges->next->drain);
-        UNIT_TEST_ASSERT(findNodeAddr(n4->addr) == nS1->edges->next->next->drain);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, graph.root->addr) == graph.root);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, nS1->addr) == nS1); //n1 got freed at the end of iterateUpdate
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, nS2->addr) == nS2);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n2->addr) == nS2);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n3->addr) == nS1->edges->next->drain);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n4->addr) == nS1->edges->next->next->drain);
 
         //cleanup
         //first the generated ones
-        free_node_memory(nS1->edges->next->next->drain);
-        free_node_memory(nS1->edges->next->drain);
-        free_edge_memory(nS1->edges->next->next);
-        free_edge_memory(nS1->edges->next);
-        free_edge_memory(nS2->edges);
+        free_node(nS1->edges->next->next->drain, &(graph.num_nodes));
+        free_node(nS1->edges->next->drain, &(graph.num_nodes));
+        free_edge(nS1->edges->next->next, &(graph.num_edges));
+        free_edge(nS1->edges->next, &(graph.num_edges));
+        free_edge(nS2->edges, &(graph.num_edges));
 
-        free_node_memory(nS1);
-        free_node_memory(nS2);
+        free_node(nS1, &(graph.num_nodes));
+        free_node(nS2, &(graph.num_nodes));
 
-        free_edge_memory(eSr1);
-        free_edge_memory(eS11);
+        free_edge(eSr1, &(graph.num_edges));
+        free_edge(eS11, &(graph.num_edges));
 
-        root->edges = NULL;
+        free_node(graph.root, &(graph.num_nodes));
+		
+        UNIT_TEST_ASSERT(graph.num_nodes == 0);
+        UNIT_TEST_ASSERT(graph.num_edges == 0);
 
         UNIT_TEST_END();
         }
@@ -834,6 +875,7 @@ UNIT_TEST(simple_iterateUpdate)
  */
 UNIT_TEST(iterateUpdate)
 	{
+		p_graph_t graph;
 		//the already known tree
 		p_node_t *nS1, *nS2, *nS3, *nS4, *nS5;
 		p_edge_t *eSr1, *eS11, *eS12, *eS14, *eS21, *eS32, *eS33, *eS41;
@@ -846,28 +888,31 @@ UNIT_TEST(iterateUpdate)
 
         UNIT_TEST_BEGIN();
 
-        //set root
-    	root->addr.u8[0] = 0x00;
-    	root->addr.u8[1] = 0x00;
-    	root->edges = NULL;
+        //set graph.root
+        graph.num_edges = 0;
+        graph.num_nodes = 0;
+		graph.root = new_node(&(graph.num_nodes));
+    	graph.root->addr.u8[0] = 0x00;
+    	graph.root->addr.u8[1] = 0x00;
+    	graph.root->edges = NULL;
 
     	//allocate nodes and edges
-    	nS1 = get_node();
-    	nS2 = get_node();
-    	nS3 = get_node();
-    	nS4 = get_node();
-    	nS5 = get_node();
-    	nX = get_node();
+    	nS1 = new_node(&(graph.num_nodes));
+    	nS2 = new_node(&(graph.num_nodes));
+    	nS3 = new_node(&(graph.num_nodes));
+    	nS4 = new_node(&(graph.num_nodes));
+    	nS5 = new_node(&(graph.num_nodes));
+    	nX = new_node(&(graph.num_nodes));
 
-    	eSr1 = get_edge();
-    	eS11 = get_edge();
-    	eS12 = get_edge();
-    	eS14 = get_edge();
-    	eS21 = get_edge();
-    	eS32 = get_edge();
-    	eS33 = get_edge();
-    	eS41 = get_edge();
-    	eX = get_edge();
+    	eSr1 = new_edge(&(graph.num_edges));
+    	eS11 = new_edge(&(graph.num_edges));
+    	eS12 = new_edge(&(graph.num_edges));
+    	eS14 = new_edge(&(graph.num_edges));
+    	eS21 = new_edge(&(graph.num_edges));
+    	eS32 = new_edge(&(graph.num_edges));
+    	eS33 = new_edge(&(graph.num_edges));
+    	eS41 = new_edge(&(graph.num_edges));
+    	eX = new_edge(&(graph.num_edges));
 
         n1 = (p_node_t*) malloc(sizeof(p_node_t));
         n2 = (p_node_t*) malloc(sizeof(p_node_t));
@@ -926,7 +971,7 @@ UNIT_TEST(iterateUpdate)
 
 
         //Build Graph (MEMB)
-        root->edges = eSr1;
+        graph.root->edges = eSr1;
         eSr1->next = NULL;
         eSr1->drain = nS1;
 
@@ -934,7 +979,7 @@ UNIT_TEST(iterateUpdate)
         eS11->next = eS12;
         eS12->next = eS14;
         eS14->next = NULL;
-        eS11->drain = root;
+        eS11->drain = graph.root;
         eS12->drain = nS2;
         eS14->drain = nS4;
 
@@ -960,9 +1005,9 @@ UNIT_TEST(iterateUpdate)
 
 
         //Build Graph (Update)
-        //n1->root, n2, n3, n4
+        //n1->graph.root, n2, n3, n4
         //n2->n3,n8
-        //n3->root, n1, n2
+        //n3->graph.root, n1, n2
         //n4->n5
         //n5->n6
         //n6->n7
@@ -971,7 +1016,7 @@ UNIT_TEST(iterateUpdate)
         e12->next = e13;
         e13->next = e14;
         e14->next = NULL;
-        e11->drain = root;
+        e11->drain = graph.root;
         e12->drain = n2;
         e13->drain = n3;
         e14->drain = n4;
@@ -986,7 +1031,7 @@ UNIT_TEST(iterateUpdate)
         e31->next = e32;
         e32->next = e33;
         e33->next = NULL;
-        e31->drain = root;
+        e31->drain = graph.root;
         e32->drain = n1;
         e33->drain = n2;
 
@@ -1005,97 +1050,97 @@ UNIT_TEST(iterateUpdate)
         n7->edges = NULL;
 
         //nX shouldn't be found since it isn't connected by an edge
-        UNIT_TEST_ASSERT(findNodeAddr(nX->addr) == NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, nX->addr) == NULL);
 
         //update
-        iterateUpdate(n1);
+        updateGraph(&graph, n1);
 
         //Assert if every Node can be found
-        UNIT_TEST_ASSERT(findNodeAddr(root->addr) == root);
-        UNIT_TEST_ASSERT(findNodeAddr(nS1->addr) == nS1); //n1 got freed at the end of iterateUpdate, nS1 will do fine anyways
-        UNIT_TEST_ASSERT(findNodeAddr(n2->addr) == nS2);
-        UNIT_TEST_ASSERT(findNodeAddr(n3->addr) == nS3);
-        UNIT_TEST_ASSERT(findNodeAddr(n4->addr) == nS4);
-        UNIT_TEST_ASSERT(findNodeAddr(n5->addr) == nS5);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, graph.root->addr) == graph.root);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, nS1->addr) == nS1); //n1 got freed at the end of iterateUpdate, nS1 will do fine anyways
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n2->addr) == nS2);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n3->addr) == nS3);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n4->addr) == nS4);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n5->addr) == nS5);
 
-        //n8 is special, because nX exists with the same address in MEMB, but is not reachable from root
-        UNIT_TEST_ASSERT(findNodeAddr(n8->addr) != NULL);
-        UNIT_TEST_ASSERT(findNodeAddr(n8->addr) != nX);
+        //n8 is special, because nX exists with the same address in MEMB, but is not reachable from graph.root
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n8->addr) != NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n8->addr) != nX);
 
         //These nodes are too deep for K=3 and shouldn't be found
-        UNIT_TEST_ASSERT(findNodeAddr(n6->addr) == NULL);
-        UNIT_TEST_ASSERT(findNodeAddr(n7->addr) == NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n6->addr) == NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n7->addr) == NULL);
 
-        //update again with n2 and n3 to create new neighbours for root
-        iterateUpdate(n2);
-        iterateUpdate(n3);
+        //update again with n2 and n3 to create new neighbours for graph.root
+        updateGraph(&graph, n2);
+        updateGraph(&graph, n3);
 
         //Assert again if something broke
         //Assert if every Node can be found
-        UNIT_TEST_ASSERT(findNodeAddr(root->addr) == root);
-        UNIT_TEST_ASSERT(findNodeAddr(nS1->addr) == nS1); //n1 got freed at the end of iterateUpdate, nS1 will do fine anyways
-        UNIT_TEST_ASSERT(findNodeAddr(nS2->addr) == nS2); //now for n2 too
-        UNIT_TEST_ASSERT(findNodeAddr(nS3->addr) == nS3); //now for n3 too
-        UNIT_TEST_ASSERT(findNodeAddr(n4->addr) == nS4);
-        UNIT_TEST_ASSERT(findNodeAddr(n5->addr) == nS5);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, graph.root->addr) == graph.root);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, nS1->addr) == nS1); //n1 got freed at the end of iterateUpdate, nS1 will do fine anyways
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, nS2->addr) == nS2); //now for n2 too
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, nS3->addr) == nS3); //now for n3 too
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n4->addr) == nS4);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n5->addr) == nS5);
 
-        //n8 is special, because nX exists with the same address in MEMB, but is not reachable from root
-        UNIT_TEST_ASSERT(findNodeAddr(n8->addr) != NULL);
-        UNIT_TEST_ASSERT(findNodeAddr(n8->addr) != nX);
+        //n8 is special, because nX exists with the same address in MEMB, but is not reachable from graph.root
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n8->addr) != NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n8->addr) != nX);
 
         //These nodes are too deep for K=3 and shouldn't be found
-        UNIT_TEST_ASSERT(findNodeAddr(n6->addr) == NULL);
-        UNIT_TEST_ASSERT(findNodeAddr(n7->addr) == NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n6->addr) == NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n7->addr) == NULL);
 
         //update with n6 to see if the deeper nodes (n7) can be found now
-        iterateUpdate(n6);
+        updateGraph(&graph, n6);
 
         //Assert again if something broke
         //Assert if every Node can be found
-        UNIT_TEST_ASSERT(findNodeAddr(root->addr) == root);
-        UNIT_TEST_ASSERT(findNodeAddr(nS1->addr) == nS1); //n1 got freed at the end of iterateUpdate, nS1 will do fine anyways
-        UNIT_TEST_ASSERT(findNodeAddr(nS2->addr) == nS2); //now for n2 too
-        UNIT_TEST_ASSERT(findNodeAddr(nS3->addr) == nS3); //now for n3 too
-        UNIT_TEST_ASSERT(findNodeAddr(n4->addr) == nS4);
-        UNIT_TEST_ASSERT(findNodeAddr(n5->addr) == nS5);
-        UNIT_TEST_ASSERT(findNodeAddr(root->edges->next->next->next->drain->addr) == root->edges->next->next->next->drain); //now for n6 too
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, graph.root->addr) == graph.root);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, nS1->addr) == nS1); //n1 got freed at the end of iterateUpdate, nS1 will do fine anyways
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, nS2->addr) == nS2); //now for n2 too
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, nS3->addr) == nS3); //now for n3 too
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n4->addr) == nS4);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n5->addr) == nS5);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, graph.root->edges->next->next->next->drain->addr) == graph.root->edges->next->next->next->drain); //now for n6 too
 
-        //n8 is special, because nX exists with the same address in MEMB, but is not reachable from root
-        UNIT_TEST_ASSERT(findNodeAddr(n8->addr) != NULL);
-        UNIT_TEST_ASSERT(findNodeAddr(n8->addr) != nX);
+        //n8 is special, because nX exists with the same address in MEMB, but is not reachable from graph.root
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n8->addr) != NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n8->addr) != nX);
 
         //n7 should be found now
-        UNIT_TEST_ASSERT(findNodeAddr(n7->addr) != NULL);
+        UNIT_TEST_ASSERT(findNodeByAddr(graph.root, n7->addr) != NULL);
 
         //cleanup
         //first the new ones
-        free_node_memory(eS21->next->drain);
-        free_node_memory(root->edges->next->next->next->drain->edges->drain);
-        free_edge_memory(root->edges->next->next->next->drain->edges);
-        free_node_memory(root->edges->next->next->next->drain);
-        free_edge_memory(root->edges->next->next->next);
-        free_edge_memory(root->edges->next->next);
-        free_edge_memory(root->edges->next);
-        free_edge_memory(eS33->next);
-        free_edge_memory(eS14->next);
-        free_edge_memory(eS21->next);
+        free_node(eS21->next->drain, &(graph.num_nodes));
+        free_node(graph.root->edges->next->next->next->drain->edges->drain, &(graph.num_nodes));
+        free_edge(graph.root->edges->next->next->next->drain->edges, &(graph.num_edges));
+        free_node(graph.root->edges->next->next->next->drain, &(graph.num_nodes));
+        free_edge(graph.root->edges->next->next->next, &(graph.num_edges));
+        free_edge(graph.root->edges->next->next, &(graph.num_edges));
+        free_edge(graph.root->edges->next, &(graph.num_edges));
+        free_edge(eS33->next, &(graph.num_edges));
+        free_edge(eS14->next, &(graph.num_edges));
+        free_edge(eS21->next, &(graph.num_edges));
 
-        free_node_memory(nS1);
-        free_node_memory(nS2);
-        free_node_memory(nS3);
-        free_node_memory(nS4);
-        free_node_memory(nS5);
-        free_node_memory(nX);
+        free_node(nS1, &(graph.num_nodes));
+        free_node(nS2, &(graph.num_nodes));
+        free_node(nS3, &(graph.num_nodes));
+        free_node(nS4, &(graph.num_nodes));
+        free_node(nS5, &(graph.num_nodes));
+        free_node(nX, &(graph.num_nodes));
 
-        free_edge_memory(eSr1);
-        free_edge_memory(eS11);
-        free_edge_memory(eS12);
-        free_edge_memory(eS14);
-        free_edge_memory(eS21);
-        free_edge_memory(eS32);
-        free_edge_memory(eS33);
-        free_edge_memory(eS41);
-        free_edge_memory(eX);
+        free_edge(eSr1, &(graph.num_edges));
+        free_edge(eS11, &(graph.num_edges));
+        free_edge(eS12, &(graph.num_edges));
+        free_edge(eS14, &(graph.num_edges));
+        free_edge(eS21, &(graph.num_edges));
+        free_edge(eS32, &(graph.num_edges));
+        free_edge(eS33, &(graph.num_edges));
+        free_edge(eS41, &(graph.num_edges));
+        free_edge(eX, &(graph.num_edges));
 
         free(n1);
         free(n2);
@@ -1119,19 +1164,21 @@ UNIT_TEST(iterateUpdate)
         free(e51);
         free(e61);
 
-        root->edges = NULL;
+        free_node(graph.root, &(graph.num_nodes));
+		
+        UNIT_TEST_ASSERT(graph.num_nodes == 0);
+        UNIT_TEST_ASSERT(graph.num_edges == 0);
 
         UNIT_TEST_END();
         }
 
 void main() {
-	//pointer of root has to be set at the start of a program or it isn't global
+	//initialize edge_memory and node_memory
 	init_mem();
-	root = &root_data;
 
 	UNIT_TEST_RUN(simpleMEMBtest);
-	UNIT_TEST_RUN(simple_findNodeAddr);
-	UNIT_TEST_RUN(complex_findNodeAddr);
+	UNIT_TEST_RUN(simple_findNodeByAddr);
+	UNIT_TEST_RUN(complex_findNodeByAddr);
 	UNIT_TEST_RUN(edgeAlreadyExists);
 	UNIT_TEST_RUN(handleExistingNode);
 	UNIT_TEST_RUN(updateNeighbour);

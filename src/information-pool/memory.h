@@ -9,10 +9,10 @@
 
 void init_mem(void);
 
-p_node_t* new_node(void);
-p_edge_t* new_edge(void);
+p_node_t* new_node(uint8_t * num_nodes);
+p_edge_t* new_edge(uint8_t * num_edges);
 
-void free_node(p_node_t * p_node);
-void free_edge(p_edge_t * p_edge);
+void free_node(p_node_t * p_node, uint8_t * num_nodes);
+void free_edge(p_edge_t * p_edge, uint8_t * num_edges);
 
 #endif
