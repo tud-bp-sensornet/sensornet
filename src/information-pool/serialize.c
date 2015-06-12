@@ -18,20 +18,22 @@ p_edge_t* deserializeEdge(void* basePointer, void* currentPointer);
 /**
  * Serializes the k-view of a graph.
  * node: the pointer to the root node of the graph
- * k: how deep the tree should be crawled
- * length: points to a value where the length of the serialized data will be stored (in bytes)
+ * hop_count: how deep the tree should be crawled
+ * bytes: points to a value where the length of the serialized data will be stored (in bytes)
  * return: void* to the start of the allocated memory
  */
-void* serialize(const p_node_t *node, uint16_t k, size_t *length)
+void* serialize(p_graph_t* graph, uint8_t hop_count, size_t* bytes)
 {
-	struct buffer *buffer = new_buffer();
+	size_t estimated_buffer_size = sizeof(p_node_t) * graph->num_nodes + sizeof(p_edge_t) * graph->num_edges;
 
-	serializeNode(node, k, 0, buffer);
+	printf("estimated_size: %d\n", estimated_buffer_size);
 
-	trim_buffer_size(buffer);
+	struct buffer *buffer = new_buffer(estimated_buffer_size);
+
+	serializeNode(graph->root, hop_count, 0, buffer);
 
 	void* serialized = buffer->data;
-	*length = buffer->offset;
+	*bytes = buffer->offset;
 
 	delete_buffer(buffer);
 
@@ -47,6 +49,8 @@ void* serialize(const p_node_t *node, uint16_t k, size_t *length)
  */
 void serializeNode(const p_node_t* node, uint16_t k, uint16_t i, struct buffer *buffer)
 {
+	printf("buffer state: %p, %d, %d\n", buffer->data, buffer->offset, buffer->size);
+
 	//copy the node into the buffer and move the offset forward according to the size of the struct
 	reserve_space(buffer, sizeof(p_node_t));
 	memcpy(buffer->data + buffer->offset, node, sizeof(p_node_t));
@@ -80,6 +84,8 @@ void serializeNode(const p_node_t* node, uint16_t k, uint16_t i, struct buffer *
  */
 void serializeEdge(const p_edge_t* edge, uint16_t k, uint16_t i, struct buffer *buffer)
 {
+	printf("buffer state: %p, %d, %d\n", buffer->data, buffer->offset, buffer->size);
+
 	//copy the edge to the currentPointer address and move the pointer forward according to the size of the struct
 	reserve_space(buffer, sizeof(p_edge_t));
 	memcpy(buffer->data + buffer->offset, edge, sizeof(p_edge_t));

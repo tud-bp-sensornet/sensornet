@@ -6,8 +6,9 @@
 #include "graph.h"
 #include "serialize.h"
 
-p_node_t* test_graph(uint16_t neighbors, uint16_t* bytes)
+p_graph_t* test_graph(uint16_t neighbors, uint16_t* bytes)
 {
+	p_graph_t* graph = malloc(sizeof *graph);
 	p_node_t* root = malloc(sizeof *root);
 
 	p_edge_t** pivot = &(root->edges);
@@ -27,15 +28,19 @@ p_node_t* test_graph(uint16_t neighbors, uint16_t* bytes)
 		pivot = &(edge->next);
 	}
 
-	*bytes = sizeof(p_node_t) + sizeof(p_node_t) * neighbors + sizeof(p_edge_t) * neighbors;
+	graph->root = root;
+	graph->num_edges = neighbors;
+	graph->num_nodes = neighbors + 1;
 
-	return root;
+	*bytes = graph->num_edges * sizeof(p_edge_t) + graph->num_nodes * sizeof(p_node_t);
+
+	return graph;
 }
 
-void free_test_graph(p_node_t* root)
+void free_test_graph(p_graph_t* graph)
 {
 	// free all neighbors first
-	p_edge_t* pivot = root->edges;
+	p_edge_t* pivot = graph->root->edges;
 	while (pivot != NULL)
 	{
 		p_edge_t* next = pivot->next;
@@ -46,7 +51,8 @@ void free_test_graph(p_node_t* root)
 		pivot = next;
 	}
 
-	free(root);
+	free(graph->root);
+	free(graph);
 }
 
 PROCESS(stress_test, "Stress test process");
@@ -61,7 +67,7 @@ PROCESS_THREAD(stress_test, ev, data)
 
 	for (neighbors = 0; neighbors < 1000; neighbors += 1)
 	{
-		p_node_t* graph = test_graph(neighbors, &bytes);
+		p_graph_t* graph = test_graph(neighbors, &bytes);
 
 		printf("Allocated graph with %d neighbors (%d bytes)\n", neighbors, bytes);
 
@@ -69,12 +75,17 @@ PROCESS_THREAD(stress_test, ev, data)
 		void* serialized = serialize(graph, 42, &sbytes);
 		printf("Serialized graph (%d bytes)\n", (int)sbytes);
 
+		deserialize(serialized);
+		printf("Deserialized graph\n");
+
 		free(serialized);
 		printf("Free'd serialization\n");
 
 		free_test_graph(graph);
 
-		printf("Free'd graph with %d neighbors (%d bytes)\n", neighbors, bytes);
+		printf("Free'd graph\n");
+
+		printf("----------------------------------------\n");
 	}
 
 	PROCESS_END();

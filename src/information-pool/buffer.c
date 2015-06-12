@@ -5,11 +5,17 @@
 /**
  * Creates and initializes a new buffer.
  */
-struct buffer* new_buffer()
+struct buffer* new_buffer(size_t initial_size)
 {
 	struct buffer *buf = malloc(sizeof *buf);
-	buf->data = malloc(INITIAL_BUFFER_SIZE);
-	buf->size = INITIAL_BUFFER_SIZE;
+	buf->data = malloc(initial_size);
+
+	if (buf == NULL || buf->data == NULL)
+	{
+		printf("NEW_BUFFER: allocating buffer of size %d failed!\n", initial_size);
+	}
+
+	buf->size = initial_size;
 	buf->offset = 0;
 
 	return buf;
@@ -30,7 +36,12 @@ void* shitty_realloc(void* oldptr, size_t oldsize, size_t newsize)
 {
 	void* newblock = malloc(newsize);
 
-	printf("REALLOC: resizing from %d to %d, cpy %p --> %p ...\n", (int)oldsize, (int)newsize, oldptr, newblock);
+	if (newblock == NULL)
+	{
+		printf("SHITTY_REALLOC: allocting memory block of size %d failed!\n", newsize);
+	}
+
+	printf("SHITTY_REALLOC: resizing from %d to %d, copy %p --> %p ...\n", (int)oldsize, (int)newsize, oldptr, newblock);
 
 	memcpy(newblock, oldptr, (newsize < oldsize) ? newsize : oldsize);
 	free(oldptr);

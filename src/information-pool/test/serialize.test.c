@@ -16,18 +16,23 @@ UNIT_TEST_REGISTER(seriDeseri_3_hop, "Serialize and deserialize tree 3 hop");
  */
 UNIT_TEST(seriDeseri_root)
 {
-	p_node_t *root, *deserialized;
+	p_graph_t *graph;
+	p_node_t* root;
 	size_t length;
 
 	UNIT_TEST_BEGIN();
 
 	root = malloc(sizeof *root);
 	root->addr.u8[0] = 0x01;
-	root->last_seen = 0;
 	root->edges = NULL;
 
-	void *serialized = serialize(root, 99, &length);
-	deserialized = deserialize(serialized);
+	graph = malloc(sizeof *graph);
+	graph->root = root;
+	graph->num_edges = 0;
+	graph->num_nodes = 1;
+
+	void* serialized = serialize(graph, 99, &length);
+	p_node_t* deserialized = deserialize(serialized);
 
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&(root->addr), &(deserialized->addr)) != 0);
 	UNIT_TEST_ASSERT(root->edges == deserialized->edges);
@@ -39,10 +44,13 @@ UNIT_TEST(seriDeseri_root)
 /**
  * Creates an example graph used for testing.
  */
-p_node_t* test_graph()
+p_graph_t* test_graph()
 {
+	p_graph_t *g;
 	p_node_t *n1, *n2, *n3, *n4;
 	p_edge_t *e1, *e2, *e3;
+
+	g = malloc(sizeof *g);
 
 	n1 = malloc(sizeof *n1);
 	n2 = malloc(sizeof *n2);
@@ -72,7 +80,11 @@ p_node_t* test_graph()
 	n3->edges = NULL;
 	n4->edges = NULL;
 
-	return n1;
+	g->root = n1;
+	g->num_nodes = 4;
+	g->num_edges = 3;
+
+	return g;
 }
 
 /**
@@ -82,7 +94,7 @@ p_node_t* test_graph()
  */
 UNIT_TEST(seriDeseri_0_hop)
 {
-	p_node_t* testGraph = test_graph();
+	p_graph_t* testGraph = test_graph();
 	size_t length;
 
 	UNIT_TEST_BEGIN();
@@ -91,7 +103,7 @@ UNIT_TEST(seriDeseri_0_hop)
 	p_node_t* deserialized = deserialize(serialized);
 
 	//Assert correct deserialisation
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->addr), &(deserialized->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->addr), &(deserialized->addr)) != 0);
 	UNIT_TEST_ASSERT(deserialized->edges == NULL);
 
 	UNIT_TEST_ASSERT(length == sizeof(p_node_t));
@@ -106,7 +118,7 @@ UNIT_TEST(seriDeseri_0_hop)
  */
 UNIT_TEST(seriDeseri_1_hop)
 {
-	p_node_t* testGraph = test_graph();
+	p_graph_t* testGraph = test_graph();
 	size_t length;
 
 	UNIT_TEST_BEGIN();
@@ -115,9 +127,9 @@ UNIT_TEST(seriDeseri_1_hop)
 	p_node_t* deserialized = deserialize(serialized);
 
 	//Assert correct deserialisation
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->addr), &(deserialized->addr)) != 0);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->edges->drain->addr), &(deserialized->edges->drain->addr)) != 0);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->edges->next->drain->addr), &(deserialized->edges->next->drain->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->addr), &(deserialized->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->addr), &(deserialized->edges->drain->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->next->drain->addr), &(deserialized->edges->next->drain->addr)) != 0);
 	UNIT_TEST_ASSERT(deserialized->edges->drain->edges == NULL);
 	UNIT_TEST_ASSERT(deserialized->edges->next->drain->edges == NULL);
 	UNIT_TEST_ASSERT(deserialized->edges->next->next == NULL);
@@ -134,7 +146,7 @@ UNIT_TEST(seriDeseri_1_hop)
  */
 UNIT_TEST(seriDeseri_2_hop)
 {
-	p_node_t* testGraph = test_graph();
+	p_graph_t* testGraph = test_graph();
 	size_t length;
 
 	UNIT_TEST_BEGIN();
@@ -143,10 +155,10 @@ UNIT_TEST(seriDeseri_2_hop)
 	p_node_t* deserialized = deserialize(serialized);
 
 	//Assert correct deserialisation
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->addr), &(deserialized->addr)) != 0);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->edges->drain->addr), &(deserialized->edges->drain->addr)) != 0);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->edges->next->drain->addr), &(deserialized->edges->next->drain->addr)) != 0);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->edges->drain->edges->drain->addr), &(deserialized->edges->drain->edges->drain->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->addr), &(deserialized->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->addr), &(deserialized->edges->drain->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->next->drain->addr), &(deserialized->edges->next->drain->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->edges->drain->addr), &(deserialized->edges->drain->edges->drain->addr)) != 0);
 	UNIT_TEST_ASSERT(deserialized->edges->next->drain->edges == NULL);
 	UNIT_TEST_ASSERT(deserialized->edges->next->next == NULL);
 	UNIT_TEST_ASSERT(deserialized->edges->drain->edges->next == NULL);
@@ -164,7 +176,7 @@ UNIT_TEST(seriDeseri_2_hop)
  */
 UNIT_TEST(seriDeseri_3_hop)
 {
-	p_node_t* testGraph = test_graph();
+	p_graph_t* testGraph = test_graph();
 	size_t length;
 
 	UNIT_TEST_BEGIN();
@@ -173,10 +185,10 @@ UNIT_TEST(seriDeseri_3_hop)
 	p_node_t* deserialized = deserialize(serialized);
 
 	//Assert correct deserialisation
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->addr), &(deserialized->addr)) != 0);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->edges->drain->addr), &(deserialized->edges->drain->addr)) != 0);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->edges->next->drain->addr), &(deserialized->edges->next->drain->addr)) != 0);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->edges->drain->edges->drain->addr), &(deserialized->edges->drain->edges->drain->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->addr), &(deserialized->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->addr), &(deserialized->edges->drain->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->next->drain->addr), &(deserialized->edges->next->drain->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->edges->drain->addr), &(deserialized->edges->drain->edges->drain->addr)) != 0);
 	UNIT_TEST_ASSERT(deserialized->edges->next->drain->edges == NULL);
 	UNIT_TEST_ASSERT(deserialized->edges->next->next == NULL);
 	UNIT_TEST_ASSERT(deserialized->edges->drain->edges->next == NULL);
