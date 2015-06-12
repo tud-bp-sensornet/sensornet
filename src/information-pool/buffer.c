@@ -12,7 +12,7 @@ struct buffer* new_buffer(size_t initial_size)
 
 	if (buf == NULL || buf->data == NULL)
 	{
-		printf("NEW_BUFFER: allocating buffer of size %d failed!\n", initial_size);
+		printf("NEW_BUFFER: allocating buffer of size %d failed!\n", (int)initial_size);
 	}
 
 	buf->size = initial_size;
@@ -38,7 +38,7 @@ void* shitty_realloc(void* oldptr, size_t oldsize, size_t newsize)
 
 	if (newblock == NULL)
 	{
-		printf("SHITTY_REALLOC: allocting memory block of size %d failed!\n", newsize);
+		printf("SHITTY_REALLOC: allocting memory block of size %d failed!\n", (int)newsize);
 	}
 
 	printf("SHITTY_REALLOC: resizing from %d to %d, copy %p --> %p ...\n", (int)oldsize, (int)newsize, oldptr, newblock);
