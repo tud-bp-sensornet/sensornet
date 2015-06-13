@@ -26,7 +26,7 @@ struct bulk_broadcast_conn;
 
 struct bulk_broadcast_callbacks {
   void (* write_chunk)(struct bulk_broadcast_conn *c, int offset, int flag, void *data, int len, const rimeaddr_t *sender);
-  int (* read_chunk)(struct bulk_broadcast_conn *c, int offset, void *to, int maxsize);
+  int (* read_chunk)(struct bulk_broadcast_conn *c, int offset, void **to, int maxsize);
 };
 
 struct bulk_broadcast_hdrpacket {
@@ -34,14 +34,10 @@ struct bulk_broadcast_hdrpacket {
   uint8_t datalen;
 };
 
-struct bulk_broadcast_datapacket {
-  void* data;
-};
-
 struct bulk_broadcast_conn {
   struct abc_conn c;
   const struct bulk_broadcast_callbacks *cb;
-  struct bulk_broadcast_datapacket current;
+  void** data;
   struct bulk_broadcast_hdrpacket currenthdr;
 };
 /*---------------------------------------------------------------------------*/

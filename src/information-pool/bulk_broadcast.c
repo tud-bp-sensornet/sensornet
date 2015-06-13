@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "graph.h"
 
 #include "bulk_broadcast.h"
 
@@ -31,8 +32,8 @@ read_new_datapacket(struct bulk_broadcast_conn *c)
 {
 	int len = 0;
 
-	if (c->cb->read_chunk) {
-		len = c->cb->read_chunk(c, c->currenthdr.chunk * BULK_BROADCAST_DATASIZE, c->current.data, BULK_BROADCAST_DATASIZE);
+	if (c->cb->read_chunk) { //TODO when c->data returns correct pointer broadcast will not send, on wrong pointer sending is no problem
+		len = c->cb->read_chunk(c, c->currenthdr.chunk * BULK_BROADCAST_DATASIZE, c->data, BULK_BROADCAST_DATASIZE);
 	}
 	if (len > 0) {
 		c->currenthdr.datalen = len;
@@ -76,8 +77,8 @@ sent_by_abc(struct abc_conn *bc, int status, int num_tx)
 		packetbuf_set_datalen((uint16_t)(c->currenthdr.datalen + sizeof(struct bulk_broadcast_hdrpacket)));
 		packetbuf_set_addr(PACKETBUF_ADDR_SENDER, &rimeaddr_node_addr);
 		memcpy(packetbuf_dataptr(), (void*)&c->currenthdr, (size_t)sizeof(struct bulk_broadcast_hdrpacket));
-		memcpy(packetbuf_dataptr() + sizeof(struct bulk_broadcast_hdrpacket), c->current.data, c->currenthdr.datalen);
-		return abc_send(&c->c);
+		memcpy(packetbuf_dataptr() + sizeof(struct bulk_broadcast_hdrpacket), *(c->data), c->currenthdr.datalen);
+		abc_send(&c->c);
 	}
 }
 /*---------------------------------------------------------------------------*/
@@ -106,10 +107,11 @@ bulk_broadcast_send(struct bulk_broadcast_conn *c)
 	read_new_datapacket(c);
 	//Load data into packetbuf
 	packetbuf_clear();
+	printf("%d %d\n", ((p_node_t*)*(c->data))->addr.u8[0], ((p_node_t*)*(c->data))->addr.u8[1]);
 	packetbuf_set_datalen((uint16_t)(c->currenthdr.datalen + sizeof(struct bulk_broadcast_hdrpacket)));
 	packetbuf_set_addr(PACKETBUF_ADDR_SENDER, &rimeaddr_node_addr);
 	memcpy(packetbuf_dataptr(), (void*)&c->currenthdr, (size_t)sizeof(struct bulk_broadcast_hdrpacket));
-	memcpy(packetbuf_dataptr() + sizeof(struct bulk_broadcast_hdrpacket), c->current.data, c->currenthdr.datalen);
+	memcpy(packetbuf_dataptr() + sizeof(struct bulk_broadcast_hdrpacket), *(c->data), c->currenthdr.datalen);
 	return abc_send(&c->c);
 }
 /*---------------------------------------------------------------------------*/
