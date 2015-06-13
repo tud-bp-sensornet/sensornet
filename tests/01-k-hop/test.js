@@ -4,7 +4,7 @@
  * Testfile that checks the correct working of the
  * k-hop algorithm in the 01-2hop-test.csc
  * Nodes have to send messages in the form of
- * "Testcase:Node:id,hop,posX,posY"
+ * "Testcase:Node:id,hop"
  * "Testcase:Edge:id,id"
  * after 21 seconds passed
  * 
@@ -29,19 +29,6 @@ function arrayContains(array, value) {
   return array.indexOf(value) > -1;
 }
 
-/* Calculate distance between 2 nodes with the IDs specified */
-function calcDistance(id1, id2) {
-    for(var i = 0; i < moteAmount; i++){
-        if(allmotes[i].getID() == id1){
-            mote1 = allmotes[i];
-           }
-        if(allmotes[i].getID() == id2){
-            mote2 = allmotes[i];
-           }
-	}
-    return mote1.getInterfaces().getPosition().getDistanceTo(mote2);
-}
-
 /* Wait until node has booted */
 WAIT_UNTIL(msg.startsWith('Starting'));
 
@@ -62,8 +49,12 @@ GENERATE_MSG(20000, "endloop");
 /* Read Testcase messages */
 while (!msg.equals("endloop")) {
   YIELD();
+  //only save Testcase: messages
   if(msg.substr(0,9).equals("Testcase:")){
-    moteDict[id].push(msg.substr(10,msg.length()-9));
+      //only save each message once
+      if(arrayContains(moteDict[id], msg.substr(9,msg.length()-9)) == false){
+            moteDict[id].push(msg.substr(9,msg.length()-9));
+        }
   }
 }
 
@@ -71,70 +62,60 @@ while (!msg.equals("endloop")) {
 
 testSuccess = 
     /* Node 1 */
-    arrayContains(moteDict[1], "Node:1,0,50,0") &&
+    arrayContains(moteDict[1], "Node:1,0") &&
     arrayContains(moteDict[1], "Edge:1,2") &&
-    arrayContains(moteDict[1], "Node:2,1,90,0") &&
+    arrayContains(moteDict[1], "Node:2,1") &&
     arrayContains(moteDict[1], "Edge:2,3") &&
     arrayContains(moteDict[1], "Edge:2,1") &&
-    arrayContains(moteDict[1], "Node:3,2,130,0") &&
+    arrayContains(moteDict[1], "Node:3,2") &&
+    (moteDict[1].length == 6) &&
     /* Node 2 */
-    arrayContains(moteDict[2], "Node:2,0,90,0") &&
+    arrayContains(moteDict[2], "Node:2,0") &&
     arrayContains(moteDict[2], "Edge:2,1") &&
     arrayContains(moteDict[2], "Edge:2,3") &&
-    arrayContains(moteDict[2], "Node:1,1,50,0") &&
+    arrayContains(moteDict[2], "Node:1,1") &&
     arrayContains(moteDict[2], "Edge:1,2") &&
-    arrayContains(moteDict[2], "Node:3,1,130,0") &&
+    arrayContains(moteDict[2], "Node:3,1") &&
     arrayContains(moteDict[2], "Edge:3,2") &&
     arrayContains(moteDict[2], "Edge:3,4") &&
     arrayContains(moteDict[2], "Edge:3,5") &&
-    arrayContains(moteDict[2], "Node:4,2,130,40") &&
-    arrayContains(moteDict[2], "Node:5,2,130,-40") &&
+    arrayContains(moteDict[2], "Node:4,2") &&
+    arrayContains(moteDict[2], "Node:5,2") &&
+    (moteDict[2].length == 11) &&
     /* Node 3 */
-    arrayContains(moteDict[3], "Node:3,0,130,0") &&
+    arrayContains(moteDict[3], "Node:3,0") &&
     arrayContains(moteDict[3], "Edge:3,2") &&
     arrayContains(moteDict[3], "Edge:3,4") &&
     arrayContains(moteDict[3], "Edge:3,5") &&
-    arrayContains(moteDict[3], "Node:2,1,90,0") &&
+    arrayContains(moteDict[3], "Node:2,1") &&
     arrayContains(moteDict[3], "Edge:2,1") &&
-    arrayContains(moteDict[3], "Node:4,1,130,40") &&
+    arrayContains(moteDict[3], "Node:4,1") &&
     arrayContains(moteDict[3], "Edge:4,3") &&
-    arrayContains(moteDict[3], "Node:5,1,130,-40") &&
+    arrayContains(moteDict[3], "Node:5,1") &&
     arrayContains(moteDict[3], "Edge:5,3") &&
-    arrayContains(moteDict[3], "Node:1,2,50,0") &&
+    arrayContains(moteDict[3], "Node:1,2") &&
+    (moteDict[3].length == 11) &&
     /* Node 4 */
-    arrayContains(moteDict[4], "Node:4,0,130,40") &&
+    arrayContains(moteDict[4], "Node:4,0") &&
     arrayContains(moteDict[4], "Edge:4,3") &&
-    arrayContains(moteDict[4], "Node:3,1,130,0") &&
+    arrayContains(moteDict[4], "Node:3,1") &&
     arrayContains(moteDict[4], "Edge:3,2") &&
     arrayContains(moteDict[4], "Edge:3,4") &&
     arrayContains(moteDict[4], "Edge:3,5") &&
-    arrayContains(moteDict[4], "Node:2,2,90,0") &&
-    arrayContains(moteDict[4], "Node:5,2,130,-40") &&
+    arrayContains(moteDict[4], "Node:2,2") &&
+    arrayContains(moteDict[4], "Node:5,2") &&
+    (moteDict[4].length == 8) &&
     /* Node 5 */
-    arrayContains(moteDict[5], "Node:5,0,130,-40") &&
+    arrayContains(moteDict[5], "Node:5,0") &&
     arrayContains(moteDict[5], "Edge:5,3") &&
-    arrayContains(moteDict[5], "Node:3,1,130,0") &&
+    arrayContains(moteDict[5], "Node:3,1") &&
     arrayContains(moteDict[5], "Edge:3,2") &&
     arrayContains(moteDict[5], "Edge:3,4") &&
     arrayContains(moteDict[5], "Edge:3,5") &&
-    arrayContains(moteDict[5], "Node:2,2,90,0") &&
-    arrayContains(moteDict[5], "Node:4,2,130,40")
+    arrayContains(moteDict[5], "Node:2,2") &&
+    arrayContains(moteDict[5], "Node:4,2") &&
+    (moteDict[1].length == 8)
     ;
-
-/* iterate nodes */
-//for(var i = 1; i <= moteAmount; i++){
-//    /* iterate messages */
-//    for(var j = 0; j < moteDict[i].length; j++){
-//        /* iterate other nodes */
-//        for(var k = 1; k <= moteAmount; k++){
-//            /* check if the other mode is a neighbor (transmission range is 50) */
-//            if(i != k && calcDistance(i,k) < 50){
-//                   arrayContains(moteDict[k], moteDict[i][j]);
-//                }
-//        }
-//    }
-// }
-/* Was the test a success?*/
 
 if(testSuccess){
     log.testOK();
