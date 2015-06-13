@@ -1,165 +1,155 @@
 #include "contiki.h"
 #include "net/rime.h"
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "serialize.h"
 #include "graph.h"
+#include "buffer.h"
 
-void* serializeNode(p_node_t * p_node, unsigned short k, unsigned short current_k, void* currentPointer, void* startPointer, uint16_t* countNode, uint16_t* countEdge);
-void* serializeEdge(p_edge_t * p_edge, unsigned short k, unsigned short current_k, void* currentPointer, void* startPointer, uint16_t* countNode, uint16_t* countEdge);
-p_node_t* deserializeNode(void* startPointer, void* currentPointer);
-p_edge_t* deserializeEdge(void* startPointer, void* currentPointer);
+void serializeNode(const p_node_t* node, uint16_t k, uint16_t i, struct buffer* buffer);
+void serializeEdge(const p_edge_t* edge, uint16_t k, uint16_t i, struct buffer* buffer);
+
+p_node_t* deserializeNode(void* basePointer, void* currentPointer);
+p_edge_t* deserializeEdge(void* basePointer, void* currentPointer);
 
 /**
- * serializes the k-view of the known tree
- * p_node: the pointer to the p_node of the node itself
+ * Serializes the k-view of a graph.
+ * node: the pointer to the root node of the graph
  * hop_count: how deep the tree should be crawled
- * maxNodes: the currently known amount of nodes
- * maxEdges: the currently known amount of edges
- * countNode: uint16_t* which will point to the counted amount of nodes in the serialized k depth of the graph
- * countEdge: uint16_t* which will point to the counted amount of edges in the serialized k depth of the graph
+ * bytes: points to a value where the length of the serialized data will be stored (in bytes)
  * return: void* to the start of the allocated memory
  */
-void* serialize(p_graph_t* graph, uint8_t hop_count, size_t* bytes, uint8_t* num_nodes, uint8_t* num_edges) {
+void* serialize(p_graph_t* graph, uint8_t hop_count, size_t* bytes)
+{
+	size_t estimated_buffer_size = sizeof(p_node_t) * graph->num_nodes + sizeof(p_edge_t) * graph->num_edges;
 
-	//allocate enough memory to fit in all information the node knows
-	void* startPointer = malloc(sizeof(p_node_t)*maxNodes+sizeof(p_edge_t)*maxEdges);
-	void* currentPointer = startPointer;
+	struct buffer *buffer = new_buffer(estimated_buffer_size);
 
-	//start counting from 0
-	*countNode = 0;
-	*countEdge = 0;
+	serializeNode(graph->root, hop_count, 0, buffer);
 
-	currentPointer = serializeNode(p_node, hop_count, 0, currentPointer, startPointer, countNode, countEdge);
+	void* serialized = buffer->data;
+	*bytes = buffer->offset;
 
-	return startPointer;
+	delete_buffer(buffer);
+
+	return serialized;
 }
 
 /**
- * copys p_node into the buffer at the position of currentPointer and calls crawlEdge, which in turn calls crawlNode
- * p_node: the edge to be copied into the buffer
+ * copies node into the buffer at the current offset and calls serializeEdge, which in turn calls serializeNode
+ * node: the edge to be copied into the buffer
  * k: how deep the tree should be crawled
- * current_k: the distance of p_node to the start node
- * currentPointer: void pointer that keeps track of the current place inside the buffer in which information will be written
- * startPointer: the beginning of buffer. used for calculating relativ position inside the buffer
- * countNode: uint16_t* which will point to the counted amount of nodes in the serialized k depth of the graph
- * countEdge: uint16_t* which will point to the counted amount of edges in the serialized k depth of the graph
- * return: void* to the start of the still free space of the allocated space in serialize
+ * i: the distance of node to the start node (current depth)
+ * buffer: buffer used for storing the serialized data
  */
-void* serializeNode(p_node_t * p_node, unsigned short k, unsigned short current_k, void* currentPointer, void* startPointer, uint16_t* countNode, uint16_t* countEdge){
-
-	//copy the node to the currentPointer address and move the pointer forward according to the size of the struct
-	*((p_node_t*)currentPointer) = *(p_node);
-	void* tempptr = currentPointer;
-	currentPointer = currentPointer+sizeof(p_node_t);
-	*countNode = (*countNode)+1;
+void serializeNode(const p_node_t* node, uint16_t k, uint16_t i, struct buffer *buffer)
+{
+	//copy the node into the buffer and move the offset forward according to the size of the struct
+	reserve_space(buffer, sizeof(p_node_t));
+	memcpy(buffer->data + buffer->offset, node, sizeof(p_node_t));
+	p_node_t* currentNode = buffer->data + buffer->offset;
+	buffer->offset += sizeof(p_node_t);
 
 	//end the tree if already deep enough
-	if(current_k < k){
+	if(i < k)
+	{
 		//stop if it has no outgoing edges
-		if(p_node->edges != NULL){
+		if(node->edges != NULL)
+		{
 			//set the relative pointer for edges and go further into the tree with k+1
-			((p_node_t*)tempptr)->edges = (p_edge_t*)(currentPointer-startPointer);
-			currentPointer = serializeEdge(p_node->edges, k, current_k+1, currentPointer, startPointer, countNode, countEdge);
+			currentNode->edges = (p_edge_t*)(buffer->offset);
+			serializeEdge(node->edges, k, i+1, buffer);
 		}
-	} else {
-		//don't send the edges of the k-level nodes or deserialization doesn't work properly
-		((p_node_t*)tempptr)->edges = NULL;
 	}
-
-	return currentPointer;
+	else
+	{
+		//don't send the edges of the k-level nodes or deserialization doesn't work properly
+		currentNode->edges = NULL;
+	}
 }
 
 /*
- * copys p_edge into the buffer at the position of currentPointer and calls crawlNode, which in turn calls crawlEdge
- * p_edge: the edge to be copied into the buffer
+ * copies edge into the buffer at the current offset and calls serializeNode, which in turn calls serializeEdge
+ * edge: the edge to be copied into the buffer
  * k: how deep the tree should be crawled
- * current_k: the distance of p_node to the start node
- * currentPointer: void pointer that keeps track of the current place inside the buffer in which information will be written
- * startPointer: the beginning of buffer. used for calculating relativ position inside the buffer
- * countNode: uint16_t* which will point to the counted amount of nodes in the serialized k depth of the graph
- * countEdge: uint16_t* which will point to the counted amount of edges in the serialized k depth of the graph
- * return: void* to the start of the still free space of the allocated space in serialize
+ * i: the distance of node to the start node (current depth)
+ * buffer: buffer used for storing the serialized data
  */
-void* serializeEdge(p_edge_t * p_edge, unsigned short k, unsigned short current_k, void* currentPointer, void* startPointer, uint16_t* countNode, uint16_t* countEdge){
-
+void serializeEdge(const p_edge_t* edge, uint16_t k, uint16_t i, struct buffer *buffer)
+{
 	//copy the edge to the currentPointer address and move the pointer forward according to the size of the struct
-	*((p_edge_t*)currentPointer) = *(p_edge);
-	void* tempptr = currentPointer;
-	currentPointer = currentPointer+sizeof(p_edge_t);
-	*countEdge = (*countEdge)+1;
+	reserve_space(buffer, sizeof(p_edge_t));
+	memcpy(buffer->data + buffer->offset, edge, sizeof(p_edge_t));
+	p_edge_t* currentEdge = buffer->data + buffer->offset;
+	buffer->offset += sizeof(p_edge_t);
 
 	//first go over every edge of the node until the list is empty
-	if(p_edge->next != NULL){
-		((p_edge_t*)tempptr)->next = (p_edge_t*)(currentPointer-startPointer);
-		currentPointer = serializeEdge(p_edge->next, k, current_k, currentPointer, startPointer, countNode, countEdge);
+	if(edge->next != NULL)
+	{
+		currentEdge->next = (p_edge_t*)(buffer->offset);
+		serializeEdge(edge->next, k, i, buffer);
 	}
 
 	//go into the drain and continue crawling
-	((p_edge_t*)tempptr)->drain = (p_node_t*)(currentPointer-startPointer);
-	currentPointer = serializeNode(p_edge->drain, k , current_k, currentPointer, startPointer, countNode, countEdge);
-
-	return currentPointer;
+	currentEdge->drain = (p_node_t*)(buffer->offset);
+	serializeNode(edge->drain, k , i, buffer);
 }
 
 /**
- * deserializes a correctly serialized graph
- * startPointer: pointer to the start of the serialized data
+ * Deserializes a correctly serialized graph.
+ * basePointer: pointer to the start of the serialized data
  * return: the root of the deserialized tree
  */
-p_node_t* deserialize(void* startPointer){
-
-	void* currentPointer = startPointer;
-
-	p_node_t *this_node;
-	this_node = deserializeNode(startPointer, currentPointer);
-
-	return this_node;
+p_node_t* deserialize(void* basePointer)
+{
+	return deserializeNode(basePointer, basePointer);
 }
 
 /**
- * deserializes the current Node and calls deserializeEdge, which calls deserializeNode again
- * startPointer: the pointer to the beginning of the serialized graph
+ * deserializes the current node and calls deserializeEdge, which calls deserializeNode again
+ * basePointer: the pointer to the beginning of the serialized graph
  * currentPointer: the pointer to the position of the current node inside the serialized graph
  * return: the current node inside the tree
  */
-p_node_t* deserializeNode(void* startPointer, void* currentPointer){
-
+p_node_t* deserializeNode(void* basePointer, void* currentPointer)
+{
 	//cast the pointer to this node
-	p_node_t *this_node;
-	this_node = (p_node_t*)currentPointer;
+	p_node_t* currentNode = currentPointer;
 
 	//go deeper into the tree if an edge exists (very error prone if the packet is damaged)
-	if(this_node->edges != NULL){
-		currentPointer = (void*)startPointer+(uint16_t)(this_node)->edges;
-		this_node->edges = deserializeEdge(startPointer, currentPointer);
+	if(currentNode->edges != NULL)
+	{
+		currentPointer = basePointer + (uintptr_t)(currentNode->edges);
+		currentNode->edges = deserializeEdge(basePointer, currentPointer);
 	}
 
-	return this_node;
+	return currentNode;
 }
 
 /**
  * deserializes the current Edge and calls deserializeNode, which calls deserializeEdge again
- * startPointer: the pointer to the beginning of the serialized graph
+ * basePointer: the pointer to the beginning of the serialized graph
  * currentPointer: the pointer to the position of the current edge inside the serialized graph
  * return: the current edge inside the tree
  */
-p_edge_t* deserializeEdge(void* startPointer, void* currentPointer){
-
+p_edge_t* deserializeEdge(void* basePointer, void* currentPointer)
+{
 	//cast the pointer to this edge
-	p_edge_t *this_edge;
-	this_edge = (p_edge_t*)currentPointer;
+	p_edge_t* currentEdge = currentPointer;
 
 	//go deeper into the tree if an edge exists (very error prone if the packet is damaged)
-	if(this_edge->next != NULL){
-	currentPointer = (void*)startPointer+(uint16_t)(this_edge)->next;
-	this_edge->next = deserializeEdge(startPointer, currentPointer);
+	if(currentEdge->next != NULL)
+	{
+		currentPointer = basePointer + (uintptr_t)(currentEdge->next);
+		currentEdge->next = deserializeEdge(basePointer, currentPointer);
 	}
 
 	//go deeper into the tree
-	currentPointer = (void*)startPointer+(uint16_t)(this_edge)->drain;
-	this_edge->drain = deserializeNode(startPointer, currentPointer);
+	currentPointer = basePointer + (uintptr_t)(currentEdge->drain);
+	currentEdge->drain = deserializeNode(basePointer, currentPointer);
 
-	return this_edge;
+	return currentEdge;
 }
