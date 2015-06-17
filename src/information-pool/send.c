@@ -1,10 +1,3 @@
-/**
- * \file
- *         Testing the bulk broadcast layer in Rime..
- * \author
- *         tud-bp-sensornet
- */
-
 #include "contiki.h"
 #include "net/rime.h"
 #include "random.h"
@@ -86,14 +79,14 @@ PROCESS_THREAD(example_broadcast_process, ev, data)
 
 	PROCESS_BEGIN();
 
-	bulk_broadcast_open(&bulk_broadcast, 129, &bulk_broadcast_call);
+	bulk_broadcast_open(&bulk_broadcast, 128, &bulk_broadcast_call);
 
 	init_mem();
 
 	//TODO: Worst case, use serialize retuned size
-	recv_memory = (void*) malloc (sizeof(p_node_t) * MAX_NODES + sizeof(p_edge_t) * MAX_EDGES);
+	recv_memory = malloc(sizeof(p_node_t) * MAX_NODES + sizeof(p_edge_t) * MAX_EDGES);
 
-	graph = (p_graph_t*) malloc (sizeof(p_graph_t));
+	graph = malloc(sizeof *graph);
 	
 	//We are root
 	graph->num_edges = 0;
@@ -104,20 +97,20 @@ PROCESS_THREAD(example_broadcast_process, ev, data)
 	
 	while (1) {
 
-		/* Delay 1-10 seconds */
-		etimer_set(&et, CLOCK_SECOND * 1 + random_rand() % (CLOCK_SECOND * 10));
+		/* Delay 10-20 seconds */
+		etimer_set(&et, CLOCK_SECOND * 10 + random_rand() % (CLOCK_SECOND * 20));
 
 		PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
 
 		//clear packet buffer
-		//packetbuf_clear ();
+		packetbuf_clear();
 
 		serializationptr = serialize(graph, K-1, &bytes);
 
 		PRINTF("Start sending size: %d edges: %d nodes: %d\n", bytes, graph->num_edges, graph->num_nodes);
 		
 		bulk_broadcast_send(&bulk_broadcast);
-
+		free(serializationptr);
 	}
 
 	PROCESS_END();
