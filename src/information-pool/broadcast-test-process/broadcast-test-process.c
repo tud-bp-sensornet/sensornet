@@ -6,28 +6,17 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "graph.h"
-#include "serialize.h"
-#include "memory.h"
 #include "bulk_broadcast.h"
-
-static p_graph_t* graph;
 
 void broadcast_received(const struct bulk_broadcast_conn *bc, const rimeaddr_t *sender, void *data, size_t length)
 {
 	int i;
-	printf("broadcast received (size %d): ", (int)length);
+	printf("broadcast received from %d.%d (size %d): ", sender->u8[0], sender->u8[1], (int)length);
 	for (i = 0; i < length; i++)
 	{
 		printf("%02X ", ((char*)data)[i] & 0xFF);
 	}
 	printf("\n");
-
-	p_node_t* foreign_root = deserialize(data);
-
-	printf("updating with foreign node, root: %d.%d\n", foreign_root->addr.u8[0], foreign_root->addr.u8[1]);
-
-	updateGraph(graph, foreign_root);
 
 	free(data);
 }
@@ -48,36 +37,26 @@ PROCESS_THREAD(example_broadcast_process, ev, data)
 	PROCESS_BEGIN();
 
 	bulk_broadcast_open(&bulk_broadcast, 128, &bulk_broadcast_call);
-
-	init_mem();
-
-	graph = malloc(sizeof *graph);
 	
-	//We are root
-	graph->num_edges = 0;
-	graph->num_nodes = 0;
-	graph->root = new_node(&(graph->num_nodes));
-	graph->root->addr = rimeaddr_node_addr;
-	graph->root->edges = NULL;
-	
-	while (1)
-	{
+	while (1) {
+
 		/* Delay 10-20 seconds */
 		etimer_set(&et, CLOCK_SECOND * 10 + random_rand() % (CLOCK_SECOND * 20));
 
 		PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
 
-		size_t bytes;
-		void* serialized = serialize(graph, K-1, &bytes);
+		size_t blocksize = 256;
+		void* big_block = malloc(blocksize);
+		int i;
+		for (i = 0; i < blocksize; i++)
+		{
+			*((char*)big_block + i) = i;
+		}
+		
+		bulk_broadcast_send(&bulk_broadcast, big_block, blocksize);
 
-		printf("Start sending size: %d, edges: %d, nodes: %d\n", bytes, graph->num_edges, graph->num_nodes);
-
-		bulk_broadcast_send(&bulk_broadcast, serialized, bytes);
-
-		free(serialized);
+		free(big_block);
 	}
 
 	PROCESS_END();
 }
-/*---------------------------------------------------------------------------*/
-/** @} */
