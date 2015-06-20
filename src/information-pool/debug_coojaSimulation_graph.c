@@ -2,6 +2,7 @@
 #include "net/rime.h"
 
 #include "graph.h"
+#include "debug_coojaSimulation_graph.h"
 
 void debug_printGraphNode(p_node_t* p_node, uint16_t i);
 void debug_printGraphEdge(p_node_t* source_node, p_edge_t* p_edge, uint16_t i);

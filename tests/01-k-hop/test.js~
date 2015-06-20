@@ -8,11 +8,9 @@
  * "Testcase:Edge:id,id"
  * after 21 seconds passed
  * 
- * Open 01-2hop-test.csc in a text editor and change
- * <source EXPORT="discard">[CONTIKI_DIR]/examples/rime/example-broadcast.c</source>
- * <commands EXPORT="discard">make example-broadcast.sky TARGET=sky</commands>
- * <firmware EXPORT="copy">[CONTIKI_DIR]/examples/rime/example-broadcast.sky</firmware>
- * to the path of the correct file
+ * To run the test with the simulation open Cooja and:
+ * File->Open simulation->Open and Reconfigure->Browse...
+ * Then choose which file should be compiled for the nodes
  */
 
 /* Make test automatically fail (timeout) after 120 simulated seconds */

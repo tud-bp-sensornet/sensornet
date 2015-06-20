@@ -7,7 +7,7 @@
   <project EXPORT="discard">[APPS_DIR]/collect-view</project>
   <project EXPORT="discard">[APPS_DIR]/powertracker</project>
   <simulation>
-    <title>01-2hop-test</title>
+    <title>01-3hop-test</title>
     <randomseed>123456</randomseed>
     <motedelay_us>1000000</motedelay_us>
     <radiomedium>
@@ -24,9 +24,9 @@
       se.sics.cooja.mspmote.SkyMoteType
       <identifier>sky1</identifier>
       <description>Sky Mote Type #sky1</description>
-      <source EXPORT="discard">[CONTIKI_DIR]/examples/rime/example-broadcast.c</source>
-      <commands EXPORT="discard">make example-broadcast.sky TARGET=sky</commands>
-      <firmware EXPORT="copy">[CONTIKI_DIR]/examples/rime/example-broadcast.sky</firmware>
+      <source EXPORT="discard">[CONFIG_DIR]/../../src/information-pool/send.c</source>
+      <commands EXPORT="discard">make send.sky TARGET=sky</commands>
+      <firmware EXPORT="copy">[CONFIG_DIR]/../../src/information-pool/send.sky</firmware>
       <moteinterface>se.sics.cooja.interfaces.Position</moteinterface>
       <moteinterface>se.sics.cooja.interfaces.RimeAddress</moteinterface>
       <moteinterface>se.sics.cooja.interfaces.IPAddress</moteinterface>
@@ -47,7 +47,7 @@
       <breakpoints />
       <interface_config>
         se.sics.cooja.interfaces.Position
-        <x>50.0</x>
+        <x>0.0</x>
         <y>0.0</y>
         <z>0.0</z>
       </interface_config>
@@ -61,7 +61,7 @@
       <breakpoints />
       <interface_config>
         se.sics.cooja.interfaces.Position
-        <x>90.0</x>
+        <x>30.0</x>
         <y>0.0</y>
         <z>0.0</z>
       </interface_config>
@@ -75,7 +75,7 @@
       <breakpoints />
       <interface_config>
         se.sics.cooja.interfaces.Position
-        <x>130.0</x>
+        <x>60.0</x>
         <y>0.0</y>
         <z>0.0</z>
       </interface_config>
@@ -89,8 +89,8 @@
       <breakpoints />
       <interface_config>
         se.sics.cooja.interfaces.Position
-        <x>130.0</x>
-        <y>40.0</y>
+        <x>60.0</x>
+        <y>30.0</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -103,8 +103,8 @@
       <breakpoints />
       <interface_config>
         se.sics.cooja.interfaces.Position
-        <x>130.0</x>
-        <y>-40.0</y>
+        <x>60.0</x>
+        <y>-30.0</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -117,8 +117,8 @@
       <breakpoints />
       <interface_config>
         se.sics.cooja.interfaces.Position
-        <x>170.0</x>
-        <y>-40.0</y>
+        <x>90.0</x>
+        <y>-30.0</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
@@ -143,10 +143,10 @@
       <skin>se.sics.cooja.plugins.skins.IDVisualizerSkin</skin>
       <skin>se.sics.cooja.plugins.skins.TrafficVisualizerSkin</skin>
       <skin>se.sics.cooja.plugins.skins.LogVisualizerSkin</skin>
-      <viewport>2.9393939393939394 0.0 0.0 2.9393939393939394 -129.33333333333334 173.0</viewport>
+      <viewport>2.9393939393939394 0.0 0.0 2.9393939393939394 76.66666666666663 166.0</viewport>
     </plugin_config>
     <width>400</width>
-    <z>2</z>
+    <z>3</z>
     <height>400</height>
     <location_x>1</location_x>
     <location_y>1</location_y>
@@ -159,7 +159,7 @@
       <coloring />
     </plugin_config>
     <width>1520</width>
-    <z>3</z>
+    <z>2</z>
     <height>240</height>
     <location_x>400</location_x>
     <location_y>160</location_y>
@@ -204,18 +204,18 @@
  * &#xD;
  * Testfile that checks the correct working of the&#xD;
  * k-hop algorithm in the 01-2hop-test.csc&#xD;
- * Nodes have to send messages in the form of&#xD;
+ * Nodes have to print their Graph in the form of&#xD;
  * "Testcase:Node:id,hop"&#xD;
  * "Testcase:Edge:id,id"&#xD;
- * after 21 seconds passed&#xD;
+ * after 5 minutes passed&#xD;
  * &#xD;
  * To run the test with the simulation open Cooja and:&#xD;
  * File-&gt;Open simulation-&gt;Open and Reconfigure-&gt;Browse...&#xD;
  * Then choose which file should be compiled for the nodes&#xD;
  */&#xD;
 &#xD;
-/* Make test automatically fail (timeout) after 120 simulated seconds */&#xD;
-TIMEOUT(120000); /* milliseconds. no action at timeout */&#xD;
+/* Make test automatically fail (timeout) after 600 simulated seconds */&#xD;
+TIMEOUT(600000); /* milliseconds. no action at timeout */&#xD;
 &#xD;
 /* Some variables */&#xD;
 moteDict = {};          //Associative Array that will hold messages of every node&#xD;
@@ -238,12 +238,12 @@ WAIT_UNTIL(msg.startsWith('Starting'));&#xD;
       moteDict[allmotes[i].getID()] = [];&#xD;
  }&#xD;
  &#xD;
-/* Wait 20 seconds (20000ms) to build network */&#xD;
-GENERATE_MSG(20000, "continue");&#xD;
+/* Wait 300 seconds (300000ms) to build network */&#xD;
+GENERATE_MSG(300000, "continue");&#xD;
 YIELD_THEN_WAIT_UNTIL(msg.equals("continue"));&#xD;
 &#xD;
 /* wait for building dict */&#xD;
-GENERATE_MSG(20000, "endloop");&#xD;
+GENERATE_MSG(40000, "endloop");&#xD;
 &#xD;
 /* Read Testcase messages */&#xD;
 while (!msg.equals("endloop")) {&#xD;
