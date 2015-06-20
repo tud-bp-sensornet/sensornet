@@ -113,11 +113,25 @@
       </interface_config>
       <motetype_identifier>sky1</motetype_identifier>
     </mote>
+    <mote>
+      <breakpoints />
+      <interface_config>
+        se.sics.cooja.interfaces.Position
+        <x>170.0</x>
+        <y>-40.0</y>
+        <z>0.0</z>
+      </interface_config>
+      <interface_config>
+        se.sics.cooja.mspmote.interfaces.MspMoteID
+        <id>6</id>
+      </interface_config>
+      <motetype_identifier>sky1</motetype_identifier>
+    </mote>
   </simulation>
   <plugin>
     se.sics.cooja.plugins.SimControl
     <width>280</width>
-    <z>2</z>
+    <z>1</z>
     <height>160</height>
     <location_x>400</location_x>
     <location_y>0</location_y>
@@ -129,10 +143,10 @@
       <skin>se.sics.cooja.plugins.skins.IDVisualizerSkin</skin>
       <skin>se.sics.cooja.plugins.skins.TrafficVisualizerSkin</skin>
       <skin>se.sics.cooja.plugins.skins.LogVisualizerSkin</skin>
-      <viewport>3.931818181818181 0.0 0.0 3.931818181818181 -258.8636363636364 248.0</viewport>
+      <viewport>2.9393939393939394 0.0 0.0 2.9393939393939394 -129.33333333333334 173.0</viewport>
     </plugin_config>
     <width>400</width>
-    <z>1</z>
+    <z>2</z>
     <height>400</height>
     <location_x>1</location_x>
     <location_y>1</location_y>
@@ -158,6 +172,7 @@
       <mote>2</mote>
       <mote>3</mote>
       <mote>4</mote>
+      <mote>5</mote>
       <showRadioRXTX />
       <showRadioHW />
       <showLEDs />
@@ -194,11 +209,9 @@
  * "Testcase:Edge:id,id"&#xD;
  * after 21 seconds passed&#xD;
  * &#xD;
- * Open 01-2hop-test.csc in a text editor and change&#xD;
- * &lt;source EXPORT="discard"&gt;[CONTIKI_DIR]/examples/rime/example-broadcast.c&lt;/source&gt;&#xD;
- * &lt;commands EXPORT="discard"&gt;make example-broadcast.sky TARGET=sky&lt;/commands&gt;&#xD;
- * &lt;firmware EXPORT="copy"&gt;[CONTIKI_DIR]/examples/rime/example-broadcast.sky&lt;/firmware&gt;&#xD;
- * to the path of the correct file&#xD;
+ * To run the test with the simulation open Cooja and:&#xD;
+ * File-&gt;Open simulation-&gt;Open and Reconfigure-&gt;Browse...&#xD;
+ * Then choose which file should be compiled for the nodes&#xD;
  */&#xD;
 &#xD;
 /* Make test automatically fail (timeout) after 120 simulated seconds */&#xD;
@@ -254,7 +267,12 @@ testSuccess = &#xD;
     arrayContains(moteDict[1], "Edge:2,3") &amp;&amp;&#xD;
     arrayContains(moteDict[1], "Edge:2,1") &amp;&amp;&#xD;
     arrayContains(moteDict[1], "Node:3,2") &amp;&amp;&#xD;
-    (moteDict[1].length == 6) &amp;&amp;&#xD;
+    arrayContains(moteDict[1], "Edge:3,2") &amp;&amp;&#xD;
+    arrayContains(moteDict[1], "Edge:3,4") &amp;&amp;&#xD;
+    arrayContains(moteDict[1], "Edge:3,5") &amp;&amp;&#xD;
+    arrayContains(moteDict[1], "Node:4,3") &amp;&amp;&#xD;
+    arrayContains(moteDict[1], "Node:5,3") &amp;&amp;&#xD;
+    (moteDict[1].length == 11) &amp;&amp;&#xD;
     /* Node 2 */&#xD;
     arrayContains(moteDict[2], "Node:2,0") &amp;&amp;&#xD;
     arrayContains(moteDict[2], "Edge:2,1") &amp;&amp;&#xD;
@@ -266,8 +284,12 @@ testSuccess = &#xD;
     arrayContains(moteDict[2], "Edge:3,4") &amp;&amp;&#xD;
     arrayContains(moteDict[2], "Edge:3,5") &amp;&amp;&#xD;
     arrayContains(moteDict[2], "Node:4,2") &amp;&amp;&#xD;
+    arrayContains(moteDict[2], "Edge:4,3") &amp;&amp;&#xD;
     arrayContains(moteDict[2], "Node:5,2") &amp;&amp;&#xD;
-    (moteDict[2].length == 11) &amp;&amp;&#xD;
+    arrayContains(moteDict[2], "Edge:5,3") &amp;&amp;&#xD;
+    arrayContains(moteDict[2], "Edge:5,6") &amp;&amp;&#xD;
+    arrayContains(moteDict[2], "Node:6,3") &amp;&amp;&#xD;
+    (moteDict[2].length == 15) &amp;&amp;&#xD;
     /* Node 3 */&#xD;
     arrayContains(moteDict[3], "Node:3,0") &amp;&amp;&#xD;
     arrayContains(moteDict[3], "Edge:3,2") &amp;&amp;&#xD;
@@ -275,12 +297,17 @@ testSuccess = &#xD;
     arrayContains(moteDict[3], "Edge:3,5") &amp;&amp;&#xD;
     arrayContains(moteDict[3], "Node:2,1") &amp;&amp;&#xD;
     arrayContains(moteDict[3], "Edge:2,1") &amp;&amp;&#xD;
+    arrayContains(moteDict[3], "Edge:2,3") &amp;&amp;&#xD;
     arrayContains(moteDict[3], "Node:4,1") &amp;&amp;&#xD;
     arrayContains(moteDict[3], "Edge:4,3") &amp;&amp;&#xD;
     arrayContains(moteDict[3], "Node:5,1") &amp;&amp;&#xD;
     arrayContains(moteDict[3], "Edge:5,3") &amp;&amp;&#xD;
+    arrayContains(moteDict[3], "Edge:5,6") &amp;&amp;&#xD;
     arrayContains(moteDict[3], "Node:1,2") &amp;&amp;&#xD;
-    (moteDict[3].length == 11) &amp;&amp;&#xD;
+    arrayContains(moteDict[3], "Edge:1,2") &amp;&amp;&#xD;
+    arrayContains(moteDict[3], "Node:6,2") &amp;&amp;&#xD;
+    arrayContains(moteDict[3], "Edge:6,5") &amp;&amp;&#xD;
+    (moteDict[3].length == 16) &amp;&amp;&#xD;
     /* Node 4 */&#xD;
     arrayContains(moteDict[4], "Node:4,0") &amp;&amp;&#xD;
     arrayContains(moteDict[4], "Edge:4,3") &amp;&amp;&#xD;
@@ -289,18 +316,44 @@ testSuccess = &#xD;
     arrayContains(moteDict[4], "Edge:3,4") &amp;&amp;&#xD;
     arrayContains(moteDict[4], "Edge:3,5") &amp;&amp;&#xD;
     arrayContains(moteDict[4], "Node:2,2") &amp;&amp;&#xD;
+    arrayContains(moteDict[4], "Edge:2,3") &amp;&amp;&#xD;
+    arrayContains(moteDict[4], "Edge:2,1") &amp;&amp;&#xD;
     arrayContains(moteDict[4], "Node:5,2") &amp;&amp;&#xD;
-    (moteDict[4].length == 8) &amp;&amp;&#xD;
+    arrayContains(moteDict[4], "Edge:5,6") &amp;&amp;&#xD;
+    arrayContains(moteDict[4], "Edge:5,3") &amp;&amp;&#xD;
+    arrayContains(moteDict[4], "Node:6,3") &amp;&amp;&#xD;
+    arrayContains(moteDict[4], "Node:1,3") &amp;&amp;&#xD;
+    (moteDict[4].length == 14) &amp;&amp;&#xD;
     /* Node 5 */&#xD;
     arrayContains(moteDict[5], "Node:5,0") &amp;&amp;&#xD;
     arrayContains(moteDict[5], "Edge:5,3") &amp;&amp;&#xD;
+    arrayContains(moteDict[5], "Edge:5,6") &amp;&amp;&#xD;
+    arrayContains(moteDict[5], "Node:6,1") &amp;&amp;&#xD;
+    arrayContains(moteDict[5], "Edge:6,5") &amp;&amp;&#xD;
     arrayContains(moteDict[5], "Node:3,1") &amp;&amp;&#xD;
     arrayContains(moteDict[5], "Edge:3,2") &amp;&amp;&#xD;
     arrayContains(moteDict[5], "Edge:3,4") &amp;&amp;&#xD;
     arrayContains(moteDict[5], "Edge:3,5") &amp;&amp;&#xD;
     arrayContains(moteDict[5], "Node:2,2") &amp;&amp;&#xD;
+    arrayContains(moteDict[5], "Edge:2,3") &amp;&amp;&#xD;
+    arrayContains(moteDict[5], "Edge:2,1") &amp;&amp;&#xD;
     arrayContains(moteDict[5], "Node:4,2") &amp;&amp;&#xD;
-    (moteDict[1].length == 8)&#xD;
+    arrayContains(moteDict[5], "Edge:4,3") &amp;&amp;&#xD;
+    arrayContains(moteDict[5], "Node:1,3") &amp;&amp;&#xD;
+    (moteDict[5].length == 15) &amp;&amp;&#xD;
+    /* Node 6 */&#xD;
+    arrayContains(moteDict[6], "Node:6,0") &amp;&amp;&#xD;
+    arrayContains(moteDict[6], "Edge:6,5") &amp;&amp;&#xD;
+    arrayContains(moteDict[6], "Node:5,1") &amp;&amp;&#xD;
+    arrayContains(moteDict[6], "Edge:5,3") &amp;&amp;&#xD;
+    arrayContains(moteDict[6], "Edge:5,6") &amp;&amp;&#xD;
+    arrayContains(moteDict[6], "Node:3,2") &amp;&amp;&#xD;
+    arrayContains(moteDict[6], "Edge:3,2") &amp;&amp;&#xD;
+    arrayContains(moteDict[6], "Edge:3,4") &amp;&amp;&#xD;
+    arrayContains(moteDict[6], "Edge:3,5") &amp;&amp;&#xD;
+    arrayContains(moteDict[6], "Node:2,3") &amp;&amp;&#xD;
+    arrayContains(moteDict[6], "Node:4,3") &amp;&amp;&#xD;
+    (moteDict[6].length == 11)&#xD;
     ;&#xD;
 &#xD;
 if(testSuccess){&#xD;
@@ -310,7 +363,7 @@ if(testSuccess){&#xD;
 /* print */&#xD;
 for(var i = 1; i &lt;= moteAmount; i++){&#xD;
     for(var j = 0; j &lt; moteDict[i].length; j++){&#xD;
-      log.log(moteDict[i][j] + "\n");&#xD;
+      log.log("Node: " + i + " Message: " + moteDict[i][j] + "\n");&#xD;
       }&#xD;
 }</script>
       <active>true</active>
