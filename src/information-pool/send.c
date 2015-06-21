@@ -16,7 +16,7 @@ static p_graph_t* graph;
 void broadcast_received(const struct bulk_broadcast_conn *bc, const rimeaddr_t *sender, void *data, size_t length)
 {
 	int i;
-	printf("broadcast received (size %d): ", (int)length);
+	printf("broadcast received from %d.%d (size %d): ", sender->u8[0], sender->u8[1], (int)length);
 	for (i = 0; i < length; i++)
 	{
 		printf("%02X ", ((char*)data)[i] & 0xFF);

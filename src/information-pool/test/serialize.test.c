@@ -328,19 +328,20 @@ UNIT_TEST(seriDeseri_big_cyclical_2_hop)
 
 	void* serialized = serialize(testGraph, 2, &length);
 
-//	printf("SIZE %d == %d\n", (int)length, (int)(3*sizeof(p_node_t) + 6*sizeof(p_edge_t)));
 	UNIT_TEST_ASSERT(length == 3*sizeof(p_node_t) + 6*sizeof(p_edge_t));
 
-//	p_node_t* deserialized = deserialize(serialized);
+	p_node_t* deserialized = deserialize(serialized);
 
 	//Assert correct deserialisation
-//	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->addr), &(deserialized->addr)) != 0);
-//	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->addr), &(deserialized->edges->drain->addr)) != 0);
-//	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->edges->drain->addr), &(testGraph->root->addr)) != 0);
-//	UNIT_TEST_ASSERT(rimeaddr_cmp(&(deserialized->edges->drain->edges->drain->addr), &(deserialized->addr)) != 0);
-//	UNIT_TEST_ASSERT(deserialized->edges->drain->edges->drain == deserialized);
-//	UNIT_TEST_ASSERT(deserialized->edges->next == NULL);
-//	UNIT_TEST_ASSERT(deserialized->edges->drain->edges->next == NULL);
+	//TODO add more assertions
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->addr), &(deserialized->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->addr), &(deserialized->edges->drain->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->next->drain->addr), &(deserialized->edges->next->drain->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(deserialized->edges->drain->edges->drain->addr), &(deserialized->addr)) != 0);
+
+	UNIT_TEST_ASSERT(deserialized->edges->drain->edges->drain == deserialized);
+	UNIT_TEST_ASSERT(deserialized->edges->next->next == NULL);
+	UNIT_TEST_ASSERT(deserialized->edges->drain->edges->next->next == NULL);
 
 	UNIT_TEST_END();
 }

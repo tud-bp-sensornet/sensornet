@@ -17,6 +17,7 @@ intptr_t findNodeInBuffer_Edge(const void* base, const p_edge_t* current, const 
 
 void serializeNode(const p_node_t* node, uint16_t k, uint16_t i, struct buffer* buffer);
 void serializeEdge(const p_edge_t* edge, uint16_t k, uint16_t i, struct buffer* buffer);
+void updateExistingNodeInBuffer(const p_node_t* node, p_node_t* nodeInBuffer, uint16_t k, uint16_t i, struct buffer *buffer);
 
 p_node_t* deserializeNode(void* basePointer, p_node_t* currentNode);
 p_edge_t* deserializeEdge(void* basePointer, p_edge_t* currentEdge);
@@ -172,6 +173,12 @@ void serializeEdge(const p_edge_t* edge, uint16_t k, uint16_t i, struct buffer *
 		if (nodeOffset != -1)
 		{
 			currentEdgeInBuffer->drain = (p_node_t*)nodeOffset;
+
+			// node may already be in buffer, but have missing edges
+			if (i < k)
+			{
+				updateExistingNodeInBuffer(pivot->drain, (p_node_t*)(buffer->data + nodeOffset), k, i, buffer);
+			}
 		}
 		else
 		{
@@ -185,6 +192,15 @@ void serializeEdge(const p_edge_t* edge, uint16_t k, uint16_t i, struct buffer *
 		{
 			currentEdgeInBuffer->next = (p_edge_t*)buffer->offset;
 		}
+	}
+}
+
+void updateExistingNodeInBuffer(const p_node_t* node, p_node_t* nodeInBuffer, uint16_t k, uint16_t i, struct buffer *buffer)
+{
+	if (nodeInBuffer->edges == NULL)
+	{
+		nodeInBuffer->edges = (p_edge_t*)(buffer->offset);
+		serializeEdge(node->edges, k, i+1, buffer);
 	}
 }
 
@@ -230,6 +246,7 @@ p_edge_t* deserializeEdge(void* basePointer, p_edge_t* currentEdge)
 	}
 
 	// only deserialize node if it occurs further into the buffer; otherwise it has already been deserialized
+	// TODO may not be bug free --> test this again
 	if ((uintptr_t)basePointer + (uintptr_t)(currentEdge->drain) > (uintptr_t)currentEdge)
 	{
 		currentEdge->drain = deserializeNode(basePointer, basePointer + (uintptr_t)(currentEdge->drain));
