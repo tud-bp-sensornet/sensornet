@@ -10,6 +10,8 @@ UNIT_TEST_REGISTER(seriDeseri_0_hop, "Serialize and deserialize tree 0 hop");
 UNIT_TEST_REGISTER(seriDeseri_1_hop, "Serialize and deserialize tree 1 hop");
 UNIT_TEST_REGISTER(seriDeseri_2_hop, "Serialize and deserialize tree 2 hop");
 UNIT_TEST_REGISTER(seriDeseri_3_hop, "Serialize and deserialize tree 3 hop");
+UNIT_TEST_REGISTER(seriDeseri_cyclical_2_hop, "Serialize and deserialize cyclical tree 2 hop");
+UNIT_TEST_REGISTER(seriDeseri_big_cyclical_2_hop, "Serialize and deserialize big cyclical tree 2 hop");
 
 /**
  * only the root without edges is initialized and crawls a depth of 99
@@ -199,6 +201,150 @@ UNIT_TEST(seriDeseri_3_hop)
 	UNIT_TEST_END();
 }
 
+/**
+ * Creates a cyclical example graph used for testing.
+ */
+p_graph_t* cyclical_test_graph()
+{
+	p_graph_t *g;
+	p_node_t *n1, *n2;
+	p_edge_t *e1, *e2;
+
+	g = malloc(sizeof *g);
+
+	n1 = malloc(sizeof *n1);
+	n2 = malloc(sizeof *n2);
+
+	e1 = malloc(sizeof *e1);
+	e2 = malloc(sizeof *e2);
+
+	// Give nodes IDs
+	n1->addr.u8[0] = 0x01;
+	n2->addr.u8[0] = 0x02;
+
+	// Build Graph, root = n1
+	// n1->n2, n2->n1
+	n1->edges = e1;
+	e1->drain = n2;
+	e1->next = NULL;
+	n2->edges = e2;
+	e2->drain = n1;
+	e2->next = NULL;
+
+	g->root = n1;
+	g->num_nodes = 2;
+	g->num_edges = 2;
+
+	return g;
+}
+
+/**
+ * Creates a bigger cyclical example graph used for testing.
+ */
+p_graph_t* big_cyclical_test_graph()
+{
+	p_graph_t *g;
+	p_node_t *n1, *n2, *n3;
+	p_edge_t *e1, *e2, *e3, *e4, *e5, *e6;
+
+	g = malloc(sizeof *g);
+
+	n1 = malloc(sizeof *n1);
+	n2 = malloc(sizeof *n2);
+	n3 = malloc(sizeof *n3);
+
+	e1 = malloc(sizeof *e1);
+	e2 = malloc(sizeof *e2);
+	e3 = malloc(sizeof *e3);
+	e4 = malloc(sizeof *e4);
+	e5 = malloc(sizeof *e5);
+	e6 = malloc(sizeof *e6);
+
+	// Give nodes IDs
+	n1->addr.u8[0] = 0x01;
+	n2->addr.u8[0] = 0x02;
+	n3->addr.u8[0] = 0x03;
+
+	// Build Graph, root = n1
+	// n1->n2, n1->n3
+	n1->edges = e1;
+	e1->drain = n2;
+	e1->next = e2;
+	e2->drain = n3;
+	e2->next = NULL;
+
+	// n2->n1, n2->n3
+	n2->edges = e3;
+	e3->drain = n1;
+	e3->next = e4;
+	e4->drain = n3;
+	e4->next = NULL;
+
+	// n3->n1, n3->n2
+	n3->edges = e5;
+	e5->drain = n1;
+	e5->next = e6;
+	e6->drain = n2;
+	e6->next = NULL;
+
+	g->root = n1;
+	g->num_nodes = 3;
+	g->num_edges = 6;
+
+	return g;
+}
+
+UNIT_TEST(seriDeseri_cyclical_2_hop)
+{
+	p_graph_t* testGraph = cyclical_test_graph();
+	size_t length;
+
+	UNIT_TEST_BEGIN();
+
+	void* serialized = serialize(testGraph, 2, &length);
+
+	UNIT_TEST_ASSERT(length == 2*sizeof(p_node_t) + 2*sizeof(p_edge_t));
+
+	p_node_t* deserialized = deserialize(serialized);
+
+	//Assert correct deserialisation
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->addr), &(deserialized->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->addr), &(deserialized->edges->drain->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->edges->drain->addr), &(testGraph->root->addr)) != 0);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(deserialized->edges->drain->edges->drain->addr), &(deserialized->addr)) != 0);
+	UNIT_TEST_ASSERT(deserialized->edges->drain->edges->drain == deserialized);
+	UNIT_TEST_ASSERT(deserialized->edges->next == NULL);
+	UNIT_TEST_ASSERT(deserialized->edges->drain->edges->next == NULL);
+
+	UNIT_TEST_END();
+}
+
+UNIT_TEST(seriDeseri_big_cyclical_2_hop)
+{
+	p_graph_t* testGraph = big_cyclical_test_graph();
+	size_t length;
+
+	UNIT_TEST_BEGIN();
+
+	void* serialized = serialize(testGraph, 2, &length);
+
+//	printf("SIZE %d == %d\n", (int)length, (int)(3*sizeof(p_node_t) + 6*sizeof(p_edge_t)));
+	UNIT_TEST_ASSERT(length == 3*sizeof(p_node_t) + 6*sizeof(p_edge_t));
+
+//	p_node_t* deserialized = deserialize(serialized);
+
+	//Assert correct deserialisation
+//	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->addr), &(deserialized->addr)) != 0);
+//	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->addr), &(deserialized->edges->drain->addr)) != 0);
+//	UNIT_TEST_ASSERT(rimeaddr_cmp(&(testGraph->root->edges->drain->edges->drain->addr), &(testGraph->root->addr)) != 0);
+//	UNIT_TEST_ASSERT(rimeaddr_cmp(&(deserialized->edges->drain->edges->drain->addr), &(deserialized->addr)) != 0);
+//	UNIT_TEST_ASSERT(deserialized->edges->drain->edges->drain == deserialized);
+//	UNIT_TEST_ASSERT(deserialized->edges->next == NULL);
+//	UNIT_TEST_ASSERT(deserialized->edges->drain->edges->next == NULL);
+
+	UNIT_TEST_END();
+}
+
 int main()
 {
     UNIT_TEST_RUN(seriDeseri_root);
@@ -206,6 +352,9 @@ int main()
     UNIT_TEST_RUN(seriDeseri_1_hop);
     UNIT_TEST_RUN(seriDeseri_2_hop);
     UNIT_TEST_RUN(seriDeseri_3_hop);
+
+    UNIT_TEST_RUN(seriDeseri_cyclical_2_hop);
+    UNIT_TEST_RUN(seriDeseri_big_cyclical_2_hop);
 
     return EXIT_SUCCESS;
 }
