@@ -197,7 +197,7 @@ void serializeEdge(const p_edge_t* edge, uint16_t k, uint16_t i, struct buffer *
 
 void updateExistingNodeInBuffer(const p_node_t* node, p_node_t* nodeInBuffer, uint16_t k, uint16_t i, struct buffer *buffer)
 {
-	if (nodeInBuffer->edges == NULL)
+	if (nodeInBuffer->edges == NULL && node->edges != NULL)
 	{
 		nodeInBuffer->edges = (p_edge_t*)(buffer->offset);
 		serializeEdge(node->edges, k, i+1, buffer);
