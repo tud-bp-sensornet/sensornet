@@ -1,0 +1,8 @@
+language: c
+
+script:
+  ## Build code
+  - make -C src/
+
+  ## Build and run unit tests
+  - make -C src/test run-unittests
