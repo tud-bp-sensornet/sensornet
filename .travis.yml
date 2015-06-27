@@ -1,0 +1,12 @@
+script:
+  ## regression-tests/Makefile handles most of generic logic
+  - "make -C regression-tests/??-$BUILD_TYPE RUNALL=true summary"
+
+after_script:
+  ## Print cooja test logs
+  - "[ ${BUILD_CATEGORY:-sim} = sim ] && tail regression-tests/??-$BUILD_TYPE/*.testlog"
+  ## Print a basic summary
+  - "echo 'Summary:'; cat regression-tests/??-$BUILD_TYPE/summary"
+  - "FAILS=`grep -c  ' FAIL ' regression-tests/??-$BUILD_TYPE/summary`"
+  ## This will detect whether the build should pass or fail
+  - "test $FAILS -eq 0; exit $?"
