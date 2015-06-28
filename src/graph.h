@@ -2,6 +2,10 @@
 #define __GRAPH_H__
 
 #include "contiki.h"
+#include "net/rime.h"
+
+//needs to be called once at the start of main to initialize space in the memory
+void init_graph();
 
 typedef struct {
     rimeaddr_t addr;
@@ -27,6 +31,9 @@ typedef struct {
     uint8_t ttl;
 } p_edge_t;
 
+void add_edge(const p_edge_t edge);
+
+void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst);
 
 //returns array of pointers to all edges, count will contain number of edges
 p_edge_t **get_all_edges(uint8_t * count);
@@ -37,5 +44,8 @@ p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count);
 
 //returns the edge with given src and destination, or null if not found
 p_edge_t *find_edge(const rimeaddr_t *src, const rimeaddr_t *dst);
+
+//returns the count of all edges
+uint8_t get_edge_count();
 
 #endif

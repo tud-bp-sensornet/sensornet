@@ -35,6 +35,7 @@ PROCESS_THREAD(simple_process, ev, data)
 
 	p_broadcast_open(&broadcast, 129);
 	static struct etimer et;
+	init_graph();
 
 	//We are root
 	p_node_t root = {rimeaddr_node_addr};
