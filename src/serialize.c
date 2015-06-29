@@ -1,3 +1,8 @@
+/**
+ * \file                       A serializer and deserializer
+ * \author                     tud-bp-sensornet
+ */
+
 #include "serialize.h"
 #include "graph.h"
 
@@ -53,13 +58,21 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 		packet_complete(memory, full_size);
 
 		free(edge_ptr_ptr);
-		free(memory);
 	}
 
+	free(memory);
 }
 
 void deserialize(const rimeaddr_t *sender, void *packet, size_t length)
 {
+
+	//Create and add the edge to the sender
+	p_edge_t edge;
+	edge.src = *sender;
+	edge.dst = rimeaddr_node_addr;
+	edge.ttl = 0x00; //TODO: Replace with correct ttl
+	add_edge(edge);
+
 	int i;
 	int j;
 	for (i = 0, j = 0; i < (int)length; j++)
@@ -68,12 +81,12 @@ void deserialize(const rimeaddr_t *sender, void *packet, size_t length)
 		if(j % 2 == 0)
 		{
 			//Add node or update
-			add_node((p_node_t)*(packet + i);
-			i = i + sizeof(p_node_t);
-		}else{
+			add_node((p_node_t) * (packet + i);
+			         i = i + sizeof(p_node_t);
+		} else {
 			//Add edge or update
-			add_edge((p_edge_t)*(packet + i);
-			i = i + sizeof(p_edge_t);
+			add_edge((p_edge_t) * (packet + i);
+			         i = i + sizeof(p_edge_t);
 		}
 	}
 }
