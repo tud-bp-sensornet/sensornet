@@ -1,3 +1,10 @@
+/**
+ * \file
+ * 			Identified broadcast Rime layer ontop of anonymous broadcast (abc)
+ * \author
+ * 			tud-bp-sensornet
+ */
+
 #include "contiki-net.h"
 #include <string.h>
 

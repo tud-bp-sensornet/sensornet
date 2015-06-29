@@ -1,3 +1,10 @@
+/**
+ * \file
+ * 			Header file for a identified broadcast Rime layer ontop of Anonymous BroadCast (abc)
+ * \author
+ * 			tud-bp-sensornet
+ */
+
 #ifndef __BROADCAST_H__
 #define __BROADCAST_H__
 
@@ -31,18 +38,17 @@ struct p_broadcast_conn {
  * 					The struct p_broadcast_conn pointer must point to a structure
  * 					containing a pointer to a function that will be called
  * 					when a packet arrives on the channel.
- *
  */
 void p_broadcast_open(struct p_broadcast_conn *c, uint16_t channel);
 
 /**
- * \brief	Close a broadcast connection
- * \param c	A pointer to a struct p_broadcast_conn
+ * \brief			Close a broadcast connection
+ * \param c			A pointer to a struct p_broadcast_conn
  *
- * 			This function closes a broadcast connection that has
- * 			previously been opened with p_broadcast_open().
+ * 					This function closes a broadcast connection that has
+ * 					previously been opened with p_broadcast_open().
  *
- * 			This function typically is called as an exit handler.
+ * 					This function typically is called as an exit handler.
  *
  */
 void p_broadcast_close(struct p_broadcast_conn *c);
