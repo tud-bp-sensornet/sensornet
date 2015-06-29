@@ -56,8 +56,10 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 
 		//Send subgraph
 		packet_complete(memory, full_size);
-
-		free(edge_ptr_ptr);
+		
+		if(edge_ptr_ptr != NULL){
+			free(edge_ptr_ptr);
+		}
 	}
 
 	free(memory);
