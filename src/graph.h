@@ -22,8 +22,8 @@ void init_graph();
  * It contains information of the node necessary for the routing protocol
  */
 typedef struct {
-    rimeaddr_t addr;
-    //possibly additional attributes, like position
+	rimeaddr_t addr;
+	//possibly additional attributes, like position
 } p_node_t;
 
 /**
@@ -71,9 +71,9 @@ p_node_t *find_node(const rimeaddr_t *addr);
  * It contains a ttl that is used to delete an edge if there wasn't an update in a certain amount of time
  */
 typedef struct {
-    rimeaddr_t src;
-    rimeaddr_t dst;
-    uint8_t ttl;
+	rimeaddr_t src;
+	rimeaddr_t dst;
+	uint8_t ttl;
 } p_edge_t;
 
 /**
@@ -100,7 +100,7 @@ void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst);
  * Returns an array of pointers to the saved edges in memory. The array should neither be freed, nor changed outside of graph.c.
  * The free spaces (NULL pointers) will always be located after the filled spaces.
  */
-p_edge_t **get_all_edges(uint8_t * count);
+p_edge_t **get_all_edges(uint8_t *count);
 
 /**
  * \brief Returns an array of pointers to the outgoing edges of the node with the specified rimeaddr. Must be freed.

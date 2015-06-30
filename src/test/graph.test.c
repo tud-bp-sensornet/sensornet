@@ -5,8 +5,10 @@
 
 #include "graph.h"
 
-/* Register example unit tests that will be executed by using
-   the UNIT_TEST_RUN macro. */
+/**
+ * Register unit tests that will be executed by using
+ * the UNIT_TEST_RUN macro.
+ */
 UNIT_TEST_REGISTER(add_nodes, "Test adding and removing nodes");
 UNIT_TEST_REGISTER(add_edges, "Test adding and removing edges");
 UNIT_TEST_REGISTER(find_nodes, "Test finding nodes");
@@ -24,6 +26,7 @@ UNIT_TEST_REGISTER(in_out_edges, "Test incoming and outgoing edges of a node");
 UNIT_TEST(add_nodes)
 {
 	p_node_t n1, n2, n3;
+	p_node_t ntemp;
 	p_node_t **node_array;
 	uint8_t counter;
 
@@ -112,6 +115,34 @@ UNIT_TEST(add_nodes)
 	UNIT_TEST_ASSERT(get_node_count() == 0);
 	UNIT_TEST_ASSERT(node_array[0] == NULL);
 
+	//Try to remove nodes when there are non saved
+
+	remove_node(&(n1.addr));
+	remove_node(&(n2.addr));
+	remove_node(&(n3.addr));
+
+	UNIT_TEST_ASSERT(get_node_count() == 0);
+	UNIT_TEST_ASSERT(node_array[0] == NULL);
+
+	//Test what happens if there are more nodes added than MEMB allocated space
+	uint8_t i;
+	for (i = 0; i < (MAX_NODES+1); i++)
+	{
+		ntemp.addr = rimeaddr_null;
+		ntemp.addr.u8[0] = (unsigned char) i;
+		add_node(ntemp);
+	}
+
+	UNIT_TEST_ASSERT(get_node_count() == MAX_NODES);
+
+	node_array = get_all_nodes(&counter);
+	for (i = 0; i < counter; i++)
+	{
+		remove_node(&(node_array[0]->addr));
+	}
+
+	UNIT_TEST_ASSERT(get_node_count() == 0);
+	UNIT_TEST_ASSERT(node_array[0] == NULL);
 
 	UNIT_TEST_END();
 }
@@ -127,6 +158,7 @@ UNIT_TEST(add_nodes)
 UNIT_TEST(add_edges)
 {
 	p_edge_t e1, e2, e3, e4, e5, e6, e1_new;
+	p_edge_t etemp;
 	p_edge_t ** edge_array;
 	uint8_t counter;
 
@@ -161,6 +193,11 @@ UNIT_TEST(add_edges)
 	e1_new.dst.u8[0] = 0x01;
 	e1_new.src.u8[0] = 0x02;
 	e1.ttl = 0;
+	e2.ttl = 0;
+	e3.ttl = 0;
+	e4.ttl = 0;
+	e5.ttl = 0;
+	e6.ttl = 0;
 	e1_new.ttl = 1;
 	edge_array = get_all_edges(&counter);
 
@@ -244,7 +281,7 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(edge_array[4] != NULL);
 	UNIT_TEST_ASSERT(edge_array[5] != NULL);
 	UNIT_TEST_ASSERT(edge_array[6] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e1.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1.dst))  && (edge_array[0]->ttl == e1.ttl));
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e1.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1.dst)) && (edge_array[0]->ttl == e1.ttl));
 	UNIT_TEST_ASSERT((rimeaddr_cmp(&(edge_array[0]->src), &(e1_new.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1_new.dst)) && (edge_array[0]->ttl == e1_new.ttl)) == 0);
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[1]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[2]->src), &(e3.src)) && rimeaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
@@ -363,6 +400,41 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e2.dst)));
 
 	remove_edge(&(e2.src), &(e2.dst));
+
+	UNIT_TEST_ASSERT(get_edge_count() == 0);
+	UNIT_TEST_ASSERT(edge_array[0] == NULL);
+
+	//Try to remove edges when there are non saved
+
+	remove_edge(&(e1.src), &(e1.dst));
+	remove_edge(&(e2.src), &(e2.dst));
+	remove_edge(&(e3.src), &(e3.dst));
+	remove_edge(&(e4.src), &(e4.dst));
+	remove_edge(&(e5.src), &(e5.dst));
+	remove_edge(&(e6.src), &(e6.dst));
+	remove_edge(&(e1_new.src), &(e1_new.dst));
+
+	UNIT_TEST_ASSERT(get_edge_count() == 0);
+	UNIT_TEST_ASSERT(edge_array[0] == NULL);
+
+	//Test what happens if there are more edges added than MEMB allocated space
+	uint8_t i;
+	for (i = 0; i < (MAX_EDGES+1); i++)
+	{
+		etemp.dst = rimeaddr_null;
+		etemp.src = rimeaddr_null;
+		etemp.src.u8[0] = (unsigned char) i;
+		etemp.ttl = 0;
+		add_edge(etemp);
+	}
+
+	UNIT_TEST_ASSERT(get_edge_count() == MAX_EDGES);
+
+	edge_array = get_all_edges(&counter);
+	for (i = 0; i < counter; i++)
+	{
+		remove_edge(&(edge_array[0]->src), &(edge_array[0]->dst));
+	}
 
 	UNIT_TEST_ASSERT(get_edge_count() == 0);
 	UNIT_TEST_ASSERT(edge_array[0] == NULL);
@@ -495,6 +567,11 @@ UNIT_TEST(find_edges)
 	e4.src.u8[0] = 0x01;
 	e5.dst.u8[0] = 0x01;
 	e5.src.u8[0] = 0x03;
+	e1.ttl = 0;
+	e2.ttl = 0;
+	e3.ttl = 0;
+	e4.ttl = 0;
+	e5.ttl = 0;
 	edge_array = get_all_edges(&counter);
 
 	UNIT_TEST_ASSERT(get_node_count() == 0);
@@ -691,6 +768,15 @@ UNIT_TEST(in_out_edges)
 	e32.dst.u8[0] = 0x02;
 	e41.src.u8[0] = 0x04;
 	e41.dst.u8[0] = 0x01;
+	e11.ttl = 0;
+	e12.ttl = 0;
+	e13.ttl = 0;
+	e14.ttl = 0;
+	e21.ttl = 0;
+	e23.ttl = 0;
+	e31.ttl = 0;
+	e32.ttl = 0;
+	e41.ttl = 0;
 	node_array = get_all_nodes(&counter1);
 	edge_array = get_all_edges(&counter2);
 
@@ -835,11 +921,12 @@ UNIT_TEST(in_out_edges)
 	UNIT_TEST_END();
 }
 
-void main() {
+int main() {
 	init_graph();
 	UNIT_TEST_RUN(add_nodes);
 	UNIT_TEST_RUN(add_edges);
 	UNIT_TEST_RUN(find_nodes);
 	UNIT_TEST_RUN(find_edges);
 	UNIT_TEST_RUN(in_out_edges);
+	return EXIT_SUCCESS;
 }

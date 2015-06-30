@@ -63,10 +63,10 @@ void add_node(const p_node_t node)
 		{
 			if (node_memory_array[i] == NULL)
 			{
-                //copy content
-                node_memory_array[i] = allocated_node;
-                memcpy(allocated_node, &node, sizeof(p_node_t));
-                //exit loop
+				//copy content
+				node_memory_array[i] = allocated_node;
+				memcpy(allocated_node, &node, sizeof(p_node_t));
+				//exit loop
 				break;
 			}
 		}
@@ -108,7 +108,10 @@ void remove_node(const rimeaddr_t *addr)
  */
 p_node_t **get_all_nodes(uint8_t *count)
 {
-	*count = node_count;
+	if (count != NULL)
+	{
+		*count = node_count;
+	}
 	return node_memory_array;
 }
 
@@ -157,7 +160,7 @@ void add_edge(const p_edge_t edge)
 	p_edge_t *search_edge = find_edge(&(edge.src), &(edge.dst));
 	if (search_edge != NULL)
 	{
-        memcpy(search_edge, &edge, sizeof(p_edge_t));
+		memcpy(search_edge, &edge, sizeof(p_edge_t));
 		return;
 	}
 	p_edge_t *allocated_edge = (p_edge_t*) memb_alloc(&edge_memory);
@@ -171,10 +174,10 @@ void add_edge(const p_edge_t edge)
 		{
 			if (edge_memory_array[i] == NULL)
 			{
-                //copy content
-                edge_memory_array[i] = allocated_edge;
-                memcpy(allocated_edge, &edge, sizeof(p_edge_t));
-                //exit loop
+				//copy content
+				edge_memory_array[i] = allocated_edge;
+				memcpy(allocated_edge, &edge, sizeof(p_edge_t));
+				//exit loop
 				break;
 			}
 		}
@@ -216,7 +219,10 @@ void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
  * The free spaces (NULL pointers) will always be located after the filled spaces.
  */
 p_edge_t **get_all_edges(uint8_t *count){
-	*count = edge_count;
+	if (count != NULL)
+	{
+		*count = edge_count;
+	}
 	return edge_memory_array;
 }
 
@@ -233,13 +239,19 @@ p_edge_t **get_all_edges(uint8_t *count){
 p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
 {
 	//count how many outgoing edges the node has
-	*count = 0;
+	if (count != NULL)
+	{
+		*count = 0;
+	}
 	uint8_t i;
 	for (i = 0; i < edge_count; i++)
 	{
 		if (rimeaddr_cmp(&(edge_memory_array[i]->src), src_addr))
 		{
-			*count = (*count)+1;
+			if (count != NULL)
+			{
+				*count = (*count)+1;
+			}
 		}
 	}
 
@@ -279,13 +291,19 @@ p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
 p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count)
 {
 	//count how many ingoing edges the node has
-	*count = 0;
+	if (count != NULL)
+	{
+		*count = 0;
+	}
 	uint8_t i;
 	for (i = 0; i < edge_count; i++)
 	{
 		if (rimeaddr_cmp(&(edge_memory_array[i]->dst), dst_addr))
 		{
-			*count = (*count)+1;
+			if (count != NULL)
+			{
+				*count = (*count)+1;
+			}
 		}
 	}
 
