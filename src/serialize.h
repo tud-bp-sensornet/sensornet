@@ -7,12 +7,13 @@
 #define __SERIALIZE_H__
 
 /**
- * \brief			            Serializes the graph (local view) into several (sub) graphs
+ * \brief			            Serializes the graph (local view) into several (sub) graphs (up to K-1 hops)
  * \param packet_complete		A function pointer which will be called if a (sub) graph was serialized
  * \param packet_data           A pointer to the memory where the (sub) graph is stored
  * \param length                The length of the serialized (sub) graph
  *
  *                              This function serializes our local view graph into several (sub) graphs.
+ *                              It will not serialize nodes and eges in more than K-1 hops distance.
  *                              The called funtion behind the function pointer must not free the memory
  *                              pointed by packet_data.
  *                              Serialized (sub) graphs are stored with this layout:
