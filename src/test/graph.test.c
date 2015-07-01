@@ -14,6 +14,7 @@ UNIT_TEST_REGISTER(add_edges, "Test adding and removing edges");
 UNIT_TEST_REGISTER(find_nodes, "Test finding nodes");
 UNIT_TEST_REGISTER(find_edges, "Test finding edges");
 UNIT_TEST_REGISTER(in_out_edges, "Test incoming and outgoing edges of a node");
+UNIT_TEST_REGISTER(test_NULL_param, "Test if functions return without doing anything if a parameter is NULL");
 
 /**
  * Test adding and removing some nodes
@@ -921,6 +922,108 @@ UNIT_TEST(in_out_edges)
 	UNIT_TEST_END();
 }
 
+/**
+ * Test if functions return without doing anything if a parameter is NULL
+ * Tests the functions:
+ * void add_node(const p_node_t node)
+ * void remove_node(const rimeaddr_t *addr)
+ * p_node_t **get_all_nodes(uint8_t * count)
+ * uint8_t get_node_count()
+ * p_node_t *find_node(const rimeaddr_t *addr)
+ * void add_edge(const p_edge_t edge)
+ * void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+ * p_edge_t **get_all_edges(uint8_t *count)
+ * p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
+ * p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count)
+ * p_edge_t *find_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+ * uint8_t get_edge_count()
+ */
+UNIT_TEST(test_NULL_param)
+{
+	p_node_t n1;
+	p_edge_t e1;
+	p_node_t **node_array;
+	p_edge_t **edge_array;
+	uint8_t counter1, counter2;
+
+	UNIT_TEST_BEGIN();
+
+	n1.addr = rimeaddr_null;
+	n1.addr.u8[0] = 0x01;
+	e1.dst = rimeaddr_null;
+	e1.src = rimeaddr_null;
+	e1.dst.u8[0] = 0x01;
+	e1.src.u8[0] = 0x02;
+	e1.ttl = 0;
+	node_array = get_all_nodes(&counter1);
+	edge_array = get_all_edges(&counter2);
+
+	UNIT_TEST_ASSERT(get_node_count() == 0);
+	UNIT_TEST_ASSERT(get_edge_count() == 0);
+	UNIT_TEST_ASSERT(counter1 == 0);
+	UNIT_TEST_ASSERT(counter2 == 0);
+	UNIT_TEST_ASSERT(node_array[0] == NULL);
+	UNIT_TEST_ASSERT(edge_array[0] == NULL);
+
+	add_node(n1);
+	add_edge(e1);
+	node_array = get_all_nodes(&counter1);
+	edge_array = get_all_edges(&counter2);
+
+	UNIT_TEST_ASSERT(get_node_count() == 1);
+	UNIT_TEST_ASSERT(get_edge_count() == 1);
+	UNIT_TEST_ASSERT(counter1 == 1);
+	UNIT_TEST_ASSERT(counter2 == 1);
+	UNIT_TEST_ASSERT(node_array[0] != NULL);
+	UNIT_TEST_ASSERT(node_array[1] == NULL);
+	UNIT_TEST_ASSERT(edge_array[0] != NULL);
+	UNIT_TEST_ASSERT(edge_array[1] == NULL);
+
+	//Test functions with NULL as param
+	UNIT_TEST_ASSERT(get_all_nodes(NULL) == NULL);
+	UNIT_TEST_ASSERT(find_node(NULL) == NULL);
+	UNIT_TEST_ASSERT(get_all_edges(NULL) == NULL);
+	UNIT_TEST_ASSERT(get_ingoing_edges(NULL, &counter2) == NULL);
+	UNIT_TEST_ASSERT(get_ingoing_edges(&(e1.dst), NULL) == NULL);
+	UNIT_TEST_ASSERT(get_ingoing_edges(NULL, NULL) == NULL);
+	UNIT_TEST_ASSERT(get_outgoing_edges(NULL, &counter2) == NULL);
+	UNIT_TEST_ASSERT(get_outgoing_edges(&(e1.src), NULL) == NULL);
+	UNIT_TEST_ASSERT(get_outgoing_edges(NULL, NULL) == NULL);
+	UNIT_TEST_ASSERT(find_edge(NULL, &(e1.dst)) == NULL);
+	UNIT_TEST_ASSERT(find_edge(&(e1.src), NULL) == NULL);
+	UNIT_TEST_ASSERT(find_edge(NULL, NULL) == NULL);
+
+	remove_node(NULL);
+	remove_edge(&(e1.src), NULL);
+	remove_edge(NULL, &(e1.dst));
+	remove_edge(NULL, NULL);
+	node_array = get_all_nodes(&counter1);
+	edge_array = get_all_edges(&counter2);
+	UNIT_TEST_ASSERT(get_node_count() == 1);
+	UNIT_TEST_ASSERT(get_edge_count() == 1);
+	UNIT_TEST_ASSERT(counter1 == 1);
+	UNIT_TEST_ASSERT(counter2 == 1);
+	UNIT_TEST_ASSERT(node_array[0] != NULL);
+	UNIT_TEST_ASSERT(node_array[1] == NULL);
+	UNIT_TEST_ASSERT(edge_array[0] != NULL);
+	UNIT_TEST_ASSERT(edge_array[1] == NULL);
+
+	//cleanup
+	remove_node(&(n1.addr));
+	remove_edge(&(e1.src), &(e1.dst));
+	node_array = get_all_nodes(&counter1);
+	edge_array = get_all_edges(&counter2);
+
+	UNIT_TEST_ASSERT(get_node_count() == 0);
+	UNIT_TEST_ASSERT(get_edge_count() == 0);
+	UNIT_TEST_ASSERT(counter1 == 0);
+	UNIT_TEST_ASSERT(counter2 == 0);
+	UNIT_TEST_ASSERT(node_array[0] == NULL);
+	UNIT_TEST_ASSERT(edge_array[0] == NULL);
+
+	UNIT_TEST_END();
+}
+
 int main() {
 	init_graph();
 	UNIT_TEST_RUN(add_nodes);
@@ -928,5 +1031,6 @@ int main() {
 	UNIT_TEST_RUN(find_nodes);
 	UNIT_TEST_RUN(find_edges);
 	UNIT_TEST_RUN(in_out_edges);
+	UNIT_TEST_RUN(test_NULL_param);
 	return EXIT_SUCCESS;
 }
