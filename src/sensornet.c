@@ -42,7 +42,8 @@ PROCESS_THREAD(simple_process, ev, data)
 	add_node(root);
 
 	printf("K = %d, MAX_NODES = %d, MAX_EDGES = %d\n", (int) K, (int) MAX_NODES, (int) MAX_EDGES);
-
+	
+	//TODO: When K=0 do not broadcast/serialize anything
 	while (1) {
 		/* Delay 2-4 seconds */
 		etimer_set(&et, CLOCK_SECOND * 2 + random_rand() % (CLOCK_SECOND * 4));
