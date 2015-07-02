@@ -24,17 +24,22 @@ typedef struct {
  * \retval The pointer to the array of p_hop_t
  *
  * Returns an array of p_hop_t. The array should be freed, by the caller.
- * If count is a NULL pointer, the function will return NULL.
+ * Array layout:
+ * (node with 1 hop)*, (node with 2 hops)*, ..., (node with n-1 hops)*, (node with n hops)+
+ * with n is the longest shortest path from root.
+ * If count is a NULL pointer or the graph has no edges or nodes, the function will return NULL.
  * If there is no hop reachable from root, the returned pointer must be freed, too.
  */
 p_hop_t *get_hop_counts(uint8_t *count);
 
 /**
- * \brief Deletes all edges with a ttl <= 0 and decrements all remaining edges by the time difference this function was called.
+ * \brief Deletes all edges with a ttl <= 0 and decrements all remaining edges by the time difference this function was last called.
  * \param void
  * \retval void
  *
- * Deleting nodes is TBD
+ * Must be called at minimum once before a clock overflow happens.
+ * Multiple clock overflows without calling purge will result in undefined behaviour when purge is called.
+ * This function DOES NOT delete nodes.
  */
 void purge();
 

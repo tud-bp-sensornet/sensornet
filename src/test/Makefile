@@ -15,6 +15,7 @@ CFLAGS += -DMAX_EDGES=$(MAX_EDGES)
 # include all needed C files here
 #PROJECT_SOURCEFILES+=
 PROJECT_SOURCEFILES+=../graph.c
+PROJECT_SOURCEFILES+=../graph-operations.c
 
 # add ../ to include path
 CFLAGS += -I../

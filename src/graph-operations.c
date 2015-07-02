@@ -3,9 +3,12 @@
  * \author tud-bp-sensornet
  */
 
+#include <stdlib.h>
 #include <math.h>
 
-CCIF unsigned long last_time = 0;
+#include "graph-operations.h"
+
+unsigned long last_time = 0;
 
 p_hop_t *get_hop_counts(uint8_t *count)
 {
@@ -15,11 +18,18 @@ p_hop_t *get_hop_counts(uint8_t *count)
 		return NULL;
 	}
 
-	uint8_t *node_count, *edge_count;
-	p_node_t **all_nodes = get_all_nodes(node_count);
-	p_edge_t **all_edges = get_all_edges(edge_count);
+	uint8_t node_count, edge_count;
+	node_count = get_node_count();
+	p_edge_t **all_edges = get_all_edges(&edge_count);
 
-	p_hop_t *hop_dict = malloc((node_count - 0x01) * sizeof(p_hop_t));
+	//If there are no nodes or edges do nothing
+	if(node_count == 0x00 || edge_count == 0x00)
+	{
+		*count = 0x00;
+		return NULL;
+	}
+
+	p_hop_t *hop_dict = malloc((node_count - 0x01) * (uint8_t)sizeof(p_hop_t));
 
 	//Initialize with zero values
 	p_hop_t null_hop = {rimeaddr_null, 0x00};
@@ -31,7 +41,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 
 	//First get all direct neighbours
 	p_hop_t *tmp_hop_ptr = hop_dict;
-	for (i = 0; i < (int)edge_count; i++)
+	for (i = 0; i < edge_count; i++)
 	{
 		if (rimeaddr_cmp(&(all_edges[i]->src), &rimeaddr_node_addr))
 		{
@@ -45,17 +55,17 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	for (i = 0; i < (int)(node_count - 1); i++)
 	{
 		//...we get all outgoing edges from this node...
-		uint8_t *tmp_count;
-		p_edge_t **tmp_outgoing = get_outgoing_edges(&(hop_dict[i].addr), tmp_count);
-		int j;
-		for (j = 0; j < (int)*tmp_count; j++)
+		uint8_t tmp_count;
+		p_edge_t **tmp_outgoing = get_outgoing_edges(&(hop_dict[i].addr), &tmp_count);
+		uint8_t j;
+		for (j = 0; j < tmp_count; j++)
 		{
 			//...and check if we reach a node we couldn't earlier...
-			int k;
-			int is_in = 0;
-			for (k = 0; k < (int)(node_count - 1); k++)
+			uint8_t k;
+			uint8_t is_in = 0;
+			for (k = 0; k < (node_count - 1); k++)
 			{
-				if (rimeaddr_cmp(&(tmp_outgoing[j]->dst, &(hop_dict[k].addr)))
+				if (rimeaddr_cmp(&(tmp_outgoing[j]->dst), &(hop_dict[k].addr)))
 			{
 				//...if the node is not in our hop_dict we weren't able to reach it yet...
 				is_in = 1;
@@ -73,28 +83,29 @@ p_hop_t *get_hop_counts(uint8_t *count)
 		}
 
 		*count = (uint8_t)(tmp_hop_ptr - hop_dict);
-
 	}
+	
+	return hop_dict;
 }
 
 void purge()
 {
-	CCIF unsigned long this_time = clock_seconds();
-	signed long diff = this_time - last_time;
+	uint16_t this_time = clock_seconds();
+	int16_t diff = this_time - last_time;
 
 	//Test for clock overflow
-	if (diff < (signed long)0)
+	if (diff < 0x0000)
 	{
 		//correct diff
-		diff = diff % pow(2, sizeof(CCIF unsigned long) * 8);
+		diff = diff % (int16_t)pow(2, sizeof(unsigned long) * 8);
 	}
 
 	//Seconds to Minutes
-	diff = diff / 60;
+	diff = diff / 0x003C;
 
 	//Iterate over all edges and remove them when ttl <= 0
-	uint8_t *count;
-	p_edge_t **all_edges = get_all_edges(count);
+	uint8_t count;
+	p_edge_t **all_edges = get_all_edges(&count);
 
 	uint8_t i;
 	for (i = 0; i < count; i++)
@@ -102,19 +113,8 @@ void purge()
 		//If ttl is over
 		if (all_edges[i]->ttl - diff <= 0x00)
 		{
-			uint8_t tmp_cnt;
-			p_edge_t **ingiong = get_ingoing_edges(&(all_edges[i]->dst), &tmp_cnt);
-			if (ingiong != NULL)
-			{
-				free(ingiong);
-			} else {
-				//TODO: TBD: when to delete notes
-				//No incoming edges to this node anymore, it can't be reached
-				//remove_node(&(all_edges[i]->dst);
-			}
-
 			//Remove this edge
-			remove_edge(all_edges[i].src, all_edges[i].dst);
+			remove_edge(&(all_edges[i]->src), &(all_edges[i]->dst));
 		} else {
 			//Set new - decreased - ttl
 			all_edges[i]->ttl = all_edges[i]->ttl - diff;
