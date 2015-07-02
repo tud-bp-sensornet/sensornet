@@ -20,6 +20,9 @@
  *                              p_node_t src, (p_edge_t src_drain, p_node_t drain)*
  *                              If a src has too many edges another packet will be serialized containing
  *                              the remaining edges and drains.
+ *								If minimal package length (2 Nodes and one Edge) is bigger than PACKETBUF_SIZE
+ *								or K == 0 NULL is returned and the function behind the function pointer will
+ *                              not get called.
  */
 void serialize(void (*packet_complete)(const void *packet_data, size_t length));
 
@@ -31,6 +34,7 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length));
  *
  *                              This function deserializes the (sub) graph and updates our local view graph.
  *                              This function will not free the memory pointed by packet nor change the sender.
+ *                              Function will create a new edge to the neighbour we got the informations from.
  */
 void deserialize(const rimeaddr_t *sender, void *packet, size_t length);
 

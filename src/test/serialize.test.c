@@ -45,6 +45,10 @@ void packet_complete_multi(const void *packet_data, size_t length)
 	deserialize(&sender, packet_data, length);
 }
 
+/**
+ * Register unit tests that will be executed by using
+ * the UNIT_TEST_RUN macro.
+ */
 UNIT_TEST_REGISTER(root_test, "Root test");
 UNIT_TEST_REGISTER(multi_sub_graph_test, "Multi sub graph test");
 

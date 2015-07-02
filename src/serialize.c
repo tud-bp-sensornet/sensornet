@@ -10,7 +10,8 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 {
 
 	//On K==0 no information will be exchanged
-	if (K == 0)
+	//If minimal package length (2 Nodes and one Edge) is bigger than PACKETBUF_SIZE, do nothing.
+	if (K == 0 || (sizeof(p_node_t) * 2 + sizeof(p_edge_t)) > PACKETBUF_SIZE)
 	{
 		return;
 	}
