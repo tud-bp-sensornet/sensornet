@@ -76,9 +76,17 @@ void add_node(const p_node_t node)
 /**
  * \brief Removes the node with the specified rimeaddr from the memory and frees the memory used by the node
  * \param addr Pointer to the rimeaddr
+ *
+ * Removes the node with the specified rimeaddr from the memory and frees the memory used by the node.
+ * If a parameter is NULL, the function immediately returns and does nothing.
  */
 void remove_node(const rimeaddr_t *addr)
 {
+	//Don't do anything if parameters are NULL
+	if (addr == NULL)
+	{
+		return;
+	}
 	uint8_t i;
 	for (i = 0; i < node_count; i++)
 	{
@@ -105,13 +113,16 @@ void remove_node(const rimeaddr_t *addr)
  *
  * Returns an array of pointers to the saved nodes in memory. The array should neither be freed, nor changed outside of graph.c.
  * The free spaces (NULL pointers) will always be located after the filled spaces.
+ * If a parameter is NULL, the function immediately returns NULL.
  */
 p_node_t **get_all_nodes(uint8_t *count)
 {
-	if (count != NULL)
+	//Don't do anything if parameters are NULL
+	if (count == NULL)
 	{
-		*count = node_count;
+		return NULL;
 	}
+	*count = node_count;
 	return node_memory_array;
 }
 
@@ -119,9 +130,17 @@ p_node_t **get_all_nodes(uint8_t *count)
  * \brief Returns a pointer to the node with the specified rimeaddr. If the node does not exist, NULL is returned.
  * \param addr Pointer to the rimeaddr
  * \retval Pointer to the node
+ *
+ * Returns a pointer to the node with the specified rimeaddr. If the node does not exist, NULL is returned.
+ * If a parameter is NULL, the function immediately returns NULL.
  */
 p_node_t *find_node(const rimeaddr_t *addr)
 {
+	//Don't do anything if parameters are NULL
+	if (addr == NULL)
+	{
+		return NULL;
+	}
 	uint8_t i;
 	for (i = 0; i < node_count; i++)
 	{
@@ -188,9 +207,17 @@ void add_edge(const p_edge_t edge)
  * \brief Removes the edge with the two specified rimeaddr from the memory and frees the memory used by the edge
  * \param src Pointer to the rimeaddr of the source node
  * \param dst Pointer to the rimeaddr of the destination node
+ *
+ * Removes the edge with the two specified rimeaddr from the memory and frees the memory used by the edge.
+ * If a parameter is NULL, the function immediately returns and does nothing.
  */
 void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
 {
+	//Don't do anything if parameters are NULL
+	if (src == NULL || dst == NULL)
+	{
+		return;
+	}
 	uint8_t i;
 	for (i = 0; i < edge_count; i++)
 	{
@@ -217,12 +244,15 @@ void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
  *
  * Returns an array of pointers to the saved edges in memory. The array should neither be freed, nor changed outside of graph.c.
  * The free spaces (NULL pointers) will always be located after the filled spaces.
+ * If a parameter is NULL, the function immediately returns NULL.
  */
 p_edge_t **get_all_edges(uint8_t *count){
-	if (count != NULL)
+	//Don't do anything if parameters are NULL
+	if (count == NULL)
 	{
-		*count = edge_count;
+		return NULL;
 	}
+	*count = edge_count;
 	return edge_memory_array;
 }
 
@@ -235,23 +265,24 @@ p_edge_t **get_all_edges(uint8_t *count){
  * Returns an array of pointers to the outgoing edges of the node with the specified rimeaddr.
  * If no outgoing edges for the node were found, NULL is returned. In this case no free is needed.
  * WARNING: The returned array has to be freed after the function was called.
+ * If a parameter is NULL, the function immediately returns NULL.
  */
 p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
 {
-	//count how many outgoing edges the node has
-	if (count != NULL)
+	//Don't do anything if parameters are NULL
+	if (src_addr == NULL || count == NULL)
 	{
-		*count = 0;
+		return NULL;
 	}
+
+	//count how many outgoing edges the node has
+	*count = 0;
 	uint8_t i;
 	for (i = 0; i < edge_count; i++)
 	{
 		if (rimeaddr_cmp(&(edge_memory_array[i]->src), src_addr))
 		{
-			if (count != NULL)
-			{
-				*count = (*count)+1;
-			}
+			*count = (*count)+1;
 		}
 	}
 
@@ -287,23 +318,24 @@ p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
  * Returns an array of pointers to the ingoing edges of the node with the specified rimeaddr
  * If no ingoing edges for the node were found, NULL is returned. In this case no free is needed.
  * WARNING: The returned array has to be freed after the function was called.
+ * If a parameter is NULL, the function immediately returns NULL.
  */
 p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count)
 {
-	//count how many ingoing edges the node has
-	if (count != NULL)
+	//Don't do anything if parameters are NULL
+	if (dst_addr == NULL || count == NULL)
 	{
-		*count = 0;
+		return NULL;
 	}
+
+	//count how many ingoing edges the node has
+	*count = 0;
 	uint8_t i;
 	for (i = 0; i < edge_count; i++)
 	{
 		if (rimeaddr_cmp(&(edge_memory_array[i]->dst), dst_addr))
 		{
-			if (count != NULL)
-			{
-				*count = (*count)+1;
-			}
+			*count = (*count)+1;
 		}
 	}
 
@@ -335,9 +367,18 @@ p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count)
  * \param src Pointer to the rimeaddr of the source node
  * \param dst Pointer to the rimeaddr of the destination node
  * \retval A pointer to the edge if it was found, NULL if it wasn't.
+ *
+ * Returns a pointer to the edge with the source and destination nodes that have the two specified rimeaddr. If it does not exist in the memory, return NULL.
+ * If a parameter is NULL, the function immediately returns NULL.
  */
 p_edge_t *find_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
 {
+	//Don't do anything if parameters are NULL
+	if (src == NULL || dst == NULL)
+	{
+		return NULL;
+	}
+
 	uint8_t i;
 	for (i = 0; i < edge_count; i++)
 	{
