@@ -3,10 +3,19 @@
  * \author tud-bp-sensornet
  */
 
+#define __GRAPH_OPERATIONS_DEBUG__ 0
+
 #include <stdlib.h>
 #include <math.h>
 
 #include "graph-operations.h"
+
+#if __GRAPH_OPERATIONS_DEBUG__
+#include <stdio.h>
+#define PRINTF(...) printf(__VA_ARGS__)
+#else
+#define PRINTF(...)
+#endif
 
 unsigned long last_time = 0;
 
@@ -16,6 +25,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	//Don't do anything if parameters are NULL
 	if (count == NULL)
 	{
+		PRINTF("Debug: Count was a NULL pointer. Function will not proceed.");
 		return NULL;
 	}
 
@@ -24,20 +34,28 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	p_edge_t **all_edges = get_all_edges(&edge_count);
 
 	//If there are no nodes or edges do nothing
-	if(node_count == 0x00 || edge_count == 0x00)
+	if (node_count == 0x00 || edge_count == 0x00)
 	{
+		PRINTF("Debug: Empty Graph. Function will not proceed.");
 		*count = 0x00;
 		return NULL;
 	}
 
 	p_hop_t *hop_dict = malloc((node_count - 0x01) * (uint8_t)sizeof(p_hop_t));
 
+	//Test if memory could be allocated
+	if (hop_dict == NULL)
+	{
+		PRINTF("Debug: Could not allocate memory. Function will not proceed.");
+		return NULL;
+	}
+
 	//Initialize with zero values
 	p_hop_t null_hop = {rimeaddr_null, 0x00};
 	uint8_t i;
 	for (i = 0; i < node_count - 1; i++)
 	{
-		hop_dict[i] = null_hop;
+		memcpy(&(hop_dict[i]), &null_hop, sizeof(p_hop_t));
 	}
 
 	//First get all direct neighbours
@@ -53,11 +71,18 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	}
 
 	//...Beginning with the nodes with the lowest hopcount...
-	for (i = 0; i < (int)(node_count - 1); i++)
+	for (i = 0; i < node_count - 1; i++)
 	{
 		//...we get all outgoing edges from this node...
 		uint8_t tmp_count;
 		p_edge_t **tmp_outgoing = get_outgoing_edges(&(hop_dict[i].addr), &tmp_count);
+
+		if (tmp_outgoing == NULL)
+		{
+			PRINTF("Debug: Node has no outgoing edges.");
+			break;
+		}
+
 		uint8_t j;
 		for (j = 0; j < tmp_count; j++)
 		{
@@ -67,15 +92,15 @@ p_hop_t *get_hop_counts(uint8_t *count)
 			for (k = 0; k < (node_count - 1); k++)
 			{
 				if (rimeaddr_cmp(&(tmp_outgoing[j]->dst), &(hop_dict[k].addr)))
-			{
-				//...if the node is not in our hop_dict we weren't able to reach it yet...
-				is_in = 1;
-				break;
+				{
+					//...if the node is not in our hop_dict we weren't able to reach it yet...
+					is_in = 1;
+					break;
+				}
 			}
-		}
 
-		//...but now we are able to.
-		if (is_in == 0)
+			//...but now we are able to.
+			if (is_in == 0)
 			{
 				tmp_hop_ptr->addr = tmp_outgoing[j]->dst;
 				tmp_hop_ptr->hop_count = hop_dict[i].hop_count + 0x01;
@@ -85,7 +110,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 
 		*count = (uint8_t)(tmp_hop_ptr - hop_dict);
 	}
-	
+
 	return hop_dict;
 }
 /*---------------------------------------------------------------------------*/
@@ -99,7 +124,9 @@ void purge()
 	{
 		//correct diff
 		diff = (((uint16_t)pow(2, (sizeof(unsigned long) * 8) - 1)) + diff) / 0x003C;
-	}else{
+	}
+	else
+	{
 		//Seconds to Minutes
 		diff = diff / 0x003C;
 	}
@@ -107,6 +134,12 @@ void purge()
 	//Iterate over all edges and remove them when ttl <= 0
 	uint8_t count;
 	p_edge_t **all_edges = get_all_edges(&count);
+
+	if (all_edges == NULL)
+	{
+		PRINTF("Debug: There are no edges in the graph. Function will not proceed.");
+		return;
+	}
 
 	uint8_t i;
 	for (i = 0; i < count; i++)
@@ -116,7 +149,9 @@ void purge()
 		{
 			//Remove this edge
 			remove_edge(&(all_edges[i]->src), &(all_edges[i]->dst));
-		} else {
+		}
+		else
+		{
 			//Set new - decreased - ttl
 			all_edges[i]->ttl = all_edges[i]->ttl - diff;
 		}

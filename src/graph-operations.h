@@ -25,10 +25,12 @@ typedef struct {
  *
  * Returns an array of p_hop_t. The array should be freed, by the caller.
  * Array layout:
- * (node with 1 hop)*, (node with 2 hops)*, ..., (node with n-1 hops)*, (node with n hops)+
+ * Nodes are sorted by its hopcount to root.
+ * (node with 1 hop)+, (node with 2 hops)+, ..., (node with n-1 hops)+, (node with n hops)+
  * with n is the longest shortest path from root.
  * If count is a NULL pointer or the graph has no edges or nodes, the function will return NULL.
  * If there is no hop reachable from root, the returned pointer must be freed, too.
+ * If no memory for the array could be allocated, the function will return NULL.
  */
 p_hop_t *get_hop_counts(uint8_t *count);
 

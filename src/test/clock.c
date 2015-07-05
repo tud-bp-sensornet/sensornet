@@ -9,7 +9,7 @@
 #include <time.h>
 #include <sys/time.h>
 
-unsigned long tme = 0x0000;
+unsigned long tme = (unsigned long)0;
 
 /*---------------------------------------------------------------------------*/
 clock_time_t
