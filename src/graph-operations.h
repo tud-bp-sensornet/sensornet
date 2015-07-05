@@ -14,8 +14,8 @@
  * The node is represented with its rimeaddr.
  */
 typedef struct {
-    rimeaddr_t addr;
-    uint8_t hop_count;
+	rimeaddr_t addr;
+	uint8_t hop_count;
 } p_hop_t;
 
 /**

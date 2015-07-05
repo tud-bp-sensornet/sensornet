@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 
-#include "contiki.h"
 #include "sys/clock.h"
 #include "graph.h"
 #include "graph-operations.h"
@@ -231,8 +230,6 @@ UNIT_TEST(empty_purge)
  */
 UNIT_TEST(delete_and_decrement_purge)
 {
-
-	clock_init();
 
 	p_node_t r, n11, n12, n0;
 

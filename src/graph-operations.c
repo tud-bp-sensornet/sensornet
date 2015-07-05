@@ -10,6 +10,7 @@
 
 unsigned long last_time = 0;
 
+/*---------------------------------------------------------------------------*/
 p_hop_t *get_hop_counts(uint8_t *count)
 {
 	//Don't do anything if parameters are NULL
@@ -87,7 +88,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	
 	return hop_dict;
 }
-
+/*---------------------------------------------------------------------------*/
 void purge()
 {
 	uint16_t this_time = clock_seconds();
@@ -97,11 +98,11 @@ void purge()
 	if (diff < 0x0000)
 	{
 		//correct diff
-		diff = diff % (int16_t)pow(2, sizeof(unsigned long) * 8);
+		diff = (((uint16_t)pow(2, (sizeof(unsigned long) * 8) - 1)) + diff) / 0x003C;
+	}else{
+		//Seconds to Minutes
+		diff = diff / 0x003C;
 	}
-
-	//Seconds to Minutes
-	diff = diff / 0x003C;
 
 	//Iterate over all edges and remove them when ttl <= 0
 	uint8_t count;
@@ -123,3 +124,4 @@ void purge()
 
 	last_time = clock_seconds();
 }
+/*---------------------------------------------------------------------------*/
