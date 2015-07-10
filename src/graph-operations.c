@@ -25,7 +25,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	//Don't do anything if parameters are NULL
 	if (count == NULL)
 	{
-		PRINTF("Debug: Count was a NULL pointer. Function will not proceed.");
+		PRINTF("Debug: Count was a NULL pointer. Function will not proceed.\n");
 		return NULL;
 	}
 
@@ -33,10 +33,10 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	node_count = get_node_count();
 	p_edge_t **all_edges = get_all_edges(&edge_count);
 
-	//If there are no nodes or edges do nothing
-	if (node_count == 0x00 || edge_count == 0x00)
+	//If there are 0-1 nodes or edges do nothing
+	if (node_count <= 0x01 || edge_count == 0x00)
 	{
-		PRINTF("Debug: Empty Graph. Function will not proceed.");
+		PRINTF("Debug: Empty Graph. Function will not proceed.\n");
 		*count = 0x00;
 		return NULL;
 	}
@@ -46,7 +46,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	//Test if memory could be allocated
 	if (hop_dict == NULL)
 	{
-		PRINTF("Debug: Could not allocate memory. Function will not proceed.");
+		PRINTF("Debug: Could not allocate memory. Function will not proceed.\n");
 		return NULL;
 	}
 
@@ -70,47 +70,50 @@ p_hop_t *get_hop_counts(uint8_t *count)
 		}
 	}
 
-	//...Beginning with the nodes with the lowest hopcount...
-	for (i = 0; i < node_count - 1; i++)
+	//Procedd only iff there are any outgoing edges from root
+	if ((uint8_t)(tmp_hop_ptr - hop_dict) != 0)
 	{
-		//...we get all outgoing edges from this node...
-		uint8_t tmp_count;
-		p_edge_t **tmp_outgoing = get_outgoing_edges(&(hop_dict[i].addr), &tmp_count);
-
-		if (tmp_outgoing == NULL)
+		//Beginning with the nodes with the lowest hopcount...
+		for (i = 0; i < node_count - 1; i++)
 		{
-			PRINTF("Debug: Node has no outgoing edges.");
-			break;
-		}
+			//...we get all outgoing edges from this node...
+			uint8_t tmp_count;
+			p_edge_t **tmp_outgoing = get_outgoing_edges(&(hop_dict[i].addr), &tmp_count);
 
-		uint8_t j;
-		for (j = 0; j < tmp_count; j++)
-		{
-			//...and check if we reach a node we couldn't earlier...
-			uint8_t k;
-			uint8_t is_in = 0;
-			for (k = 0; k < (node_count - 1); k++)
+			if (tmp_outgoing == NULL)
 			{
-				if (rimeaddr_cmp(&(tmp_outgoing[j]->dst), &(hop_dict[k].addr)))
+				PRINTF("Debug: Node has no outgoing edges.\n");
+				break;
+			}
+
+			uint8_t j;
+			for (j = 0; j < tmp_count; j++)
+			{
+				//...and check if we reach a node we couldn't earlier...
+				uint8_t k;
+				uint8_t is_in = 0;
+				for (k = 0; k < (node_count - 1); k++)
 				{
-					//...if the node is not in our hop_dict we weren't able to reach it yet...
-					is_in = 1;
-					break;
+					if (rimeaddr_cmp(&(tmp_outgoing[j]->dst), &(hop_dict[k].addr)))
+					{
+						//...if the node is not in our hop_dict we weren't able to reach it yet...
+						is_in = 1;
+						break;
+					}
+				}
+
+				//...but now we are able to.
+				if (is_in == 0)
+				{
+					tmp_hop_ptr->addr = tmp_outgoing[j]->dst;
+					tmp_hop_ptr->hop_count = hop_dict[i].hop_count + 0x01;
+					tmp_hop_ptr++;
 				}
 			}
-
-			//...but now we are able to.
-			if (is_in == 0)
-			{
-				tmp_hop_ptr->addr = tmp_outgoing[j]->dst;
-				tmp_hop_ptr->hop_count = hop_dict[i].hop_count + 0x01;
-				tmp_hop_ptr++;
-			}
 		}
-
-		*count = (uint8_t)(tmp_hop_ptr - hop_dict);
 	}
 
+	*count = (uint8_t)(tmp_hop_ptr - hop_dict);
 	return hop_dict;
 }
 /*---------------------------------------------------------------------------*/
@@ -137,18 +140,83 @@ void purge()
 
 	if (all_edges == NULL)
 	{
-		PRINTF("Debug: There are no edges in the graph. Function will not proceed.");
+		PRINTF("Debug: There are no edges in the graph. Function will not proceed.\n");
 		return;
 	}
 
 	uint8_t i;
-	for (i = 0; i < count; i++)
+	uint8_t deleted = 0;
+	for (i = 0; i < count - deleted; i++)
 	{
 		//If ttl is over
 		if (all_edges[i]->ttl - diff <= 0x00)
 		{
+			//Save rimeaddr
+			rimeaddr_t src = all_edges[i]->src;
+			rimeaddr_t dst = all_edges[i]->dst;
+
 			//Remove this edge
 			remove_edge(&(all_edges[i]->src), &(all_edges[i]->dst));
+
+			//Do not delete root
+			if (!rimeaddr_cmp(&src, &rimeaddr_node_addr))
+			{
+				//Check for orphan nodes
+				uint8_t src_out_count;
+				p_edge_t **src_out = get_outgoing_edges(&src, &src_out_count);
+
+				uint8_t src_in_count;
+				p_edge_t **src_in = get_ingoing_edges(&src, &src_in_count);
+
+				//Delete orphan nodes
+				if (src_out_count == 0 && src_in_count == 0)
+				{
+					remove_node(&src);
+				}
+				else
+				{
+					if (src_out != NULL)
+					{
+						free(src_out);
+					}
+
+					if (src_in != NULL)
+					{
+						free(src_in);
+					}
+				}
+			}
+
+			if (!rimeaddr_cmp(&dst, &rimeaddr_node_addr))
+			{
+				uint8_t dst_out_count;
+				p_edge_t **dst_out = get_outgoing_edges(&dst, &dst_out_count);
+
+				uint8_t dst_in_count;
+				p_edge_t **dst_in = get_ingoing_edges(&dst, &dst_in_count);
+
+				if (dst_out_count == 0 && dst_in_count == 0)
+				{
+					remove_node(&dst);
+				}
+				else
+				{
+					if (dst_out != NULL)
+					{
+						free(dst_out);
+					}
+
+					if (dst_in != NULL)
+					{
+						free(dst_in);
+					}
+				}
+
+			}
+
+			//Array will be rearranged, adapt to new array
+			i--;
+			deleted++;
 		}
 		else
 		{

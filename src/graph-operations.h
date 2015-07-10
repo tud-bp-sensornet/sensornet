@@ -13,7 +13,8 @@
  * This struct represents an association between a node and it's hop count to root (this node)
  * The node is represented with its rimeaddr.
  */
-typedef struct {
+typedef struct
+{
 	rimeaddr_t addr;
 	uint8_t hop_count;
 } p_hop_t;
@@ -41,7 +42,8 @@ p_hop_t *get_hop_counts(uint8_t *count);
  *
  * Must be called at minimum once before a clock overflow happens.
  * Multiple clock overflows without calling purge will result in undefined behaviour when purge is called.
- * This function DOES NOT delete nodes.
+ * Will delete a node iff node has no ingoing and outgoing edges.
+ * Root will never be deleted.
  */
 void purge();
 

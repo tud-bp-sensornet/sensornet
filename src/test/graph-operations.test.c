@@ -214,6 +214,13 @@ UNIT_TEST(empty_purge)
 
 	purge();
 
+	uint8_t node_count;
+	p_node_t **all_nodes = get_all_nodes(&node_count);
+
+	//Root should still be there
+	UNIT_TEST_ASSERT(all_nodes[0]->addr.u8[0] == r.addr.u8[0]);
+	UNIT_TEST_ASSERT(node_count == 0x01);
+
 	UNIT_TEST_END();
 
 	remove_node(&(r.addr));
@@ -221,29 +228,33 @@ UNIT_TEST(empty_purge)
 
 /**
  * Graph:
- *     r                      r                      r
- *    / \             ->       \             ->
- * n11   n12     n0       n11   n12     n0       n11   n12     n0
+ *     r         n1             r                    r
+ *    / \        |      ->       \           ->
+ * n11   n12     n0               n12
  * Test purge with a graph with edges to be deleted and to be decremented
+ * and nodes to be deleted.
  * Tests the functions:
  * void purge();
  */
 UNIT_TEST(delete_and_decrement_purge)
 {
 
-	p_node_t r, n11, n12, n0;
+	p_node_t r, n11, n12, n0, n1;
 
 	r.addr = rimeaddr_null;
 	n11.addr = rimeaddr_null;
 	n12.addr = rimeaddr_null;
 	n0.addr = rimeaddr_null;
+	n1.addr = rimeaddr_null;
 	r.addr.u8[0] = 0x01;
 	n11.addr.u8[0] = 0x02;
 	n12.addr.u8[0] = 0x03;
 	n0.addr.u8[0] = 0x06;
+	n1.addr.u8[0] = 0x07;
 
-	p_edge_t er11 = {r.addr, n11.addr, 0x01}; //1 Minute ttl
-	p_edge_t er12 = {r.addr, n12.addr, 0x0A}; //10 Minute ttl
+	p_edge_t er11 = {r.addr, n11.addr, 0x01}; //1 minute ttl
+	p_edge_t er12 = {r.addr, n12.addr, 0x0A}; //10 minute ttl
+	p_edge_t e10 = {n1.addr, n0.addr, 0x01}; //1 minute ttl
 
 	rimeaddr_set_node_addr(&(r.addr));
 
@@ -251,13 +262,15 @@ UNIT_TEST(delete_and_decrement_purge)
 	add_node(n12);
 	add_node(n0);
 	add_node(n11);
+	add_node(n1);
 
 	add_edge(er12);
 	add_edge(er11);
+	add_edge(e10);
 
 	UNIT_TEST_BEGIN();
 
-	clock_set_seconds((unsigned long) 300); //Set clock to 5 Minutes
+	clock_set_seconds((unsigned long) 300); //Set clock to 5 minutes
 
 	purge();
 
@@ -271,12 +284,10 @@ UNIT_TEST(delete_and_decrement_purge)
 	UNIT_TEST_ASSERT(edge_count == 0x01);
 	UNIT_TEST_ASSERT(all_edges[0]->ttl == 0x05); //5 Minutes left
 
-	//Nodes are not touched
+	//Nodes only 2 nodes left
 	UNIT_TEST_ASSERT(all_nodes[0]->addr.u8[0] == r.addr.u8[0]);
 	UNIT_TEST_ASSERT(all_nodes[1]->addr.u8[0] == n12.addr.u8[0]);
-	UNIT_TEST_ASSERT(all_nodes[2]->addr.u8[0] == n0.addr.u8[0]);
-	UNIT_TEST_ASSERT(all_nodes[3]->addr.u8[0] == n11.addr.u8[0]);
-	UNIT_TEST_ASSERT(node_count == 0x04);
+	UNIT_TEST_ASSERT(node_count == 0x02);
 
 	//Test for clock overflow
 	clock_set_seconds((unsigned long) 60); //Set clock to 1 Minute
@@ -289,23 +300,17 @@ UNIT_TEST(delete_and_decrement_purge)
 	//Last edge should be deleted
 	UNIT_TEST_ASSERT(edge_count == 0x00);
 
-	//Nodes are not touched
+	//Every node is deleted except root
 	UNIT_TEST_ASSERT(all_nodes[0]->addr.u8[0] == r.addr.u8[0]);
-	UNIT_TEST_ASSERT(all_nodes[1]->addr.u8[0] == n12.addr.u8[0]);
-	UNIT_TEST_ASSERT(all_nodes[2]->addr.u8[0] == n0.addr.u8[0]);
-	UNIT_TEST_ASSERT(all_nodes[3]->addr.u8[0] == n11.addr.u8[0]);
-	UNIT_TEST_ASSERT(node_count == 0x04);
+	UNIT_TEST_ASSERT(node_count == 0x01);
 
 	UNIT_TEST_END();
 
 	remove_node(&(r.addr));
-	remove_node(&(n11.addr));
-	remove_node(&(n12.addr));
-	remove_node(&(n0.addr));
-
 }
 
-int main() {
+int main()
+{
 	init_graph();
 
 	//p_hop_t *get_hop_counts(uint8_t *count);
