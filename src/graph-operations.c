@@ -111,6 +111,8 @@ p_hop_t *get_hop_counts(uint8_t *count)
 					tmp_hop_ptr++;
 				}
 			}
+
+			free(tmp_outgoing);
 		}
 	}
 
