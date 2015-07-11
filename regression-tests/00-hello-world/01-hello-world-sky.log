@@ -1,0 +1,2304 @@
+ INFO [main] (GUI.java:1325) - > Starting Cooja
+ INFO [main] (GUI.java:2846) - External tools default settings: /external_tools_linux.config
+ INFO [main] (GUI.java:2876) - External tools user settings: /home/user/.cooja.user.properties
+ INFO [main] (Simulation.java:423) - Simulation random seed: 6382288755305265633
+ WARN [main] (GUI.java:4232) - Replaced [CONTIKI_DIR]/examples/hello-world/hello-world.sky with /home/user/Desktop/sensornet/lib/contiki/examples/hello-world/hello-world.sky (default: ../../lib/contiki), but could not find it. This does not have to be an error, as the file might be created later.
+ INFO [main] (CompileContiki.java:140) - > make hello-world.sky TARGET=sky 
+ INFO [main] (MspMote.java:232) - Loading firmware from: /home/user/Desktop/sensornet/lib/contiki/examples/hello-world/hello-world.sky
+Warning: Unable to parse _end symbol. I'm guessing that heap starts at 0x05b80
+Warning: Unable to parse _end symbol. I'm guessing that heap starts at 0x05b80
+ WARN [main] (GUI.java:4232) - Replaced [CONTIKI_DIR]-2.7/regression-tests/02-hello-world/hello-world.js with /home/user/Desktop/sensornet/lib/contiki-2.7/regression-tests/02-hello-world/hello-world.js (default: ../../lib/contiki), but could not find it. This does not have to be an error, as the file might be created later.
+ INFO [main] (ScriptRunner.java:421) - Test script deactivated
+FATAL [main] (ScriptRunner.java:316) - Failed to load script from: /home/user/Desktop/sensornet/lib/contiki-2.7/regression-tests/02-hello-world/hello-world.js
+ INFO [main] (LogScriptEngine.java:265) - Script timeout in 100000 ms
+ INFO [main] (ScriptRunner.java:378) - Test script activated
+ INFO [main] (GUI.java:1771) - Visualized plugin was not started: class se.sics.cooja.plugins.SimControl
+ INFO [main] (GUI.java:1771) - Visualized plugin was not started: class se.sics.cooja.plugins.LogListener
+ INFO [Thread-2] (Simulation.java:252) - Simulation main loop started, system time: 1436618759819
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+ INFO [Thread-2] (LogScriptEngine.java:389) - Test script at 5.00%, done in 8.4 sec
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+ INFO [Thread-2] (LogScriptEngine.java:389) - Test script at 10.00%, done in 5.2 sec
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+ INFO [Thread-2] (LogScriptEngine.java:389) - Test script at 15.00%, done in 3.9 sec
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt
+DEBUG [Thread-2] (MspMote.java:221) - 1: TimerA: triggering interrupt TIV: 2
+ INFO [Thread-1] (LogScriptEngine.java:309) - Test script finished
+ INFO [Thread-2] (Simulation.java:311) - Simulation main loop stopped, system time: 1436618760478	Duration: 659 ms	Simulated time 15516 ms	Ratio 23.544764795144157
+ INFO [AWT-EventQueue-0] (ScriptRunner.java:421) - Test script deactivated

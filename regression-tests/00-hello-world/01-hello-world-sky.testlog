@@ -1,0 +1,7 @@
+Random seed: 6382288755305265633
+first mote output: 'Rime started with address 1.0'
+second mote output: 'MAC 01:00:00:00:00:00:00:00 Contiki-2.7 started. Node id is set to 1.'
+waiting for hello world output from mote 1
+ok, reporting success now
+TEST OK
+Test ended at simulation time: 15516471

@@ -2,10 +2,8 @@
 #include "net/rime.h"
 
 #include "graph.h"
+#include "graph-operations.h""
 #include "debug_coojaSimulation_graph.h"
-
-void debug_printGraphNode(p_node_t* p_node, uint16_t i);
-void debug_printGraphEdge(p_node_t* source_node, p_edge_t* p_edge, uint16_t i);
 
 /**
  * Prints the graph by printing Node informations and Edge informations while iterating it
@@ -13,43 +11,23 @@ void debug_printGraphEdge(p_node_t* source_node, p_edge_t* p_edge, uint16_t i);
  * Testcase:Edge:%d,%d\n	with the rimeaddr.u8[0] of the source and the rimeaddr.u8[0] of the drain
  * graph: the graph that should be printed
  */
-void debug_printGraph(p_graph_t* graph){
+void debug_printGraph(){
 	printf("Print Graph for Node %d\n", rimeaddr_node_addr);
-	debug_printGraphNode(graph->root,0);
-}
+	uint8_t count = 0;
 
-/**
- * Prints the current Node
- * Testcase:Node:%d,%d\n	with the rimeaddr.u8[0] and the depth
- * p_node: the current Node
- * i: the current depth of the graph
- */
-void debug_printGraphNode(p_node_t* p_node, uint16_t i){
-	printf("Testcase:Node:%d,%d\n", p_node->addr.u8[0],i);
-
-	//Only go to the depth of K
-	if(i<K){
-		//If the node has an edge, iterate it
-		if(p_node->edges != NULL){
-			debug_printGraphEdge(p_node, p_node->edges, i+1);
-		}
+	//print nodes
+	p_hop_t *hops = get_hop_counts(&count);
+	uint8_t i;
+	for (i = 0; i < count; i++)
+	{
+		printf("Testcase:Node:%d,%d\n", hops[i].addr.u8[0],hops[i].hop_count);
 	}
-}
+	free(hops);
 
-/**
- * Prints the current Edge
- * Testcase:Edge:%d,%d\n	with the rimeaddr.u8[0] of the source and the rimeaddr.u8[0] of the drain
- * source_node: the source of p_edge
- * p_edge: the current Edge
- * i: the current depth of the graph
- */
-void debug_printGraphEdge(p_node_t* source_node, p_edge_t* p_edge, uint16_t i){
-	printf("Testcase:Edge:%d,%d\n", source_node->addr.u8[0],p_edge->drain->addr.u8[0]);
-
-	//If the source_node has more edges, iterate them
-	if(p_edge->next != NULL){
-		debug_printGraphEdge(source_node, p_edge->next, i);
+	//print edges
+	p_edge_t **edge_array = get_all_edges(&count);
+	for (i = 0; i < count; i++)
+	{
+		printf("Testcase:Edge:%d,%d\n", edge_array[i]->src.u8[0], edge_array[i]->dst.u8[0]);
 	}
-	//Iterate the drain of the Edge
-	debug_printGraphNode(p_edge->drain, i);
 }
