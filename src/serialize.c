@@ -18,7 +18,7 @@
 #define PRINTF(...)
 #endif
 
-void package_and_send_edges(void *memory, void *memory_ptr, rimeaddr_t *src, void (*packet_complete)(const void *packet_data, size_t length));
+void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, void (*packet_complete)(const void *packet_data, size_t length));
 
 /*---------------------------------------------------------------------------*/
 void serialize(void (*packet_complete)(const void *packet_data, size_t length))
@@ -36,10 +36,9 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 
 	//Single memory to avoid fragementation
 	//Memory layout: p_node_t src, (p_edge_t src_drain, p_node_t drain)*
-	void *memory = malloc(PACKETBUF_SIZE);
-	void *memory_ptr = memory;
+	void *memory_base = malloc(PACKETBUF_SIZE);
 
-	if (memory == NULL)
+	if (memory_base == NULL)
 	{
 		PRINTF("Debug: Could not allocate memory. Function will not proceed.\n");
 		return;
@@ -51,21 +50,18 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 	if (root == NULL)
 	{
 		PRINTF("Debug: Could not find root in graph. Function will not proceed.\n");
-		free(memory);
+		free(memory_base);
 		return;
 	}
-
-	PRINTF("Debug: Pack root %d\n", root->addr.u8[0]);
-	memcpy(memory_ptr, root, sizeof(p_node_t));
-	memory_ptr = memory_ptr + sizeof(p_node_t);
 
 	//Package all outgoing edges and edge destinations from root (on K >= 2) (reachable in 1 hops)
 	if (K >= 2)
 	{
-		package_and_send_edges(memory, memory_ptr, &rimeaddr_node_addr, packet_complete);
+		package_and_send_edges_and_nodes(memory_base, root, packet_complete);
 	}
 	else
 	{
+		free(memory_base);
 		return;
 	}
 
@@ -87,57 +83,62 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 			if (nd == NULL)
 			{
 				PRINTF("Debug: Could not find node in graph. Function will not proceed.\n");
+				free(memory_base);
 				free(hops);
 				return;
 			}
 
-			memcpy(memory, nd, sizeof(p_node_t));
-			memory_ptr = memory + sizeof(p_node_t);
-			package_and_send_edges(memory, memory_ptr, &(hops[l].addr), packet_complete);
+			package_and_send_edges_and_nodes(memory_base, nd, packet_complete);
 		}
 	}
 
-	if (hops != NULL)
-	{
-		free(hops);
-	}
+	free(memory_base);
+	free(hops);
 }
 /*---------------------------------------------------------------------------*/
-void package_and_send_edges(void *memory, void *memory_ptr, rimeaddr_t *src, void (*packet_complete)(const void *packet_data, size_t length))
+void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, void (*packet_complete)(const void *packet_data, size_t length))
 {
+
+	void *memory_current = memory_base;
+
+	PRINTF("Debug: Pack root node %d\n", root->addr.u8[0]);
+	memcpy(memory_current, root, sizeof(p_node_t));
+	memory_current = memory_current + sizeof(p_node_t);
+
 	//Get all outgoing edges from that node
 	uint8_t edge_count;
-	p_edge_t **edge_ptr_ptr = get_outgoing_edges(src, &edge_count);
+	p_edge_t **edges = get_outgoing_edges(&(root->addr), &edge_count);
 
 	PRINTF("Debug: Node has %d edges.\n", edge_count);
 
 	//Package every edge and drain
-	uint8_t j = (uint8_t)sizeof(p_node_t);
+	size_t j = sizeof(p_node_t);
 	uint8_t k;
 	for (k = 0; k < edge_count; k++)
 	{
-		PRINTF("Debug: Pack edge to %d\n", edge_ptr_ptr[k]->dst.u8[0]);
+		PRINTF("Debug: Pack edge to %d\n", edges[k]->dst.u8[0]);
 
 		//Increment package size counter
 		j = j + (sizeof(p_node_t) + sizeof(p_edge_t));
 
 		//Pack outgoing edge
-		memcpy(memory_ptr, edge_ptr_ptr[k], sizeof(p_edge_t));
-		memory_ptr = memory_ptr + sizeof(p_edge_t);
+		memcpy(memory_current, edges[k], sizeof(p_edge_t));
+		memory_current = memory_current + sizeof(p_edge_t);
 
 		//Pack drain of edge
-		p_node_t *drain = find_node(&(edge_ptr_ptr[k]->dst));
+		p_node_t *drain = find_node(&(edges[k]->dst));
 
 		if (drain == NULL)
 		{
 			PRINTF("Debug: Cannot find drain. Function will not proceed.\n");
+			free(edges);
 			return;
 		}
 
 		PRINTF("Debug: Pack node %d\n", drain->addr.u8[0]);
 
-		memcpy(memory_ptr, drain, sizeof(p_node_t));
-		memory_ptr = memory_ptr + sizeof(p_node_t);
+		memcpy(memory_current, drain, sizeof(p_node_t));
+		memory_current = memory_current + sizeof(p_node_t);
 
 		//Package will get too big in next iteration
 		PRINTF("Debug: Size is now: %d\n", j);
@@ -145,22 +146,22 @@ void package_and_send_edges(void *memory, void *memory_ptr, rimeaddr_t *src, voi
 		{
 			PRINTF("Debug: Send package (too big). Size: %d\n", j);
 			//Send subgraph
-			packet_complete(memory, (size_t)j);
+			packet_complete(memory_base, j);
 
 			//Reset size and packet
 			j = sizeof(p_node_t);
-			memory_ptr = memory + sizeof(p_node_t);
+			memory_current = memory_base + sizeof(p_node_t);
 		}
 	}
 
-	if (edge_ptr_ptr != NULL)
+	if (edges != NULL)
 	{
-		free(edge_ptr_ptr);
+		free(edges);
 	}
 
 	//Send subgraph
 	PRINTF("Debug: Send package.\n");
-	packet_complete(memory, (size_t)j);
+	packet_complete(memory_base, (size_t)j);
 }
 /*---------------------------------------------------------------------------*/
 void deserialize(const rimeaddr_t *sender, const void *packet, size_t length)

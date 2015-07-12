@@ -11,8 +11,8 @@
 #include "rimeaddr.h"
 
 /**
- * \brief			            Serializes the graph (local view) into several (sub) graphs (up to K-1 hops)
- * \param packet_complete		A function pointer which will be called if a (sub) graph was serialized
+ * \brief                       Serializes the graph (local view) into several (sub) graphs (up to K-1 hops)
+ * \param packet_complete       A function pointer which will be called if a (sub) graph was serialized
  * \param packet_data           A pointer to the memory where the (sub) graph is stored
  * \param length                The length of the serialized (sub) graph
  *
