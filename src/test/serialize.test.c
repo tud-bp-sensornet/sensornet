@@ -225,7 +225,7 @@ UNIT_TEST(multi_sub_graph_test)
 	rimeaddr_set_node_addr(&(root.addr));
 	add_node(root);
 
-	//Create a graph which serialization is bigger than the PACKETBUF_SIZE (128)
+	//Create a graph which serialization is bigger than the MAX_BROADCAST_PAYLOAD_SIZE
 	//Smallest functional node size is 2 Byte and edge is 5 Byte
 	for (size = 2; size < 21; size++) //19 edges and nodes
 	{

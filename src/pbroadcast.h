@@ -3,10 +3,17 @@
  * \author         tud-bp-sensornet
  */
 
-#ifndef __BROADCAST_H__
-#define __BROADCAST_H__
+#ifndef __PBROADCAST_H__
+#define __PBROADCAST_H__
 
-struct p_broadcast_conn;
+#include <stdlib.h>
+
+// In my experience, broadcasting will work with a payload size of up to 110 bytes (on a sky).
+// It is unclear how this limit is calculated. The following formula will give us enough leeway
+// to make sure broadcasting works, but it is not accurate. Maybe there's a good way to find
+// the maximum possible packet size.
+// The uint16_t is to account for the size of the hash of the packet.
+#define MAX_BROADCAST_PAYLOAD_SIZE (PACKETBUF_SIZE - PACKETBUF_HDR_SIZE - sizeof(uint16_t))
 
 #define BROADCAST_ATTRIBUTES  { PACKETBUF_ADDR_SENDER, PACKETBUF_ADDRSIZE }, ABC_ATTRIBUTES
 
@@ -17,10 +24,10 @@ struct p_broadcast_conn;
  * \param data      A pointer to the data part of the packetbuf
  * \param length    The size of the data part of the packetbuf
  */
-struct p_broadcast_conn {
+struct p_broadcast_conn
+{
 	struct abc_conn abc;
-
-	void (*received)(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, void *data, size_t length);
+	void (*received)(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, const void *data, size_t length);
 };
 
 /**
@@ -66,4 +73,4 @@ void p_broadcast_close(struct p_broadcast_conn *c);
  */
 int p_broadcast_send(struct p_broadcast_conn *c, void *data, size_t length);
 
-#endif /* __BROADCAST_H__ */
+#endif /* __PBROADCAST_H__ */

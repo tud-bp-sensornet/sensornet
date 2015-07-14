@@ -10,6 +10,7 @@
 #include "serialize.h"
 #include "graph.h"
 #include "graph-operations.h"
+#include "pbroadcast.h"
 
 #if __SERIALIZE_DEBUG__
 #include <stdio.h>
@@ -25,18 +26,18 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 {
 
 	PRINTF("Node size: %d Edge size: %d\n", sizeof(p_node_t), sizeof(p_edge_t));
-	PRINTF("Debug: PACKETBUF SIZE: %d\n", PACKETBUF_SIZE);
+	PRINTF("Debug: PACKETBUF SIZE: %d\n", MAX_BROADCAST_PAYLOAD_SIZE);
 
 	//On K==0 no information will be exchanged
-	//If minimal package length (2 Nodes and one Edge) is bigger than PACKETBUF_SIZE, do nothing.
-	if (K == 0 || (sizeof(p_node_t) * 2 + sizeof(p_edge_t)) > PACKETBUF_SIZE)
+	//If minimal package length (2 Nodes and one Edge) is bigger than MAX_BROADCAST_PAYLOAD_SIZE, do nothing.
+	if (K == 0 || (sizeof(p_node_t) * 2 + sizeof(p_edge_t)) > MAX_BROADCAST_PAYLOAD_SIZE)
 	{
 		return;
 	}
 
 	//Single memory to avoid fragementation
 	//Memory layout: p_node_t src, (p_edge_t src_drain, p_node_t drain)*
-	void *memory_base = malloc(PACKETBUF_SIZE);
+	void *memory_base = malloc(MAX_BROADCAST_PAYLOAD_SIZE);
 
 	if (memory_base == NULL)
 	{
@@ -142,7 +143,7 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, void (*
 
 		//Package will get too big in next iteration
 		PRINTF("Debug: Size is now: %d\n", j);
-		if (j + (sizeof(p_node_t) + sizeof(p_edge_t)) > PACKETBUF_SIZE && k + 1 < edge_count)
+		if (j + (sizeof(p_node_t) + sizeof(p_edge_t)) > MAX_BROADCAST_PAYLOAD_SIZE && k + 1 < edge_count)
 		{
 			PRINTF("Debug: Send package (too big). Size: %d\n", j);
 			//Send subgraph

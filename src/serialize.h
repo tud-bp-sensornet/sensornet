@@ -24,7 +24,7 @@
  *                              p_node_t src, (p_edge_t src_drain, p_node_t drain)*
  *                              If a src has too many edges another packet will be serialized containing
  *                              the remaining edges and drains.
- *                              If minimal package length (2 Nodes and one Edge) is bigger than PACKETBUF_SIZE
+ *                              If minimal package length (2 Nodes and one Edge) is bigger than MAX_BROADCAST_PAYLOAD_SIZE
  *                              , K == 0, no memory space could be allocated or the graph is malformed the
  *                              function will return and the function behind the function pointer will
  *                              not get called.
