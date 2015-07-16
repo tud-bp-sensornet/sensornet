@@ -8,12 +8,13 @@
 #include "graph.h"
 
 size_t tmp_length;
-const void *tmp_packet_data;
+void *tmp_packet_data;
 
 void packet_complete_root(const void *packet_data, size_t length)
 {
 	tmp_length = length;
-	tmp_packet_data = packet_data;
+	tmp_packet_data = malloc(length);
+	memcpy(tmp_packet_data, packet_data, length);
 }
 
 uint8_t called = 0x00;
@@ -185,7 +186,7 @@ UNIT_TEST(root_test)
 	UNIT_TEST_END();
 
 	remove_node(&(r.addr));
-
+	free(tmp_packet_data);
 }
 
 /**
