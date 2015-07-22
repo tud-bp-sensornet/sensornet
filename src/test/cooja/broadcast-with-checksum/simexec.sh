@@ -5,24 +5,17 @@ if [ ! -f $CONTIKI/tools/cooja/dist/cooja.jar ]; then
 	cd $CONTIKI/tools/cooja
 	ant -q jar
 	cd $OLDPWD
-	
-	#for travis
-	while [ ! -f $CONTIKI/tools/cooja/dist/cooja.jar ]
-	do
-  		sleep 2
-	done
 fi
 
 java -Xshare:auto -jar $CONTIKI/tools/cooja/dist/cooja.jar -nogui=$CSC -contiki=$CONTIKI > /dev/null
 cat COOJA.testlog
 
-if grep -q "TEST FAILED" COOJA.testlog; then
+if grep -q "TEST OK" COOJA.testlog; then
 	rm COOJA.testlog
 	rm COOJA.log
-
-	exit 1
+	exit 0
 fi
 
 rm COOJA.testlog
 rm COOJA.log
-exit 0
+exit 1
