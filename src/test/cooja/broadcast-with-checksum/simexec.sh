@@ -7,7 +7,7 @@ if [ ! -f $CONTIKI/tools/cooja/dist/cooja.jar ]; then
 	cd $OLDPWD
 fi
 
-java -Xshare:auto -jar $CONTIKI/tools/cooja/dist/cooja.jar -nogui=$CSC -contiki=$CONTIKI > /dev/null
+java -Xshare:auto -jar $CONTIKI/tools/cooja/dist/cooja.jar -nogui=$CSC -contiki=$CONTIKI
 cat COOJA.testlog
 
 if grep -q "TEST OK" COOJA.testlog; then
