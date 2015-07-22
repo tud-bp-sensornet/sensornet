@@ -26,33 +26,33 @@ before_script:
 
   ## Install old APCS ARM toolchain for mc1233x and mbxxx
   - $WGET https://raw.githubusercontent.com/wiki/malvira/libmc1322x/files/arm-2008q3-66-arm-none-eabi-i686-pc-linux-gnu.tar.bz2 &&
-  tar xjf arm-2008q3*.tar.bz2 -C /tmp/ &&
-  sudo cp -f -r /tmp/arm-2008q3/* /usr/ &&
-  rm -rf /tmp/arm-2008q3 arm-2008q3*.tar.bz2 &&
-  arm-none-eabi-gcc --version ;
+    tar xjf arm-2008q3*.tar.bz2 -C /tmp/ &&
+    sudo cp -f -r /tmp/arm-2008q3/* /usr/ &&
+    rm -rf /tmp/arm-2008q3 arm-2008q3*.tar.bz2 &&
+    arm-none-eabi-gcc --version ;
 
   ## Install mainline ARM toolchain.  gcc-arm-none-eabi is available
   ## in Ubuntu >= 14.04, but this external PPA is needed for 12.04.
   ## Install srecord
   - sudo add-apt-repository -y ppa:terry.guo/gcc-arm-embedded &&
-  sudo apt-get -qq update &&
-  sudo apt-get -qq install gcc-arm-none-eabi srecord &&
-  arm-none-eabi-gcc --version ;
+    sudo apt-get -qq update &&
+    sudo apt-get -qq install gcc-arm-none-eabi srecord &&
+    arm-none-eabi-gcc --version ;
   
   ## Install SDCC from a purpose-built bundle
   - $WGET https://raw.githubusercontent.com/wiki/g-oikonomou/contiki-sensinode/files/sdcc.tar.gz &&
-  tar xzf sdcc.tar.gz -C /tmp/ &&
-  sudo cp -f -r /tmp/sdcc/* /usr/local/ &&
-  rm -rf /tmp/sdcc sdcc.tar.gz &&
-  sdcc --version &&
-  sudo apt-get -qq install srecord ;
+    tar xzf sdcc.tar.gz -C /tmp/ &&
+    sudo cp -f -r /tmp/sdcc/* /usr/local/ &&
+    rm -rf /tmp/sdcc sdcc.tar.gz &&
+    sdcc --version &&
+    sudo apt-get -qq install srecord ;
 
   ## Clone and build cc65
   - git clone https://github.com/cc65/cc65 /tmp/cc65 &&
-  make -C /tmp/cc65 bin apple2enh atarixl c64 c128 &&
-  sudo make -C /tmp/cc65 avail &&
-  export CC65_HOME=/tmp/cc65/ &&
-  cc65 --version ;
+    make -C /tmp/cc65 bin apple2enh atarixl c64 c128 &&
+    sudo make -C /tmp/cc65 avail &&
+    export CC65_HOME=/tmp/cc65/ &&
+    cc65 --version ;
   
 script:
   ## Build code
