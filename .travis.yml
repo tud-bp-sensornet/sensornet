@@ -12,6 +12,18 @@ before_script:
     rm -rf /tmp/msp430 mspgcc*.tar.bz2 &&
     msp430-gcc --version
 
+  ## Install avr toolchain
+  - sudo apt-get -qq install gcc-avr avr-libc
+
+  ## Install 32-bit compatibility libraries
+  - sudo apt-get -qq install libc6:i386 libgcc1:i386 gcc-4.6-base:i386
+      libstdc++5:i386 libstdc++6:i386
+
+  ## Install RL78 GCC toolchain
+  - sudo apt-get install libncurses5:i386 zlib1g:i386
+  - $WGET http://adamdunkels.github.io/contiki-fork/gnurl78-v13.02-elf_1-2_i386.deb &&
+    sudo dpkg -i gnurl78*.deb
+
 script:
   ## Build code
   - make -C src/
