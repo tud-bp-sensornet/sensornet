@@ -13,7 +13,7 @@ if [ ! -f $CONTIKI/tools/cooja/dist/cooja.jar ]; then
 	done
 fi
 
-java -Xshare:on -jar $CONTIKI/tools/cooja/dist/cooja.jar -nogui=$CSC -contiki=$CONTIKI > /dev/null
+java -Xshare:auto -jar $CONTIKI/tools/cooja/dist/cooja.jar -nogui=$CSC -contiki=$CONTIKI > /dev/null
 cat COOJA.testlog
 
 if grep -q "TEST FAILED" COOJA.testlog; then
