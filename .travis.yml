@@ -11,48 +11,6 @@ before_script:
     sudo cp -f -r /tmp/msp430/* /usr/local/ &&
     rm -rf /tmp/msp430 mspgcc*.tar.bz2 &&
     msp430-gcc --version
-
-  ## Install avr toolchain
-  - sudo apt-get -qq install gcc-avr avr-libc
-
-  ## Install 32-bit compatibility libraries
-  - sudo apt-get -qq install libc6:i386 libgcc1:i386 gcc-4.6-base:i386
-      libstdc++5:i386 libstdc++6:i386
-
-  ## Install RL78 GCC toolchain
-  - sudo apt-get install libncurses5:i386 zlib1g:i386
-  - $WGET http://adamdunkels.github.io/contiki-fork/gnurl78-v13.02-elf_1-2_i386.deb &&
-    sudo dpkg -i gnurl78*.deb
-
-  ## Install old APCS ARM toolchain for mc1233x and mbxxx
-  - $WGET https://raw.githubusercontent.com/wiki/malvira/libmc1322x/files/arm-2008q3-66-arm-none-eabi-i686-pc-linux-gnu.tar.bz2 &&
-    tar xjf arm-2008q3*.tar.bz2 -C /tmp/ &&
-    sudo cp -f -r /tmp/arm-2008q3/* /usr/ &&
-    rm -rf /tmp/arm-2008q3 arm-2008q3*.tar.bz2 &&
-    arm-none-eabi-gcc --version ;
-
-  ## Install mainline ARM toolchain.  gcc-arm-none-eabi is available
-  ## in Ubuntu >= 14.04, but this external PPA is needed for 12.04.
-  ## Install srecord
-  - sudo add-apt-repository -y ppa:terry.guo/gcc-arm-embedded &&
-    sudo apt-get -qq update &&
-    sudo apt-get -qq install gcc-arm-none-eabi srecord &&
-    arm-none-eabi-gcc --version ;
-  
-  ## Install SDCC from a purpose-built bundle
-  - $WGET https://raw.githubusercontent.com/wiki/g-oikonomou/contiki-sensinode/files/sdcc.tar.gz &&
-    tar xzf sdcc.tar.gz -C /tmp/ &&
-    sudo cp -f -r /tmp/sdcc/* /usr/local/ &&
-    rm -rf /tmp/sdcc sdcc.tar.gz &&
-    sdcc --version &&
-    sudo apt-get -qq install srecord ;
-
-  ## Clone and build cc65
-  - git clone https://github.com/cc65/cc65 /tmp/cc65 &&
-    make -C /tmp/cc65 bin apple2enh atarixl c64 c128 &&
-    sudo make -C /tmp/cc65 avail &&
-    export CC65_HOME=/tmp/cc65/ &&
-    cc65 --version ;
   
 script:
   ## Build code
@@ -61,5 +19,7 @@ script:
   ## Build and run unit tests
   - make -C src/test run-unittests
   
-  ## Build and run Cooja test
+  ## Build and run Cooja test with dirty hack to build all sources correct
+  - make -C src/test/cooja/broadcast-with-checksum
+  - make -C src/test/cooja/broadcast-with-checksum
   - make -C src/test/cooja/broadcast-with-checksum run-unittest
