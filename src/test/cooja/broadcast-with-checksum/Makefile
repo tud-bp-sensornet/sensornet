@@ -5,11 +5,11 @@ CFLAGS += -I../../../
 
 CFLAGS += -D__BROADCAST_DEBUG__=1
 
-CONTIKI-PROJECT = broadcast.firmware
-all: $(CONTIKI-PROJECT)
+TESTS=$(wildcard ??-*.csc)
+all: $(TESTS)
 
 # build and call wrapper
-run-unittest: $(CONTIKI-PROJECT)
+run-unittest: $(TESTS)
 	sh simexec.sh
 
 CONTIKI_WITH_RIME = 1

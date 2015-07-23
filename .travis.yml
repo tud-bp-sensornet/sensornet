@@ -19,7 +19,5 @@ script:
   ## Build and run unit tests
   - make -C src/test run-unittests
   
-  ## Build and run Cooja test with dirty hack to build all sources correct
-  - make -C src/test/cooja/broadcast-with-checksum
-  - make -C src/test/cooja/broadcast-with-checksum
+  ## Build and run Cooja test
   - make -C src/test/cooja/broadcast-with-checksum run-unittest
