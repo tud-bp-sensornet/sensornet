@@ -8,10 +8,17 @@
 
 void fill_with_data(void *data, size_t length, uint16_t base)
 {
-	int i;
+
+	if (data == NULL)
+	{
+		printf("[Broadcast] Error: data is NULL\n");
+		return;
+	}
+
+	uint8_t i;
 	for (i = 0; i < length; i++)
 	{
-		*((char*)data + i) = (i + base) & 0xFF;
+		*((char *)data + i) = (i + base) & 0xFF;
 	}
 }
 
@@ -23,6 +30,13 @@ void broadcast_faulty_message()
 {
 	abc_open(&abc, 128, &callbacks);
 	void *packet = malloc(64);
+
+	if (packet == NULL)
+	{
+		printf("[Broadcast] Error: Could not allocate memory.\n");
+		return;
+	}
+
 	fill_with_data(packet, 64, 64);
 	memcpy(packetbuf_dataptr(), packet, 64);
 	free(packet);
@@ -32,13 +46,26 @@ void broadcast_faulty_message()
 
 void broadcast_received(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, const void *data, size_t length)
 {
+
+	if (data == NULL)
+	{
+		printf("[Broadcast] Error: data is NULL\n");
+		return;
+	}
+
+	if (sender == NULL)
+	{
+		printf("[Broadcast] Error: sender is NULL\n");
+		return;
+	}
+
 	printf("BROADCAST RECEIVED WITH CORRECT HASH, SIZE=%d, FIRST BYTE=%d\n", length, ((char *)data)[0]);
 
-	int i;
+	uint8_t i;
 	printf("broadcast received from %d.%d (size %d): ", sender->u8[0], sender->u8[1], (int)length);
 	for (i = 0; i < length; i++)
 	{
-		printf("%02X ", ((char*)data)[i] & 0xFF);
+		printf("%02X ", ((char *)data)[i] & 0xFF);
 	}
 	printf("\n");
 }
@@ -68,6 +95,13 @@ PROCESS_THREAD(broadcast_test_process, ev, data)
 		printf("BEGIN SEND CORRECT PACKET\n");
 
 		void *packet = malloc(64);
+
+		if (packet == NULL)
+		{
+			printf("[Broadcast] Error: Could not allocate memory.\n");
+			PROCESS_EXIT();
+		}
+
 		fill_with_data(packet, 64, 32);
 
 		p_broadcast_send(&c, packet, 64);
@@ -93,5 +127,5 @@ PROCESS_THREAD(broadcast_test_process, ev, data)
 	}
 
 	PROCESS_END();
-	
+
 }

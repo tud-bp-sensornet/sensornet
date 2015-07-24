@@ -15,7 +15,7 @@
 // The uint16_t is to account for the size of the hash of the packet.
 #define MAX_BROADCAST_PAYLOAD_SIZE (PACKETBUF_SIZE - PACKETBUF_HDR_SIZE - sizeof(uint16_t))
 
-#define BROADCAST_ATTRIBUTES  { PACKETBUF_ADDR_SENDER, PACKETBUF_ADDRSIZE }, ABC_ATTRIBUTES
+#define BROADCAST_ATTRIBUTES {PACKETBUF_ADDR_SENDER, PACKETBUF_ADDRSIZE}, ABC_ATTRIBUTES
 
 /**
  * \brief           Connection for broadcast including callback function
