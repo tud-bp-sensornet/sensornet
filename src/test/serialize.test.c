@@ -15,11 +15,16 @@ void packet_complete_root(const void *packet_data, size_t length)
 	tmp_length = length;
 	tmp_packet_data = malloc(length);
 	memcpy(tmp_packet_data, packet_data, length);
+
+	//Do not disturb serialize; Do not modify the graph here
+
 }
 
 uint8_t called = 0x00;
-void *memry;
-size_t old_length;
+void *memry_1;
+size_t old_length_1;
+void *memry_2;
+size_t old_length_2;
 uint8_t size = 0x00;
 
 void packet_complete_multi(const void *packet_data, size_t length)
@@ -29,44 +34,20 @@ void packet_complete_multi(const void *packet_data, size_t length)
 	//Save first serialized data for later use
 	if (called == 0x01)
 	{
-		memry = malloc(length);
-		memcpy(memry, packet_data, length);
-		old_length = length;
+		memry_1 = malloc(length);
+		memcpy(memry_1, packet_data, length);
+		old_length_1 = length;
 	}
 
-	//On second call...
+	//Save second serialized data
 	if (called == 0x02)
 	{
-		//...delete all nodes and edges
-		uint8_t i;
-		for (i = 1; i < size; i++)
-		{
-			rimeaddr_t node = rimeaddr_null;
-			node.u8[0] = (uint8_t)i;
-			remove_node(&node);
-
-			rimeaddr_t node2 = rimeaddr_null;
-			node2.u8[0] = 0x01;
-			remove_edge(&node2, &node);
-
-		}
-
-		//add new root
-		p_node_t root = {rimeaddr_null};
-		root.addr.u8[0] = 0x0F; //Node number 15
-		rimeaddr_set_node_addr(&(root.addr));
-		add_node(root);
-
-		//old root (sender)
-		p_node_t sender;
-		sender.addr = rimeaddr_null;
-		sender.addr.u8[0] = 0x01;
-
-		deserialize(&(sender.addr), memry, old_length);
-		deserialize(&(sender.addr), packet_data, length);
-
-		free(memry);
+		memry_2 = malloc(length);
+		memcpy(memry_2, packet_data, length);
+		old_length_2 = length;
 	}
+
+	//Do not disturb serialize; Do not modify the graph here
 }
 
 void *tmp_1_ptr;
@@ -77,6 +58,8 @@ void *tmp_3_ptr;
 size_t tmp_3_lngth;
 void *tmp_4_ptr;
 size_t tmp_4_lngth;
+void *tmp_5_ptr;
+size_t tmp_5_lngth;
 size_t cnt = 0;
 void packet_complete_long(const void *packet_data, size_t length)
 {
@@ -109,48 +92,12 @@ void packet_complete_long(const void *packet_data, size_t length)
 	}
 	if (cnt == 5)
 	{
-		//Delete all nodes and edges
-		uint8_t node_count;
-		p_node_t **all_nodes = get_all_nodes(&node_count);
-		uint8_t edge_count;
-		p_edge_t **all_edges = get_all_edges(&edge_count);
-
-		uint8_t i;
-		for (i = node_count; i > 0; i--)
-		{
-			remove_node(&(all_nodes[i - 1]->addr));
-		}
-
-		for (i = edge_count; i > 0; i--)
-		{
-			remove_edge(&(all_edges[i - 1]->src), &(all_edges[i - 1]->dst));
-		}
-
-		//Create new and old root
-		p_node_t root;
-		root.addr = rimeaddr_null;
-		root.addr.u8[0] = 0x01;
-
-		p_node_t new_root;
-		new_root.addr = rimeaddr_null;
-		new_root.addr.u8[0] = 0x0A;
-		add_node(new_root);
-		rimeaddr_set_node_addr(&(new_root.addr));
-
-		//Deserialize everything
-		deserialize(&(root.addr), tmp_1_ptr, tmp_1_lngth);
-		deserialize(&(root.addr), tmp_2_ptr, tmp_2_lngth);
-		deserialize(&(root.addr), tmp_3_ptr, tmp_3_lngth);
-		deserialize(&(root.addr), tmp_4_ptr, tmp_4_lngth);
-		deserialize(&(root.addr), packet_data, length);
-
-		//Cleanup
-		free(tmp_1_ptr);
-		free(tmp_2_ptr);
-		free(tmp_3_ptr);
-		free(tmp_4_ptr);
-
+		tmp_5_ptr = malloc(length);
+		memcpy(tmp_5_ptr, packet_data, length);
+		tmp_5_lngth = length;
 	}
+
+	//Do not disturb serialize; Do not modify the graph here
 }
 
 /**
@@ -255,6 +202,33 @@ UNIT_TEST(multi_sub_graph_test)
 
 	UNIT_TEST_ASSERT(called == 0x02); //Function should be called 2 times
 
+	//Delete all nodes and edges
+	uint8_t i;
+	for (i = 1; i < size; i++)
+	{
+		rimeaddr_t node = rimeaddr_null;
+		node.u8[0] = (uint8_t)i;
+		remove_node(&node);
+
+		rimeaddr_t node2 = rimeaddr_null;
+		node2.u8[0] = 0x01;
+		remove_edge(&node2, &node);
+
+	}
+
+	//add new root
+	p_node_t new_root = {rimeaddr_null};
+	new_root.addr.u8[0] = 0x0F; //Node number 15
+	rimeaddr_set_node_addr(&(new_root.addr));
+	add_node(new_root);
+
+	//Deserialize everything
+	deserialize(&(root.addr), memry_1, old_length_1);
+	deserialize(&(root.addr), memry_2, old_length_2);
+
+	free(memry_1);
+	free(memry_2);
+
 	//Check if we got everything
 	uint8_t node_count = get_node_count();
 	uint8_t edge_count = get_edge_count();
@@ -263,7 +237,6 @@ UNIT_TEST(multi_sub_graph_test)
 	UNIT_TEST_ASSERT(edge_count == 19); //19 edges from root + one extra edge to new root, but new root is a drain
 
 	//cleanup and test if every edge/node was correctly de/serialized
-	uint8_t i;
 	for (i = 1; i < size; i++)
 	{
 		rimeaddr_t node = rimeaddr_null;
@@ -369,6 +342,46 @@ UNIT_TEST(long_graph_test)
 	UNIT_TEST_ASSERT(MAX_EDGES >= 12);
 
 	serialize(packet_complete_long);
+
+	UNIT_TEST_ASSERT(cnt == 0x05);
+
+	//Delete all nodes and edges
+	uint8_t node_count;
+	p_node_t **all_nodes = get_all_nodes(&node_count);
+	uint8_t edge_count;
+	p_edge_t **all_edges = get_all_edges(&edge_count);
+
+	uint8_t i;
+	for (i = node_count; i > 0; i--)
+	{
+		remove_node(&(all_nodes[i - 1]->addr));
+	}
+
+	for (i = edge_count; i > 0; i--)
+	{
+		remove_edge(&(all_edges[i - 1]->src), &(all_edges[i - 1]->dst));
+	}
+
+	//Create new root
+	p_node_t new_root;
+	new_root.addr = rimeaddr_null;
+	new_root.addr.u8[0] = 0x0A;
+	add_node(new_root);
+	rimeaddr_set_node_addr(&(new_root.addr));
+
+	//Deserialize everything
+	deserialize(&(root.addr), tmp_1_ptr, tmp_1_lngth);
+	deserialize(&(root.addr), tmp_2_ptr, tmp_2_lngth);
+	deserialize(&(root.addr), tmp_3_ptr, tmp_3_lngth);
+	deserialize(&(root.addr), tmp_4_ptr, tmp_4_lngth);
+	deserialize(&(root.addr), tmp_5_ptr, tmp_5_lngth);
+
+	//Cleanup
+	free(tmp_1_ptr);
+	free(tmp_2_ptr);
+	free(tmp_3_ptr);
+	free(tmp_4_ptr);
+	free(tmp_5_ptr);
 
 	UNIT_TEST_ASSERT(get_node_count() == 0x08); //All nodes to lvl 3 + new root
 	UNIT_TEST_ASSERT(get_edge_count() == 0x09); //All edges to lvl 3 except between lvl 3 + new root edge

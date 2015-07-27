@@ -63,27 +63,39 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	p_hop_t *tmp_hop_ptr = hop_dict;
 	for (i = 0; i < edge_count; i++)
 	{
+		//Edge from root to neighbour
 		if (rimeaddr_cmp(&(all_edges[i]->src), &rimeaddr_node_addr))
 		{
 			tmp_hop_ptr->addr = all_edges[i]->dst;
 			tmp_hop_ptr->hop_count = 0x01;
 			tmp_hop_ptr++;
 		}
+		else
+			//Edge from neighbour to root
+			if (rimeaddr_cmp(&(all_edges[i]->dst), &rimeaddr_node_addr))
+			{
+				tmp_hop_ptr->addr = all_edges[i]->src;
+				tmp_hop_ptr->hop_count = 0x01;
+				tmp_hop_ptr++;
+			}
 	}
 
-	//Procedd only iff there are any outgoing edges from root
-	if ((uint8_t)(tmp_hop_ptr - hop_dict) != 0)
+	//Proceed only iff there are any out/ingoing edges from root
+	if ((uint8_t)(tmp_hop_ptr - hop_dict) != 0x00)
 	{
 		//Beginning with the nodes with the lowest hopcount...
 		for (i = 0; i < node_count - 1; i++)
 		{
-			//...we get all outgoing edges from this node...
+			//...we get all out/ingoing edges from this node...
 			uint8_t tmp_count;
 			p_edge_t **tmp_outgoing = get_outgoing_edges(&(hop_dict[i].addr), &tmp_count);
 
-			if (tmp_outgoing == NULL)
+			uint8_t tmp_count_in;
+			p_edge_t **tmp_ingoing = get_ingoing_edges(&(hop_dict[i].addr), &tmp_count_in);
+
+			if (tmp_outgoing == NULL && tmp_ingoing == NULL)
 			{
-				PRINTF("Debug: Node has no outgoing edges.\n");
+				PRINTF("Debug: Node has no ingoing and outgoing edges.\n");
 				break;
 			}
 
@@ -95,7 +107,8 @@ p_hop_t *get_hop_counts(uint8_t *count)
 				uint8_t is_in = 0;
 				for (k = 0; k < (node_count - 1); k++)
 				{
-					if (rimeaddr_cmp(&(tmp_outgoing[j]->dst), &(hop_dict[k].addr)))
+					//...except root...
+					if (rimeaddr_cmp(&(tmp_outgoing[j]->dst), &(hop_dict[k].addr)) || rimeaddr_cmp(&(tmp_outgoing[j]->dst), &rimeaddr_node_addr))
 					{
 						//...if the node is not in our hop_dict we weren't able to reach it yet...
 						is_in = 1;
@@ -112,7 +125,30 @@ p_hop_t *get_hop_counts(uint8_t *count)
 				}
 			}
 
+			//Same for ingoing edges.
+			for (j = 0; j < tmp_count_in; j++)
+			{
+				uint8_t k;
+				uint8_t is_in = 0;
+				for (k = 0; k < (node_count - 1); k++)
+				{
+					if (rimeaddr_cmp(&(tmp_ingoing[j]->src), &(hop_dict[k].addr)) || rimeaddr_cmp(&(tmp_ingoing[j]->src), &rimeaddr_node_addr))
+					{
+						is_in = 1;
+						break;
+					}
+				}
+
+				if (is_in == 0)
+				{
+					tmp_hop_ptr->addr = tmp_ingoing[j]->src;
+					tmp_hop_ptr->hop_count = hop_dict[i].hop_count + 0x01;
+					tmp_hop_ptr++;
+				}
+			}
+
 			free(tmp_outgoing);
+			free(tmp_ingoing);
 		}
 	}
 
