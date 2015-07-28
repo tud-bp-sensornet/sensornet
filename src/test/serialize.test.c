@@ -21,10 +21,10 @@ void packet_complete_root(const void *packet_data, size_t length)
 }
 
 uint8_t called = 0x00;
-void *memry_1;
-size_t old_length_1;
-void *memry_2;
-size_t old_length_2;
+void *memry_1 = NULL;
+size_t old_length_1 = 0;
+void *memry_2 = NULL;
+size_t old_length_2 = 0;
 uint8_t size = 0x00;
 
 void packet_complete_multi(const void *packet_data, size_t length)
@@ -35,7 +35,10 @@ void packet_complete_multi(const void *packet_data, size_t length)
 	if (called == 0x01)
 	{
 		memry_1 = malloc(length);
-		memcpy(memry_1, packet_data, length);
+		if (memry_1 != NULL)
+		{
+			memcpy(memry_1, packet_data, length);
+		}
 		old_length_1 = length;
 	}
 
@@ -43,23 +46,26 @@ void packet_complete_multi(const void *packet_data, size_t length)
 	if (called == 0x02)
 	{
 		memry_2 = malloc(length);
-		memcpy(memry_2, packet_data, length);
+		if (memry_2 != NULL)
+		{
+			memcpy(memry_2, packet_data, length);
+		}
 		old_length_2 = length;
 	}
 
 	//Do not disturb serialize; Do not modify the graph here
 }
 
-void *tmp_1_ptr;
-size_t tmp_1_lngth;
-void *tmp_2_ptr;
-size_t tmp_2_lngth;
-void *tmp_3_ptr;
-size_t tmp_3_lngth;
-void *tmp_4_ptr;
-size_t tmp_4_lngth;
-void *tmp_5_ptr;
-size_t tmp_5_lngth;
+void *tmp_1_ptr = NULL;
+size_t tmp_1_lngth = 0;
+void *tmp_2_ptr = NULL;
+size_t tmp_2_lngth = 0;
+void *tmp_3_ptr = NULL;
+size_t tmp_3_lngth = 0;
+void *tmp_4_ptr = NULL;
+size_t tmp_4_lngth = 0;
+void *tmp_5_ptr = NULL;
+size_t tmp_5_lngth = 0;
 size_t cnt = 0;
 void packet_complete_long(const void *packet_data, size_t length)
 {
@@ -69,31 +75,46 @@ void packet_complete_long(const void *packet_data, size_t length)
 	if (cnt == 1)
 	{
 		tmp_1_ptr = malloc(length);
-		memcpy(tmp_1_ptr, packet_data, length);
+		if (tmp_1_ptr != NULL)
+		{
+			memcpy(tmp_1_ptr, packet_data, length);
+		}
 		tmp_1_lngth = length;
 	}
 	if (cnt == 2)
 	{
 		tmp_2_ptr = malloc(length);
-		memcpy(tmp_2_ptr, packet_data, length);
+		if (tmp_2_ptr != NULL)
+		{
+			memcpy(tmp_2_ptr, packet_data, length);
+		}
 		tmp_2_lngth = length;
 	}
 	if (cnt == 3)
 	{
 		tmp_3_ptr = malloc(length);
-		memcpy(tmp_3_ptr, packet_data, length);
+		if (tmp_3_ptr != NULL)
+		{
+			memcpy(tmp_3_ptr, packet_data, length);
+		}
 		tmp_3_lngth = length;
 	}
 	if (cnt == 4)
 	{
 		tmp_4_ptr = malloc(length);
-		memcpy(tmp_4_ptr, packet_data, length);
+		if (tmp_4_ptr != NULL)
+		{
+			memcpy(tmp_4_ptr, packet_data, length);
+		}
 		tmp_4_lngth = length;
 	}
 	if (cnt == 5)
 	{
 		tmp_5_ptr = malloc(length);
-		memcpy(tmp_5_ptr, packet_data, length);
+		if (tmp_5_ptr != NULL)
+		{
+			memcpy(tmp_5_ptr, packet_data, length);
+		}
 		tmp_5_lngth = length;
 	}
 
@@ -223,6 +244,8 @@ UNIT_TEST(multi_sub_graph_test)
 	add_node(new_root);
 
 	//Deserialize everything
+	UNIT_TEST_ASSERT(memry_1 != NULL);
+	UNIT_TEST_ASSERT(memry_2 != NULL);
 	deserialize(&(root.addr), memry_1, old_length_1);
 	deserialize(&(root.addr), memry_2, old_length_2);
 
@@ -370,6 +393,11 @@ UNIT_TEST(long_graph_test)
 	rimeaddr_set_node_addr(&(new_root.addr));
 
 	//Deserialize everything
+	UNIT_TEST_ASSERT(tmp_1_ptr != NULL);
+	UNIT_TEST_ASSERT(tmp_2_ptr != NULL);
+	UNIT_TEST_ASSERT(tmp_3_ptr != NULL);
+	UNIT_TEST_ASSERT(tmp_4_ptr != NULL);
+	UNIT_TEST_ASSERT(tmp_5_ptr != NULL);
 	deserialize(&(root.addr), tmp_1_ptr, tmp_1_lngth);
 	deserialize(&(root.addr), tmp_2_ptr, tmp_2_lngth);
 	deserialize(&(root.addr), tmp_3_ptr, tmp_3_lngth);
