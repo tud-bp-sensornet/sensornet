@@ -10,6 +10,7 @@
 #include "serialize.h"
 #include "graph.h"
 #include "graph-operations.h"
+#include <stdio.h>
 
 #if __SERIALIZE_DEBUG__
 #include <stdio.h>
@@ -24,7 +25,7 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, void (*
 void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 {
 
-	PRINTF("Node size: %d Edge size: %d\n", sizeof(p_node_t), sizeof(p_edge_t));
+	PRINTF("Debug: Node size: %d Edge size: %d\n", sizeof(p_node_t), sizeof(p_edge_t));
 	PRINTF("Debug: PACKETBUF SIZE: %d\n", PACKETBUF_SIZE);
 
 	//On K==0 no information will be exchanged
@@ -44,7 +45,6 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 		return;
 	}
 
-	//Package root (on K >= 1) (reachable in 0 hops)
 	p_node_t *root = find_node(&rimeaddr_node_addr);
 
 	if (root == NULL)
@@ -54,7 +54,16 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 		return;
 	}
 
-	//Package all outgoing edges and edge destinations from root (on K >= 2) (reachable in 1 hops)
+	//Package and send only root (on K == 1) (reachable in 0 hops)
+	if (K == 1)
+	{
+		memcpy(memory_base, root, sizeof(p_node_t));
+		packet_complete(memory_base, sizeof(p_node_t));
+		free(memory_base);
+		return;
+	}
+
+	//Package root and all outgoing edges and edge destinations from root (on K >= 2) (reachable in 1 hops)
 	if (K >= 2)
 	{
 		package_and_send_edges_and_nodes(memory_base, root, packet_complete);
@@ -110,6 +119,21 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, void (*
 	p_edge_t **edges = get_outgoing_edges(&(root->addr), &edge_count);
 
 	PRINTF("Debug: Node has %d edges.\n", edge_count);
+
+	//Root without outgoing edges has to be sent
+	if ((edge_count == 0x00 || edges == NULL) && rimeaddr_cmp(&(root->addr), &rimeaddr_node_addr))
+	{
+		PRINTF("Debug: Send package.\n");
+		packet_complete(memory_base, sizeof(p_node_t));
+	}
+
+	//If node has no outgoing edges we dont have to send it
+	//(it was already sent as a drain in another package)
+	if (edge_count == 0x00 || edges == NULL)
+	{
+		PRINTF("Debug: Do not send.\n");
+		return;
+	}
 
 	//Package every edge and drain
 	size_t j = sizeof(p_node_t);

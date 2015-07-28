@@ -20,8 +20,8 @@ typedef struct
 } p_hop_t;
 
 /**
- * \brief Returns an array of p_hop_t with the shortest hopcount for every node to root (excluding root)
- * \param count A pointer to an uint8 value that will be set to the current amount of reachable nodes from root
+ * \brief Returns an array of p_hop_t with the shortest hopcount for every node to root (excluding root) traversing the graph as if edges are not directed.
+ * \param count A pointer to an uint8 value that will be set to the current amount of reachable nodes (ignoring edge direction) from root
  * \retval The pointer to the array of p_hop_t
  *
  * Returns an array of p_hop_t. The array should be freed, by the caller.

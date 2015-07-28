@@ -56,37 +56,40 @@ UNIT_TEST(null_hop)
 /**
  * Graph:
  *            r
- *           / \
+ *  to r ->  / \
  *        n11   n12     n0
  *         /     \
- *      n21------>n22
+ *      n21------>n22<---n23
  * Test get hopcount of a cyclic graph with one node not reachable
+ * and the left subtree only reachable by ignoring edge direction
  * Tests the functions:
  * p_hop_t *get_hop_counts(uint8_t *count);
  */
 UNIT_TEST(cyclic_hop)
 {
-	p_node_t r, n11, n12, n21, n22, n0;
-	//p_edge_t er11, er12, e1121, e1222, e2122;
+	p_node_t r, n11, n12, n21, n22, n23, n0;
 
 	r.addr = rimeaddr_null;
 	n11.addr = rimeaddr_null;
 	n12.addr = rimeaddr_null;
 	n21.addr = rimeaddr_null;
 	n22.addr = rimeaddr_null;
+	n23.addr = rimeaddr_null;
 	n0.addr = rimeaddr_null;
 	r.addr.u8[0] = 0x01;
 	n11.addr.u8[0] = 0x02;
 	n12.addr.u8[0] = 0x03;
 	n21.addr.u8[0] = 0x04;
 	n22.addr.u8[0] = 0x05;
-	n0.addr.u8[0] = 0x06;
+	n23.addr.u8[0] = 0x06;
+	n0.addr.u8[0] = 0x07;
 
-	p_edge_t er11 = {r.addr, n11.addr, 0x00};
+	p_edge_t e11r = {n11.addr, r.addr, 0x00};
 	p_edge_t er12 = {r.addr, n12.addr, 0x00};
 	p_edge_t e1121 = {n11.addr, n21.addr, 0x00};
 	p_edge_t e1222 = {n12.addr, n22.addr, 0x00};
 	p_edge_t e2122 = {n21.addr, n22.addr, 0x00};
+	p_edge_t e2322 = {n23.addr, n22.addr, 0x00};
 
 	rimeaddr_set_node_addr(&(r.addr));
 
@@ -95,13 +98,15 @@ UNIT_TEST(cyclic_hop)
 	add_node(n22);
 	add_node(n12);
 	add_node(n0);
+	add_node(n23);
 	add_node(n11);
 	add_node(n21);
 
 	add_edge(e2122);
 	add_edge(er12);
+	add_edge(e2322);
 	add_edge(e1121);
-	add_edge(er11);
+	add_edge(e11r);
 	add_edge(e1222);
 
 	UNIT_TEST_BEGIN();
@@ -109,7 +114,7 @@ UNIT_TEST(cyclic_hop)
 	uint8_t count;
 	p_hop_t *ptr = get_hop_counts(&count);
 
-	UNIT_TEST_ASSERT(count == 0x04);
+	UNIT_TEST_ASSERT(count == 0x05);
 
 	UNIT_TEST_ASSERT(ptr[1].addr.u8[0] == n11.addr.u8[0]);
 	UNIT_TEST_ASSERT(ptr[1].hop_count == 0x01);
@@ -123,6 +128,9 @@ UNIT_TEST(cyclic_hop)
 	UNIT_TEST_ASSERT(ptr[2].addr.u8[0] == n22.addr.u8[0]);
 	UNIT_TEST_ASSERT(ptr[2].hop_count == 0x02);
 
+	UNIT_TEST_ASSERT(ptr[4].addr.u8[0] == n23.addr.u8[0]);
+	UNIT_TEST_ASSERT(ptr[4].hop_count == 0x03);
+
 	free(ptr);
 
 	UNIT_TEST_END();
@@ -132,13 +140,15 @@ UNIT_TEST(cyclic_hop)
 	remove_node(&(n12.addr));
 	remove_node(&(n21.addr));
 	remove_node(&(n22.addr));
+	remove_node(&(n23.addr));
 	remove_node(&(n0.addr));
 
-	remove_edge(&(r.addr), &(n11.addr));
+	remove_edge(&(n11.addr), &(r.addr));
 	remove_edge(&(r.addr), &(n12.addr));
 	remove_edge(&(n11.addr), &(n21.addr));
 	remove_edge(&(n12.addr), &(n22.addr));
 	remove_edge(&(n21.addr), &(n22.addr));
+	remove_edge(&(n23.addr), &(n22.addr));
 
 }
 
