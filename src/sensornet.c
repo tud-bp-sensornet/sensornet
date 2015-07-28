@@ -1,7 +1,8 @@
 #include "contiki.h"
-#include "broadcast.h"
+#include "pbroadcast.h"
 #include "graph.h"
 #include "serialze.h"
+#include "graph-operations.h"
 
 #include <stdio.h>
 
@@ -48,6 +49,9 @@ PROCESS_THREAD(simple_process, ev, data)
 		etimer_set(&et, CLOCK_SECOND * 2 + random_rand() % (CLOCK_SECOND * 4));
 
 		PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
+
+		//Purge edges with expired ttl
+		purge();
 
 		//Create subgraphs and broadcast them
 		serialize(packet_complete);
