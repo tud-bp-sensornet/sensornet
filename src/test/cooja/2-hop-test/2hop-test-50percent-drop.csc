@@ -24,9 +24,9 @@
       se.sics.cooja.mspmote.SkyMoteType
       <identifier>sky1</identifier>
       <description>Sky Mote Type #sky1</description>
-      <source EXPORT="discard">[CONFIG_DIR]/../3-hop-test/sensornet.c</source>
+      <source EXPORT="discard">[CONFIG_DIR]/../2-hop-test/sensornet.c</source>
       <commands EXPORT="discard">make sensornet.sky TARGET=sky</commands>
-      <firmware EXPORT="copy">[CONFIG_DIR]/../3-hop-test/sensornet.sky</firmware>
+      <firmware EXPORT="copy">[CONFIG_DIR]/../2-hop-test/sensornet.sky</firmware>
       <moteinterface>se.sics.cooja.interfaces.Position</moteinterface>
       <moteinterface>se.sics.cooja.interfaces.RimeAddress</moteinterface>
       <moteinterface>se.sics.cooja.interfaces.IPAddress</moteinterface>

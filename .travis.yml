@@ -6,3 +6,8 @@ script:
 
   ## Build and run unit tests
   - make -C src/test run-unittests
+
+  ## Build and run Cooja test
+  - make -C src/test/cooja/broadcast-with-checksum run-unittest
+  - make -C src/test/cooja/2-hop-test run-unittest
+  - make -C src/test/cooja/3-hop-test run-unittest
