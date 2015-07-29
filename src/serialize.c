@@ -19,7 +19,7 @@
 #define PRINTF(...)
 #endif
 
-void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, void (*packet_complete)(const void *packet_data, size_t length));
+void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t *hops, uint8_t reachable_count, uint8_t hop, void (*packet_complete)(const void *packet_data, size_t length));
 
 /*---------------------------------------------------------------------------*/
 void serialize(void (*packet_complete)(const void *packet_data, size_t length))
@@ -66,7 +66,7 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 	//Package root and all outgoing edges and edge destinations from root (on K >= 2) (reachable in 1 hops)
 	if (K >= 2)
 	{
-		package_and_send_edges_and_nodes(memory_base, root, packet_complete);
+		package_and_send_edges_and_nodes(memory_base, root, NULL, 0x00, 0x00, packet_complete);
 	}
 	else
 	{
@@ -82,6 +82,8 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 	uint8_t l;
 	for (l = 0; l < reachable_count; l++)
 	{
+		//Send nodes and outgoing edges from every node reachable in <=K-2 hops.
+		//Send nodes and outgoing edges to K-2 for every node reachable in K-1 hops.
 		if (hops[l].hop_count <= K - 1)
 		{
 			//Package this node
@@ -97,7 +99,7 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 				return;
 			}
 
-			package_and_send_edges_and_nodes(memory_base, nd, packet_complete);
+			package_and_send_edges_and_nodes(memory_base, nd, hops, reachable_count, hops[l].hop_count, packet_complete);
 		}
 	}
 
@@ -105,7 +107,7 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 	free(hops);
 }
 /*---------------------------------------------------------------------------*/
-void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, void (*packet_complete)(const void *packet_data, size_t length))
+void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t *hops, uint8_t reachable_count, uint8_t hop, void (*packet_complete)(const void *packet_data, size_t length))
 {
 
 	void *memory_current = memory_base;
@@ -140,6 +142,40 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, void (*
 	uint8_t k;
 	for (k = 0; k < edge_count; k++)
 	{
+		uint8_t packable = 1;
+		//If node is a leaf (level K-1)...
+		if (hop == K - 1)
+		{
+			if (!rimeaddr_cmp(&(edges[k]->dst), &rimeaddr_node_addr))
+			{
+				//...pack only edges to level K-2...
+				uint8_t i;
+				packable = 0;
+				for (i = 0; i < reachable_count; i++)
+				{
+					if (rimeaddr_cmp(&(hops[i].addr), &(edges[k]->dst)))
+					{
+						if (hops[i].hop_count == K - 2)
+						{
+							packable = 1;
+						}
+						break;
+					}
+				}
+			}
+			else
+			{
+				//...or to root.
+				packable = 1;
+			}
+		}
+
+		//Is it still packable?
+		if (packable != 1)
+		{
+			continue;
+		}
+
 		PRINTF("Debug: Pack edge to %d\n", edges[k]->dst.u8[0]);
 
 		//Increment package size counter
