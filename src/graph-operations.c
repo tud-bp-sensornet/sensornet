@@ -66,17 +66,56 @@ p_hop_t *get_hop_counts(uint8_t *count)
 		//Edge from root to neighbour
 		if (rimeaddr_cmp(&(all_edges[i]->src), &rimeaddr_node_addr))
 		{
-			tmp_hop_ptr->addr = all_edges[i]->dst;
-			tmp_hop_ptr->hop_count = 0x01;
-			tmp_hop_ptr++;
+			//Check if node is already in our hopcounts
+			uint8_t k;
+			uint8_t is_in = 0;
+			for (k = 0; k < (tmp_hop_ptr - hop_dict); k++)
+			{
+				if (rimeaddr_cmp(&(all_edges[i]->dst), &(hop_dict[k].addr)))
+				{
+					PRINTF("Debug: %d already in hop_count (outgoing direct)\n", all_edges[i]->dst.u8[0]);
+					//...if the node is not in our hop_dict have not seen it yet...
+					is_in = 1;
+					break;
+				}
+			}
+
+			//...but now we have.
+			if (is_in == 0)
+			{
+				PRINTF("Debug: Add node (outgoing direct): %d\n", all_edges[i]->dst.u8[0]);
+				tmp_hop_ptr->addr = all_edges[i]->dst;
+				tmp_hop_ptr->hop_count = 0x01;
+				tmp_hop_ptr++;
+			}
 		}
 		else
 			//Edge from neighbour to root
 			if (rimeaddr_cmp(&(all_edges[i]->dst), &rimeaddr_node_addr))
 			{
-				tmp_hop_ptr->addr = all_edges[i]->src;
-				tmp_hop_ptr->hop_count = 0x01;
-				tmp_hop_ptr++;
+
+				//Check if node is already in our hopcounts
+				uint8_t k;
+				uint8_t is_in = 0;
+				for (k = 0; k < (tmp_hop_ptr - hop_dict); k++)
+				{
+					if (rimeaddr_cmp(&(all_edges[i]->src), &(hop_dict[k].addr)))
+					{
+						//...if the node is not in our hop_dict have not seen it yet...
+						PRINTF("Debug: %d already in hop_count (ingoing direct)\n", all_edges[i]->src.u8[0]);
+						is_in = 1;
+						break;
+					}
+				}
+
+				//...but now we have.
+				if (is_in == 0)
+				{
+					PRINTF("Debug: Add node (ingoing direct): %d\n", all_edges[i]->src.u8[0]);
+					tmp_hop_ptr->addr = all_edges[i]->src;
+					tmp_hop_ptr->hop_count = 0x01;
+					tmp_hop_ptr++;
+				}
 			}
 	}
 
@@ -105,12 +144,13 @@ p_hop_t *get_hop_counts(uint8_t *count)
 				//...and check if we reach a node we couldn't earlier...
 				uint8_t k;
 				uint8_t is_in = 0;
-				for (k = 0; k < (node_count - 1); k++)
+				for (k = 0; k < (tmp_hop_ptr - hop_dict); k++)
 				{
 					//...except root...
 					if (rimeaddr_cmp(&(tmp_outgoing[j]->dst), &(hop_dict[k].addr)) || rimeaddr_cmp(&(tmp_outgoing[j]->dst), &rimeaddr_node_addr))
 					{
 						//...if the node is not in our hop_dict we weren't able to reach it yet...
+						PRINTF("Debug: %d already in hop_count (outgoing)\n", tmp_outgoing[j]->dst.u8[0]);
 						is_in = 1;
 						break;
 					}
@@ -119,6 +159,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 				//...but now we are able to.
 				if (is_in == 0)
 				{
+					PRINTF("Debug: Add node (outgoing): %d\n", tmp_outgoing[j]->dst.u8[0]);
 					tmp_hop_ptr->addr = tmp_outgoing[j]->dst;
 					tmp_hop_ptr->hop_count = hop_dict[i].hop_count + 0x01;
 					tmp_hop_ptr++;
@@ -130,10 +171,11 @@ p_hop_t *get_hop_counts(uint8_t *count)
 			{
 				uint8_t k;
 				uint8_t is_in = 0;
-				for (k = 0; k < (node_count - 1); k++)
+				for (k = 0; k < (tmp_hop_ptr - hop_dict); k++)
 				{
 					if (rimeaddr_cmp(&(tmp_ingoing[j]->src), &(hop_dict[k].addr)) || rimeaddr_cmp(&(tmp_ingoing[j]->src), &rimeaddr_node_addr))
 					{
+						PRINTF("Debug: %d already in hop_count (ingoing)\n", tmp_ingoing[j]->src.u8[0]);
 						is_in = 1;
 						break;
 					}
@@ -141,6 +183,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 
 				if (is_in == 0)
 				{
+					PRINTF("Debug: Add node (ingoing): %d\n", tmp_ingoing[j]->src.u8[0]);
 					tmp_hop_ptr->addr = tmp_ingoing[j]->src;
 					tmp_hop_ptr->hop_count = hop_dict[i].hop_count + 0x01;
 					tmp_hop_ptr++;
