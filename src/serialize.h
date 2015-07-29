@@ -17,7 +17,8 @@
  * \param length                The length of the serialized (sub) graph
  *
  *                              This function serializes our local view graph into several (sub) graphs.
- *                              It will not serialize nodes and eges in more than K-1 hops distance.
+ *                              It will not serialize nodes and eges in more than K-1 hops distance and
+ *                              not the edges between K-1 nodes.
  *                              The called funtion behind the function pointer must not free the memory
  *                              pointed by packet_data.
  *                              Serialized (sub) graphs are stored with this layout:

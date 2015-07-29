@@ -2,7 +2,6 @@
 #include "unit-test.h"
 
 #include <stdlib.h>
-#include <stdio.h>
 
 #include "sys/clock.h"
 #include "graph.h"
@@ -167,7 +166,7 @@ UNIT_TEST(cyclic_hop)
  */
 UNIT_TEST(omnidirectional_hop)
 {
-	p_node_t r, n11, n12, n21, n22, n23;
+	p_node_t r, n11, n12, n21, n22;
 
 	r.addr = rimeaddr_null;
 	n11.addr = rimeaddr_null;
