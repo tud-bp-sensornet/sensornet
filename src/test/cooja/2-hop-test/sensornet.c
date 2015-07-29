@@ -6,6 +6,10 @@
 
 #include <stdio.h>
 
+#ifndef __K_HOP_DEBUG__
+#define __K_HOP_DEBUG__ 0
+#endif
+
 /*---------------------------------------------------------------------------*/
 PROCESS(simple_process, "Simple process");
 AUTOSTART_PROCESSES(&simple_process);
@@ -18,7 +22,42 @@ recv(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, void *data, si
 }
 /*---------------------------------------------------------------------------*/
 static struct p_broadcast_conn broadcast;
-broadcast->received = recv;
+/*---------------------------------------------------------------------------*/
+/**
+ * Prints the graph by printing Node informations and Edge informations while iterating it
+ * Testcase:Node:%d,%d\n	with the rimeaddr.u8[0] and the depth
+ * Testcase:Edge:%d,%d\n	with the rimeaddr.u8[0] of the source and the rimeaddr.u8[0] of the drain
+ * graph: the graph that should be printed
+ */
+static void debug_k_hop_timer_event(void *ptr){
+	printf("Print Graph for Node %d\n", rimeaddr_node_addr);
+	uint8_t count = 0;
+
+	uint8_t i = 0;
+	printf("Saved Nodes:%d\n", get_node_count());
+	printf("Saved Edges:%d\n", get_edge_count());
+
+	//print nodes
+	p_hop_t *hops = get_hop_counts(&count);
+	printf("hops:%d\n", hops);
+	printf("Count Node hops:%d\n", count);
+	//also print root
+	printf("Testcase:Node:%d,%d\n", rimeaddr_node_addr,0);
+	for (i = 0; i < count; i++)
+	{
+		printf("Testcase:Node:%d,%d\n", hops[i].addr.u8[0],hops[i].hop_count);
+	}
+	free(hops);
+
+	//print edges
+	p_edge_t **edge_array = get_all_edges(&count);
+	printf("Count Edge:%d\n", count);
+	for (i = 0; i < count; i++)
+	{
+		printf("Testcase:Edge:%d,%d\n", edge_array[i]->src.u8[0], edge_array[i]->dst.u8[0]);
+	}
+	free(edge_array);
+}
 /*---------------------------------------------------------------------------*/
 static void
 packet_complete(const void *packet_data, size_t length)
@@ -34,9 +73,16 @@ PROCESS_THREAD(simple_process, ev, data)
 	PROCESS_EXITHANDLER(p_broadcast_close(&broadcast);)
 	PROCESS_BEGIN();
 
+	broadcast.received = recv;
+
 	p_broadcast_open(&broadcast, 129);
 	static struct etimer et;
 	init_graph();
+	if(__K_HOP_DEBUG__){
+		static struct ctimer ct;
+		//After 305 seconds, call debug_k_hop_timer_event
+		ctimer_set(&ct, CLOCK_SECOND * 305, debug_k_hop_timer_event, NULL);
+	}
 
 	//We are root
 	p_node_t root = {rimeaddr_node_addr};
@@ -60,3 +106,4 @@ PROCESS_THREAD(simple_process, ev, data)
 	PROCESS_END();
 }
 /*---------------------------------------------------------------------------*/
+
