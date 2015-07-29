@@ -281,24 +281,23 @@ UNIT_TEST(multi_sub_graph_test)
 
 /**
  * Graph:
- *                 r
- *               /  \
- *             n11->n12
- *             /      \
- *           n21----->n22
+ *                 r                      r -> r2
+ *               /  \                   /  \
+ *             n11<>n12               n11<>n12
+ *             /      \               /      \
+ *           n21<---->n22    ->     n21      n22
  *           /          \
- *         n31--------->n32
- *         /              \
- *       n41------------->n42
+ *         n31          n32
  *
  * Test serialize and deserialize with a graph with more than K = 3 levels
+ * and (some) bidirectional edges producing a graph
  * Tests the functions:
  * void serialize(void (*packet_complete)(const void *packet_data, size_t length));
  * void deserialize(const rimeaddr_t *sender, const void *packet, size_t length);
  */
 UNIT_TEST(long_graph_test)
 {
-	p_node_t root, n11, n12, n21, n22, n31, n32, n41, n42;
+	p_node_t root, n11, n12, n21, n22, n31, n32;
 	root.addr = rimeaddr_null;
 	n11.addr = rimeaddr_null;
 	n12.addr = rimeaddr_null;
@@ -306,8 +305,6 @@ UNIT_TEST(long_graph_test)
 	n22.addr = rimeaddr_null;
 	n31.addr = rimeaddr_null;
 	n32.addr = rimeaddr_null;
-	n41.addr = rimeaddr_null;
-	n42.addr = rimeaddr_null;
 	root.addr.u8[0] = 0x01;
 	n11.addr.u8[0] = 0x02;
 	n12.addr.u8[0] = 0x03;
@@ -315,8 +312,6 @@ UNIT_TEST(long_graph_test)
 	n22.addr.u8[0] = 0x05;
 	n31.addr.u8[0] = 0x06;
 	n32.addr.u8[0] = 0x07;
-	n41.addr.u8[0] = 0x08;
-	n42.addr.u8[0] = 0x09;
 	rimeaddr_set_node_addr(&(root.addr));
 	add_node(root);
 	add_node(n11);
@@ -325,33 +320,47 @@ UNIT_TEST(long_graph_test)
 	add_node(n22);
 	add_node(n31);
 	add_node(n32);
-	add_node(n41);
-	add_node(n42);
 
+	//edge r -> n11
 	p_edge_t er11 = {root.addr, n11.addr, 0x00};
-	p_edge_t er12 = {root.addr, n12.addr, 0x00};
+
+	//edge n12 -> r
+	p_edge_t e12r = {n12.addr, root.addr, 0x00};
+
+	//edge n11 <-> n12
 	p_edge_t e1112 = {n11.addr, n12.addr, 0x00};
+	p_edge_t e1211 = {n12.addr, n11.addr, 0x00};
+
+	//edge n21 <-> n11
 	p_edge_t e1121 = {n11.addr, n21.addr, 0x00};
-	p_edge_t e1222 = {n12.addr, n22.addr, 0x00};
+	p_edge_t e2111 = {n21.addr, n11.addr, 0x00};
+
+	//edge n22 -> n12
+	p_edge_t e2212 = {n22.addr, n12.addr, 0x00};
+
+	//edge n21 <-> n22 (edge is out of K-1 view; between 2 K-1 nodes)
 	p_edge_t e2122 = {n21.addr, n22.addr, 0x00};
-	p_edge_t e2131 = {n21.addr, n31.addr, 0x00};
+	p_edge_t e2221 = {n22.addr, n21.addr, 0x00};
+
+	//edge n22 -> n32 (edge is out of K-1 view; between K-1 and K node)
 	p_edge_t e2232 = {n22.addr, n32.addr, 0x00};
-	p_edge_t e3132 = {n31.addr, n32.addr, 0x00};
-	p_edge_t e3141 = {n31.addr, n41.addr, 0x00};
-	p_edge_t e3242 = {n32.addr, n42.addr, 0x00};
-	p_edge_t e4142 = {n41.addr, n42.addr, 0x00};
+
+	//edge n21 <-> n31 (edge is out of K-1 view; between K-1 and K node)
+	p_edge_t e2131 = {n21.addr, n31.addr, 0x00};
+	p_edge_t e3121 = {n31.addr, n21.addr, 0x00};
+
 	add_edge(er11);
-	add_edge(er12);
+	add_edge(e12r);
 	add_edge(e1112);
+	add_edge(e1211);
 	add_edge(e1121);
-	add_edge(e1222);
+	add_edge(e2111);
+	add_edge(e2212);
 	add_edge(e2122);
-	add_edge(e2131);
+	add_edge(e2221);
 	add_edge(e2232);
-	add_edge(e3132);
-	add_edge(e3141);
-	add_edge(e3242);
-	add_edge(e4142);
+	add_edge(e2131);
+	add_edge(e3121);
 
 	UNIT_TEST_BEGIN();
 
@@ -361,7 +370,7 @@ UNIT_TEST(long_graph_test)
 
 	//This test works only with this configuration
 	UNIT_TEST_ASSERT(K == 3);
-	UNIT_TEST_ASSERT(MAX_NODES >= 9);
+	UNIT_TEST_ASSERT(MAX_NODES >= 7);
 	UNIT_TEST_ASSERT(MAX_EDGES >= 12);
 
 	serialize(packet_complete_long);
@@ -411,53 +420,43 @@ UNIT_TEST(long_graph_test)
 	free(tmp_4_ptr);
 	free(tmp_5_ptr);
 
-	UNIT_TEST_ASSERT(get_node_count() == 0x08); //All nodes to lvl 3 + new root
-	UNIT_TEST_ASSERT(get_edge_count() == 0x09); //All edges to lvl 3 except between lvl 3 + new root edge
+	UNIT_TEST_ASSERT(get_node_count() == 0x06); //K-1 View + new root = K View
+	UNIT_TEST_ASSERT(get_edge_count() == 0x08); //All edges to lvl 2 except between lvl 2 + new root edge
 
 	//cleanup and test if every edge/node was correctly de/serialized
 	UNIT_TEST_ASSERT(find_node(&(root.addr)) != NULL);
 	remove_node(&(root.addr));
 	UNIT_TEST_ASSERT(find_edge(&(root.addr), &(n11.addr)) != NULL);
 	remove_edge(&(root.addr), &(n11.addr));
-	UNIT_TEST_ASSERT(find_edge(&(root.addr), &(n12.addr)) != NULL);
-	remove_edge(&(root.addr), &(n12.addr));
+	UNIT_TEST_ASSERT(find_edge(&(n12.addr), &(root.addr)) != NULL);
+	remove_edge(&(n12.addr), &(root.addr));
 
 	UNIT_TEST_ASSERT(find_node(&(n11.addr)) != NULL);
 	remove_node(&(n11.addr));
 	UNIT_TEST_ASSERT(find_edge(&(n11.addr), &(n12.addr)) != NULL);
 	remove_edge(&(n11.addr), &(n12.addr));
+	UNIT_TEST_ASSERT(find_edge(&(n12.addr), &(n11.addr)) != NULL);
+	remove_edge(&(n12.addr), &(n11.addr));
 	UNIT_TEST_ASSERT(find_edge(&(n11.addr), &(n21.addr)) != NULL);
 	remove_edge(&(n11.addr), &(n21.addr));
+	UNIT_TEST_ASSERT(find_edge(&(n21.addr), &(n11.addr)) != NULL);
+	remove_edge(&(n21.addr), &(n11.addr));
 
 	UNIT_TEST_ASSERT(find_node(&(n12.addr)) != NULL);
 	remove_node(&(n12.addr));
-	UNIT_TEST_ASSERT(find_edge(&(n12.addr), &(n22.addr)) != NULL);
-	remove_edge(&(n12.addr), &(n22.addr));
+	UNIT_TEST_ASSERT(find_edge(&(n22.addr), &(n12.addr)) != NULL);
+	remove_edge(&(n22.addr), &(n12.addr));
 
 	UNIT_TEST_ASSERT(find_node(&(n21.addr)) != NULL);
 	remove_node(&(n21.addr));
-	UNIT_TEST_ASSERT(find_edge(&(n21.addr), &(n22.addr)) != NULL);
-	remove_edge(&(n21.addr), &(n22.addr));
-	UNIT_TEST_ASSERT(find_edge(&(n21.addr), &(n31.addr)) != NULL);
-	remove_edge(&(n21.addr), &(n31.addr));
 
 	UNIT_TEST_ASSERT(find_node(&(n22.addr)) != NULL);
 	remove_node(&(n22.addr));
-	UNIT_TEST_ASSERT(find_edge(&(n22.addr), &(n32.addr)) != NULL);
-	remove_edge(&(n22.addr), &(n32.addr));
 
-	UNIT_TEST_ASSERT(find_node(&(n31.addr)) != NULL);
-	remove_node(&(n31.addr));
-
-	UNIT_TEST_ASSERT(find_node(&(n32.addr)) != NULL);
-	remove_node(&(n32.addr));
-
-	rimeaddr_t node = rimeaddr_null;
-	node.u8[0] = 0x0A;
-	UNIT_TEST_ASSERT(find_node(&node) != NULL);
-	remove_node(&node);
-	UNIT_TEST_ASSERT(find_edge(&(root.addr), &node) != NULL);
-	remove_edge(&(root.addr), &node);
+	UNIT_TEST_ASSERT(find_node(&(new_root.addr)) != NULL);
+	remove_node(&(new_root.addr));
+	UNIT_TEST_ASSERT(find_edge(&(root.addr), &(new_root.addr)) != NULL);
+	remove_edge(&(root.addr), &(new_root.addr));
 
 	UNIT_TEST_END();
 }
