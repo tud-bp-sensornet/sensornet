@@ -85,7 +85,7 @@ void p_broadcast_close(struct p_broadcast_conn *c)
 	abc_close(&(c->abc));
 }
 
-int p_broadcast_send(struct p_broadcast_conn *c, void *data, size_t length)
+int p_broadcast_send(struct p_broadcast_conn *c, const void *data, size_t length)
 {
 
 	if (length > MAX_BROADCAST_PAYLOAD_SIZE)

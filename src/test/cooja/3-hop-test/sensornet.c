@@ -1,10 +1,11 @@
-#include "contiki.h"
-#include "pbroadcast.h"
-#include "graph.h"
-#include "serialize.h"
-#include "graph-operations.h"
-
 #include <stdio.h>
+
+#include "contiki.h"
+#include "graph.h"
+#include "graph-operations.h"
+#include "serialize.h"
+#include "pbroadcast.h"
+#include "random.h"
 
 #ifndef __K_HOP_DEBUG__
 #define __K_HOP_DEBUG__ 0
@@ -15,7 +16,7 @@ PROCESS(simple_process, "Simple process");
 AUTOSTART_PROCESSES(&simple_process);
 /*---------------------------------------------------------------------------*/
 static void
-recv(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, void *data, size_t length)
+recv(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, const void *data, size_t length)
 {
 	//Update graph
 	deserialize(sender, data, length);
@@ -23,6 +24,7 @@ recv(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, void *data, si
 /*---------------------------------------------------------------------------*/
 static struct p_broadcast_conn broadcast;
 /*---------------------------------------------------------------------------*/
+#if __K_HOP_DEBUG__
 /**
  * Prints the graph by printing Node informations and Edge informations while iterating it
  * Testcase:Node:%d,%d\n	with the rimeaddr.u8[0] and the depth
@@ -56,6 +58,7 @@ static void debug_k_hop_timer_event(void *ptr){
 	}
 	free(edge_array);
 }
+#endif
 /*---------------------------------------------------------------------------*/
 static void
 packet_complete(const void *packet_data, size_t length)
@@ -76,11 +79,12 @@ PROCESS_THREAD(simple_process, ev, data)
 	p_broadcast_open(&broadcast, 129);
 	static struct etimer et;
 	init_graph();
-	if(__K_HOP_DEBUG__){
+	
+#if __K_HOP_DEBUG__
 		static struct ctimer ct;
 		//After 305 seconds, call debug_k_hop_timer_event
 		ctimer_set(&ct, CLOCK_SECOND * 305, debug_k_hop_timer_event, NULL);
-	}
+#endif
 
 	//We are root
 	p_node_t root = {rimeaddr_node_addr};

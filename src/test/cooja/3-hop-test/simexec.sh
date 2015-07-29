@@ -1,5 +1,5 @@
 CONTIKI="../../../../lib/contiki"
-CSC="broadcast.simulation.csc"
+CSC="3hop-test.csc"
 
 if [ ! -f $CONTIKI/tools/cooja/dist/cooja.jar ]; then
 	cd $CONTIKI/tools/cooja

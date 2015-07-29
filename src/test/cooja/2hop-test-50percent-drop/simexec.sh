@@ -1,5 +1,5 @@
 CONTIKI="../../../../lib/contiki"
-CSC="2hop-test.csc"
+CSC="2hop-test-50percent-drop.csc"
 
 if [ ! -f $CONTIKI/tools/cooja/dist/cooja.jar ]; then
 	cd $CONTIKI/tools/cooja

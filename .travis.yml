@@ -22,4 +22,6 @@ script:
   ## Build and run Cooja test
   - make -C src/test/cooja/broadcast-with-checksum run-unittest
   - make -C src/test/cooja/2-hop-test run-unittest
+  - make -C src/test/cooja/2hop-test-50percent-drop run-unittest
   - make -C src/test/cooja/3-hop-test run-unittest
+  - make -C src/test/cooja/3hop-test-50percent-drop run-unittest

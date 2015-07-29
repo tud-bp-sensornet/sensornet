@@ -16,7 +16,7 @@
 // The uint16_t is to account for the size of the hash of the packet.
 #define MAX_BROADCAST_PAYLOAD_SIZE (PACKETBUF_SIZE - PACKETBUF_HDR_SIZE - sizeof(uint16_t))
 
-#define BROADCAST_ATTRIBUTES {PACKETBUF_ADDR_SENDER, PACKETBUF_ADDRSIZE}, ABC_ATTRIBUTES
+#define PBROADCAST_ATTRIBUTES {PACKETBUF_ADDR_SENDER, PACKETBUF_ADDRSIZE}, ABC_ATTRIBUTES
 
 /**
  * \brief           Connection for broadcast including callback function
@@ -72,6 +72,6 @@ void p_broadcast_close(struct p_broadcast_conn *c);
  *                  The parameter c must point to a broadcast connection that
  *                  must have previously been set up with p_broadcast_open().
  */
-int p_broadcast_send(struct p_broadcast_conn *c, void *data, size_t length);
+int p_broadcast_send(struct p_broadcast_conn *c, const void *data, size_t length);
 
 #endif /* __PBROADCAST_H__ */
