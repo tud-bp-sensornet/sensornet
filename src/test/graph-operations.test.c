@@ -2,6 +2,7 @@
 #include "unit-test.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "sys/clock.h"
 #include "graph.h"
@@ -15,6 +16,7 @@ UNIT_TEST_REGISTER(empty_hop, "Test empty graph get_hop_count");
 UNIT_TEST_REGISTER(null_hop, "Test NULL pointer parameter get_hop_count");
 UNIT_TEST_REGISTER(cyclic_hop, "Test cyclic graph get_hop_count");
 UNIT_TEST_REGISTER(no_hop, "Test no reachable node get_hop_count");
+UNIT_TEST_REGISTER(omnidirectional_hop, "Test with omnidirectional edges get_hop_count");
 
 UNIT_TEST_REGISTER(empty_purge, "Test on empty and only root graph purge");
 UNIT_TEST_REGISTER(delete_and_decrement_purge, "Test delete and decrement purge");
@@ -149,6 +151,109 @@ UNIT_TEST(cyclic_hop)
 	remove_edge(&(n12.addr), &(n22.addr));
 	remove_edge(&(n21.addr), &(n22.addr));
 	remove_edge(&(n23.addr), &(n22.addr));
+
+}
+
+/**
+ * Graph:
+ *            r
+ *           / \
+ *        n11   n12
+ *         /     \
+ *      n21<----->n22
+ * Test get hopcount of a cyclic graph with all edges in both directions
+ * Tests the functions:
+ * p_hop_t *get_hop_counts(uint8_t *count);
+ */
+UNIT_TEST(omnidirectional_hop)
+{
+	p_node_t r, n11, n12, n21, n22, n23;
+
+	r.addr = rimeaddr_null;
+	n11.addr = rimeaddr_null;
+	n12.addr = rimeaddr_null;
+	n21.addr = rimeaddr_null;
+	n22.addr = rimeaddr_null;
+	r.addr.u8[0] = 0x01;
+	n11.addr.u8[0] = 0x02;
+	n12.addr.u8[0] = 0x03;
+	n21.addr.u8[0] = 0x04;
+	n22.addr.u8[0] = 0x05;
+
+	p_edge_t e11r = {n11.addr, r.addr, 0x00};
+	p_edge_t er11 = {r.addr, n11.addr, 0x00};
+
+	p_edge_t er12 = {r.addr, n12.addr, 0x00};
+	p_edge_t e12r = {n12.addr, r.addr, 0x00};
+
+	p_edge_t e1121 = {n11.addr, n21.addr, 0x00};
+	p_edge_t e2111 = {n21.addr, n11.addr, 0x00};
+
+	p_edge_t e1222 = {n12.addr, n22.addr, 0x00};
+	p_edge_t e2212 = {n22.addr, n12.addr, 0x00};
+
+	p_edge_t e2122 = {n21.addr, n22.addr, 0x00};
+	p_edge_t e2221 = {n22.addr, n21.addr, 0x00};
+
+	rimeaddr_set_node_addr(&(r.addr));
+
+	//Randomly add the nodes and edges
+	add_node(r);
+	add_node(n22);
+	add_node(n12);
+	add_node(n11);
+	add_node(n21);
+
+	add_edge(e2122);
+	add_edge(er12);
+	add_edge(e1121);
+	add_edge(e11r);
+	add_edge(e1222);
+	add_edge(e2221);
+	add_edge(e12r);
+	add_edge(e2111);
+	add_edge(er11);
+	add_edge(e2212);
+
+	UNIT_TEST_BEGIN();
+
+	uint8_t count;
+	p_hop_t *ptr = get_hop_counts(&count);
+
+	UNIT_TEST_ASSERT(count == 0x04);
+
+	UNIT_TEST_ASSERT(ptr[1].addr.u8[0] == n11.addr.u8[0]);
+	UNIT_TEST_ASSERT(ptr[1].hop_count == 0x01);
+
+	UNIT_TEST_ASSERT(ptr[0].addr.u8[0] == n12.addr.u8[0]);
+	UNIT_TEST_ASSERT(ptr[0].hop_count == 0x01);
+
+	UNIT_TEST_ASSERT(ptr[3].addr.u8[0] == n21.addr.u8[0]);
+	UNIT_TEST_ASSERT(ptr[3].hop_count == 0x02);
+
+	UNIT_TEST_ASSERT(ptr[2].addr.u8[0] == n22.addr.u8[0]);
+	UNIT_TEST_ASSERT(ptr[2].hop_count == 0x02);
+
+	free(ptr);
+
+	UNIT_TEST_END();
+
+	remove_node(&(r.addr));
+	remove_node(&(n11.addr));
+	remove_node(&(n12.addr));
+	remove_node(&(n21.addr));
+	remove_node(&(n22.addr));
+
+	remove_edge(&(n11.addr), &(r.addr));
+	remove_edge(&(r.addr), &(n11.addr));
+	remove_edge(&(r.addr), &(n12.addr));
+	remove_edge(&(n12.addr), &(r.addr));
+	remove_edge(&(n11.addr), &(n21.addr));
+	remove_edge(&(n21.addr), &(n11.addr));
+	remove_edge(&(n12.addr), &(n22.addr));
+	remove_edge(&(n22.addr), &(n12.addr));
+	remove_edge(&(n21.addr), &(n22.addr));
+	remove_edge(&(n22.addr), &(n21.addr));
 
 }
 
@@ -328,6 +433,7 @@ int main()
 	UNIT_TEST_RUN(null_hop);
 	UNIT_TEST_RUN(cyclic_hop);
 	UNIT_TEST_RUN(no_hop);
+	UNIT_TEST_RUN(omnidirectional_hop);
 
 	//void purge();
 	UNIT_TEST_RUN(empty_purge);
