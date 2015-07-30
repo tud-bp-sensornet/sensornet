@@ -1,7 +1,8 @@
 #include "contiki.h"
 #include "net/rime.h"
 
-#include <stdlib.h>
+//the malloc of <stdlib.h> has strange behavior and leads to an illegal read. the malloc of https://github.com/contiki/contiki-2.x/blob/master/backyard/core/lib/malloc.c was used instead.
+#include "malloc.h"
 #include <string.h>
 
 #include "graph.h"
@@ -293,7 +294,7 @@ p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
 	}
 
 	//allocate memory to be returned
-	p_edge_t** outgoing_edge_array = (p_edge_t**) malloc(sizeof(p_edge_t*) * (*count));
+	p_edge_t** outgoing_edge_array = (p_edge_t**) malloc(2 * (*count));
 	uint8_t current_num = 0;
 
 	//insert the outgoing edges into the array to be returned
