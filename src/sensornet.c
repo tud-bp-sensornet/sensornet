@@ -82,8 +82,8 @@ PROCESS_THREAD(simple_process, ev, data)
 	
 #if __K_HOP_DEBUG__
 		static struct ctimer ct;
-		//After 305 seconds, call debug_k_hop_timer_event
-		ctimer_set(&ct, CLOCK_SECOND * 305, debug_k_hop_timer_event, NULL);
+		//After 45 seconds, call debug_k_hop_timer_event
+		ctimer_set(&ct, CLOCK_SECOND * 45, debug_k_hop_timer_event, NULL);
 #endif
 
 	//We are root

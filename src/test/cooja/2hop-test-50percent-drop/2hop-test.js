@@ -55,12 +55,12 @@ for(var i = 0; i < mote_amount; i++)
 	mote_dict[all_motes[i].getID()] = [];
 }
  
-/* Wait 300 seconds (300000ms) to build network */
-GENERATE_MSG(300000, "continue");
+/* Wait 40 seconds (40000ms) to build network */
+GENERATE_MSG(40000, "continue");
 YIELD_THEN_WAIT_UNTIL(msg.equals("continue"));
 
 /* wait for building dict */
-GENERATE_MSG(40000, "endloop");
+GENERATE_MSG(10000, "endloop");
 
 /* Read Testcase messages */
 while (!msg.equals("endloop"))
