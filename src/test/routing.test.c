@@ -42,7 +42,7 @@ UNIT_TEST(no_edge_test)
  *
  *       n3
  *       |
- * n2 <- r <-> n1
+ * n2 -> r <-> n1
  *
  * Tests the functions:
  * rimeaddr_t get_nearest_neighbour();
@@ -65,27 +65,29 @@ UNIT_TEST(find_nearest_test)
 	add_node(n2);
 	add_node(n3);
 
-	p_edge_t er2 = {r.addr, n2.addr, 0x00};
+	p_edge_t e2r = {n2.addr, r.addr, 0x00};
 	p_edge_t er3 = {r.addr, n3.addr, 0x00};
 	p_edge_t e1r = {n1.addr, r.addr, 0x00};
+	p_edge_t er1 = {r.addr, n1.addr, 0x00};
 
-	add_edge(er2);
+	add_edge(e2r);
 	add_edge(er3);
 	add_edge(e1r);
+	add_edge(er1);
 
 	UNIT_TEST_BEGIN();
 
 	rimeaddr_t addr = get_nearest_neighbour();
 
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&addr, &(n2.addr)));
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&addr, &(n1.addr)));
 
-	//Add edge r -> n1
-	p_edge_t er1 = {r.addr, n1.addr, 0x00};
-	add_edge(er1);
+	//Add edge r -> n2
+	p_edge_t er2 = {r.addr, n2.addr, 0x00};
+	add_edge(er2);
 
 	addr = get_nearest_neighbour();
 
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&addr, &(n1.addr)));
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&addr, &(n2.addr)));
 
 	UNIT_TEST_END();
 
@@ -95,6 +97,7 @@ UNIT_TEST(find_nearest_test)
 	remove_node(&(n3.addr));
 
 	remove_edge(&(n1.addr), &(r.addr));
+	remove_edge(&(n2.addr), &(r.addr));
 	remove_edge(&(r.addr), &(n3.addr));
 	remove_edge(&(r.addr), &(n1.addr));
 	remove_edge(&(r.addr), &(n2.addr));

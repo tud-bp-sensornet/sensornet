@@ -25,3 +25,4 @@ script:
   - make -C src/test/cooja/2hop-test-50percent-drop run-unittest
   - make -C src/test/cooja/3-hop-test run-unittest
   - make -C src/test/cooja/3hop-test-50percent-drop run-unittest
+  - make -C src/test/cooja/routing run-unittest
