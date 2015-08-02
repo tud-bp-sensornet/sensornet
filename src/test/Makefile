@@ -17,6 +17,8 @@ CFLAGS += -DMAX_EDGES=$(MAX_EDGES)
 PROJECT_SOURCEFILES+=../graph.c
 PROJECT_SOURCEFILES+=../graph-operations.c
 PROJECT_SOURCEFILES+=../serialize.c
+PROJECT_SOURCEFILES+=../routing.c
+PROJECT_SOURCEFILES+=../positions.c
 PROJECT_SOURCEFILES+=clock.c #necessary because native has no proper clock implementation
 
 # add ../ to include path
