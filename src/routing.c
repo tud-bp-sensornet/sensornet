@@ -1,5 +1,5 @@
 /**
- * \file                       A router
+ * \file                       Routing helper functions - Used by the routing algorithm for path finding
  * \author                     tud-bp-sensornet
  */
 
@@ -46,7 +46,7 @@ rimeaddr_t get_nearest_neighbour()
 			}
 		}
 	}
-	
+
 	PRINTF("Debug: Nearest is: %d\n", nearest_neighbour.u8[0]);
 	return nearest_neighbour;
 }

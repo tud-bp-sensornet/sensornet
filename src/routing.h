@@ -1,5 +1,5 @@
 /**
- * \file                       Header file for the router
+ * \file                       Header file for the routing helper functions
  * \author                     tud-bp-sensornet
  */
 
@@ -13,7 +13,7 @@
  * \retval          The rimeaddr_t of the nearest neighbour
  *
  *                  This function returns the rimeaddr_t of the nearest
- *                  neighbour of root to the destiantion node calculated
+ *                  neighbour of root to the destination node calculated
  *                  with euclidean distance.
  *
  * 	                Returns rimeaddr_null when no neighbour is found.

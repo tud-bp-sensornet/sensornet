@@ -1,6 +1,8 @@
 #include "unit-test.h"
 #include "contiki.h"
 
+#include <stdlib.h>
+
 #include "graph.h"
 #include "routing.h"
 
@@ -111,6 +113,6 @@ int main()
 	UNIT_TEST_RUN(no_edge_test);
 	UNIT_TEST_RUN(find_nearest_test);
 
-	return 1;
+	return EXIT_SUCCESS;
 }
 
