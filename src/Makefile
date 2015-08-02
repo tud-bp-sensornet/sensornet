@@ -19,6 +19,7 @@ PROJECT_SOURCEFILES+=graph-operations.c
 PROJECT_SOURCEFILES+=serialize.c
 PROJECT_SOURCEFILES+=pbroadcast.c
 PROJECT_SOURCEFILES+=routing.c
+PROJECT_SOURCEFILES+=positions.c
 
 CONTIKI=../lib/contiki
 CONTIKI_WITH_RIME = 1
