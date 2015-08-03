@@ -91,8 +91,8 @@ PROCESS_THREAD(k_hop_process, ev, data)
 
 	while (1)
 	{
-		/* Delay 60-120 seconds */
-		etimer_set(&et, CLOCK_SECOND * 60 + random_rand() % (CLOCK_SECOND * 120));
+		/* Delay 2-4 seconds */
+		etimer_set(&et, CLOCK_SECOND * 2 + random_rand() % (CLOCK_SECOND * 4));
 
 		PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
 
