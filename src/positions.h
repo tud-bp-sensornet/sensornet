@@ -9,7 +9,7 @@
 #define __POSITIONS_H__
 
 /**
- * Represents a position on a two-dimensional system.
+ * Represents a position in a two-dimensional system.
  */
 typedef struct {
 	int16_t x;
