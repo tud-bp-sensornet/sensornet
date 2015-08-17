@@ -4,12 +4,16 @@ CONTIKI = ../../../../lib/contiki
 K = 2
 MAX_NODES = 20
 MAX_EDGES = 100
+DISCOVERY_INTERVAL_MIN = 2
+DISCOVERY_INTERVAL_MAX = 4
 
 CFLAGS += -Wall
 
 CFLAGS += -DK=$(K)
 CFLAGS += -DMAX_NODES=$(MAX_NODES)
 CFLAGS += -DMAX_EDGES=$(MAX_EDGES)
+CFLAGS += -DDISCOVERY_INTERVAL_MIN=$(DISCOVERY_INTERVAL_MIN)
+CFLAGS += -DDISCOVERY_INTERVAL_MAX=$(DISCOVERY_INTERVAL_MAX)
 
 PROJECT_SOURCEFILES+=../../../graph.c
 PROJECT_SOURCEFILES+=../../../graph-operations.c
@@ -17,9 +21,11 @@ PROJECT_SOURCEFILES+=../../../serialize.c
 PROJECT_SOURCEFILES+=../../../pbroadcast.c
 PROJECT_SOURCEFILES+=../../../routing.c
 PROJECT_SOURCEFILES+=../../../positions.c
+PROJECT_SOURCEFILES+=../../../neighbor-discovery.c
 CFLAGS += -I../../../
 
-CFLAGS += -D__ROUTING_THREAD_DEBUG__=1
+
+CFLAGS += -D__ROUTING_DEBUG__=1
 
 TESTS=$(wildcard ??-*.csc)
 all: $(TESTS)

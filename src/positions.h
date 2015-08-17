@@ -33,9 +33,9 @@ extern rimeaddr_t node_destination;
 extern uint8_t node_amount;
 
 /**
- * \brief Returns the stored position of a node.
+ * \brief      Returns the stored position of a node.
  * \param addr Rimeaddr of the node you want to know the position of.
- * \retval The x and y position of the node.
+ * \retval     The x and y position of the node.
  */
 position_t get_stored_position_of(const rimeaddr_t *addr);
 
