@@ -1,4 +1,4 @@
-CONTIKI_PROJECT = sensornet
+CONTIKI_PROJECT = simple-application
 all: $(CONTIKI_PROJECT)
 
 # default parameters
