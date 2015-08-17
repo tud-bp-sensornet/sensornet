@@ -9,7 +9,7 @@
 #include "positions.h"
 
 #ifndef __NEIGHBOR_DISCOVERY_DEBUG__
-#define __NEIGHBOR_DISCOVERY_DEBUG__ 1
+#define __NEIGHBOR_DISCOVERY_DEBUG__ 0
 #endif
 
 #if __NEIGHBOR_DISCOVERY_DEBUG__
@@ -85,7 +85,7 @@ PROCESS_THREAD(neighbor_discovery_process, ev, data)
 	while (1)
 	{
 		/* Delay 60-120 seconds */
-		etimer_set(&et, CLOCK_SECOND * 60 + random_rand() % (CLOCK_SECOND * 120));
+		etimer_set(&et, CLOCK_SECOND * DISCOVERY_INTERVAL_MIN + random_rand() % (CLOCK_SECOND * DISCOVERY_INTERVAL_MAX));
 
 		PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
 
