@@ -28,15 +28,18 @@ rimeaddr_t get_nearest_neighbour()
 	uint8_t i;
 	rimeaddr_t nearest_neighbour = rimeaddr_null;
 	int16_t neighbour_distance = 0x7FFF; //32767 maximum value
+
+	position_t dst_pos = get_stored_position_of(&node_destination);
+
 	for (i = 0; i < edge_count; i++)
 	{
 		if (rimeaddr_cmp(&(edges[i]->src), &rimeaddr_node_addr))
 		{
+			position_t neighbor_pos = get_stored_position_of(&(edges[i]->dst));
+
 			//Calculate euklidean distance
-			int16_t dst_x = pos_x[node_destination - 0x01]; //Rimeaddr of nodes start with 1, 0 is rimeaddr_null
-			int16_t dst_y = pos_y[node_destination - 0x01];
 			//No need for sqrt, we do not need the exact distance
-			int16_t distance = (dst_x - pos_x[edges[i]->dst.u8[0] - 1]) * (dst_x - pos_x[edges[i]->dst.u8[0] - 1]) + (dst_y - pos_y[edges[i]->dst.u8[0] - 1]) * (dst_y - pos_y[edges[i]->dst.u8[0] - 1]);
+			int16_t distance = (dst_pos.x - neighbor_pos.x) * (dst_pos.x - neighbor_pos.x) + (dst_pos.y - neighbor_pos.y) * (dst_pos.y - neighbor_pos.y);
 			PRINTF("Debug: Distance from %d to %d is: %d\n", node_destination, edges[i]->dst.u8[0], distance);
 
 			if (neighbour_distance > distance)

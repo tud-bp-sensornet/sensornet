@@ -23,9 +23,9 @@
 #endif
 
 /*---------------------------------------------------------------------------*/
-PROCESS(k_hop_process, "K-Hop process");
+PROCESS(neighbor_discovery_process, "K-Hop process");
 PROCESS(routing_process, "Routing process");
-AUTOSTART_PROCESSES(&k_hop_process, &routing_process);
+AUTOSTART_PROCESSES(&neighbor_discovery_process, &routing_process);
 /*---------------------------------------------------------------------------*/
 static struct p_broadcast_conn broadcast;
 static struct unicast_conn uc;
@@ -42,7 +42,7 @@ recv_uc(struct unicast_conn *c, const rimeaddr_t *from)
 	PRINTF("Got unicast from: %d Content: %s\n", from->u8[0], (char *)packetbuf_dataptr());
 	//Are we the destination?
 	rimeaddr_t dst = rimeaddr_null;
-	dst.u8[0] = node_destination;
+	dst.u8[0] = node_destination.u8[0];
 	if (!rimeaddr_cmp(&rimeaddr_node_addr, &dst))
 	{
 		//Forward message
@@ -63,8 +63,7 @@ recv_uc(struct unicast_conn *c, const rimeaddr_t *from)
 /*---------------------------------------------------------------------------*/
 static const struct unicast_callbacks unicast_callbacks = {recv_uc};
 /*---------------------------------------------------------------------------*/
-static void
-packet_complete(const void *packet_data, size_t length)
+static void packet_complete(const void *packet_data, size_t length)
 {
 	//Broadcast subgraph
 	if (p_broadcast_send(&broadcast, packet_data, length) == 0)
@@ -73,7 +72,7 @@ packet_complete(const void *packet_data, size_t length)
 	}
 }
 /*---------------------------------------------------------------------------*/
-PROCESS_THREAD(k_hop_process, ev, data)
+PROCESS_THREAD(neighbor_discovery_process, ev, data)
 {
 	PROCESS_EXITHANDLER(p_broadcast_close(&broadcast));
 	PROCESS_BEGIN();
