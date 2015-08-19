@@ -6,6 +6,8 @@
 #ifndef __ROUTING_H__
 #define __ROUTING_H__
 
+#include <stdlib.h>
+#include "contiki.h"
 #include "rimeaddr.h"
 
 /**
@@ -20,4 +22,30 @@
  */
 rimeaddr_t get_nearest_neighbour();
 
-#endif /* __ROUTER_H__ */
+/**
+ * \brief                  Initializes the message router.
+ * \param message_received Callback function that is called when a message was received that was intended for the current node.
+ */
+void init_router(void (*message_received)(const void *packet_data, size_t length));
+
+/**
+ * \brief  Closes the router and cleans up used resources.
+ */
+void close_router();
+
+/**
+ * \brief             Sends a message to another node using the routing functionality.
+ * \param packet_data Data to be sent.
+ * \param length      Length in bytes of packet_data.
+ * \retval            Returns 1 if message was sent successfully, 0 if it wasn't
+ *
+ *                    Note that we can not guarantee that the the message arrives beyond
+ *                    the next hop. Sending will fail if the router was not initialized
+ *                    beforehand, if there is no neighbor to send the message to, or if
+ *                    the position of the target node is unknown.
+ *
+ *                    Currently, a message can only be sent to the known base station.
+ */
+int8_t send_message(const void *packet_data, size_t length);
+
+#endif /* __ROUTING_H__ */

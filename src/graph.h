@@ -23,7 +23,8 @@ void init_graph();
  */
 typedef struct {
 	rimeaddr_t addr;
-	//possibly additional attributes, like position
+	//int16_t pos_x;
+	//int16_t pos_y;
 } p_node_t;
 
 /**

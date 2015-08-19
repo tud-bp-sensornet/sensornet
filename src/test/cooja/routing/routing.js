@@ -30,8 +30,14 @@ GENERATE_MSG(10000, "endloop");
 while (!msg.equals("endloop"))
 {
 	YIELD();
+
+	if (msg.startsWith("get_nearest_neighbour:"))
+	{
+		continue;
+	}
+
 	message_count++;
-	
+
 	switch (message_count)
 	{
 	case 1:

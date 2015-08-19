@@ -1,4 +1,4 @@
-CONTIKI_PROJECT = sensornet
+CONTIKI_PROJECT = simple-application
 all: $(CONTIKI_PROJECT)
 
 # default parameters
@@ -20,6 +20,7 @@ PROJECT_SOURCEFILES+=serialize.c
 PROJECT_SOURCEFILES+=pbroadcast.c
 PROJECT_SOURCEFILES+=routing.c
 PROJECT_SOURCEFILES+=positions.c
+PROJECT_SOURCEFILES+=neighbor-discovery.c
 
 CONTIKI=../lib/contiki
 CONTIKI_WITH_RIME = 1

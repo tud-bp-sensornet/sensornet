@@ -49,9 +49,9 @@ PROCESS_THREAD(simple_process, ev, data)
 {
 	PROCESS_BEGIN();
 	
-	//After 45 seconds, call debug_k_hop_timer_event
+	//After 60 seconds, call debug_k_hop_timer_event
 	static struct ctimer ct;
-	ctimer_set(&ct, CLOCK_SECOND * 45, debug_k_hop_timer_event, NULL);
+	ctimer_set(&ct, CLOCK_SECOND * 60, debug_k_hop_timer_event, NULL);
 	
 	process_start(&neighbor_discovery_process, NULL);
 

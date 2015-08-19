@@ -6,7 +6,7 @@
  * Nodes have to print their Graph in the form of
  * "Testcase:Node:id,hop"
  * "Testcase:Edge:id,id"
- * after 45 seconds passed
+ * after 60 seconds passed
  */
 
 /* Make test automatically fail (timeout) after 600 simulated seconds */
@@ -55,8 +55,8 @@ for(var i = 0; i < mote_amount; i++)
 	mote_dict[all_motes[i].getID()] = [];
 }
  
-/* Wait 40 seconds (40000ms) to build network */
-GENERATE_MSG(40000, "continue");
+/* Wait 55 seconds (55000ms) to build network */
+GENERATE_MSG(55000, "continue");
 YIELD_THEN_WAIT_UNTIL(msg.equals("continue"));
 
 /* wait for building dict */
