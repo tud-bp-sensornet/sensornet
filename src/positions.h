@@ -17,12 +17,6 @@ typedef struct {
 } position_t;
 
 /**
- * These arrays represent the x and y positions of the nodes in 2D
- */
-int16_t pos_x[6];
-int16_t pos_y[6];
-
-/**
  * This value holds the destination node
  */
 extern rimeaddr_t node_destination;

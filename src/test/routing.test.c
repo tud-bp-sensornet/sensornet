@@ -61,6 +61,10 @@ UNIT_TEST(find_nearest_test)
 	n1.addr.u8[0] = 0x03;
 	n2.addr.u8[0] = 0x04;
 	n3.addr.u8[0] = 0x06;
+	r.pos = get_stored_position_of(&(r.addr));
+	n1.pos = get_stored_position_of(&(n1.addr));
+	n2.pos = get_stored_position_of(&(n2.addr));
+	n3.pos = get_stored_position_of(&(n3.addr));
 	rimeaddr_set_node_addr(&(r.addr));
 	add_node(r);
 	add_node(n1);
