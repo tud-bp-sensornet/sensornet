@@ -46,6 +46,6 @@ void close_router();
  *
  *                    Currently, a message can only be sent to the known base station.
  */
-int8_t send_message(const void *packet_data, size_t length);
+int8_t send_message(const void *packet_data, size_t length, rimeaddr_t *dst);
 
 #endif /* __ROUTING_H__ */

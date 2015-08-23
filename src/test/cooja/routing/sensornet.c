@@ -29,7 +29,7 @@ PROCESS_THREAD(simple_application_process, ev, data)
 	{
 		PROCESS_WAIT_EVENT_UNTIL(ev == sensors_event && data == &button_sensor);
 
-		send_message("Fire!", 5);
+		send_message("Fire!", 5, &node_destination);
 	}
 
 	PROCESS_END();

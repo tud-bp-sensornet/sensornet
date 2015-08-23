@@ -18,7 +18,7 @@ PROCESS_THREAD(simple_application_process, ev, data)
 	process_start(&neighbor_discovery_process, NULL);
 
 	PROCESS_EXITHANDLER(close_router());
-	
+
 	PROCESS_BEGIN();
 	SENSORS_ACTIVATE(button_sensor);
 
@@ -29,7 +29,7 @@ PROCESS_THREAD(simple_application_process, ev, data)
 	{
 		PROCESS_WAIT_EVENT_UNTIL(ev == sensors_event && data == &button_sensor);
 
-		send_message("Fire!", 5);
+		send_message("Fire!", 5, &node_destination);
 	}
 
 	PROCESS_END();

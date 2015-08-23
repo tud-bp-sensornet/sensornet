@@ -5,6 +5,7 @@
 
 #include "graph.h"
 #include "routing.h"
+#include "positions.h"
 
 /**
  * Register unit tests that will be executed by using
@@ -29,7 +30,7 @@ UNIT_TEST(no_edge_test)
 
 	UNIT_TEST_BEGIN();
 
-	rimeaddr_t addr = get_nearest_neighbour();
+	rimeaddr_t addr = get_nearest_neighbour(&node_destination);
 
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&addr, &rimeaddr_null));
 
@@ -79,7 +80,7 @@ UNIT_TEST(find_nearest_test)
 
 	UNIT_TEST_BEGIN();
 
-	rimeaddr_t addr = get_nearest_neighbour();
+	rimeaddr_t addr = get_nearest_neighbour(&node_destination);
 
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&addr, &(n1.addr)));
 
@@ -87,7 +88,7 @@ UNIT_TEST(find_nearest_test)
 	p_edge_t er2 = {r.addr, n2.addr, 0x00};
 	add_edge(er2);
 
-	addr = get_nearest_neighbour();
+	addr = get_nearest_neighbour(&node_destination);
 
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&addr, &(n2.addr)));
 
