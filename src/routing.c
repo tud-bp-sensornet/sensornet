@@ -37,7 +37,15 @@ rimeaddr_t get_nearest_neighbour()
 	{
 		if (rimeaddr_cmp(&(edges[i]->src), &rimeaddr_node_addr))
 		{
-			position_t neighbor_pos = get_stored_position_of(&(edges[i]->dst));
+			p_node_t *node = find_node(&(edges[i]->dst));
+			
+			if(node == NULL)
+			{
+				PRINTF("get_nearest_neighbour: Could not find node!\n");
+				continue;
+			}
+			
+			position_t neighbor_pos = node->pos;
 
 			//Calculate euklidean distance
 			//No need for sqrt, we do not need the exact distance
