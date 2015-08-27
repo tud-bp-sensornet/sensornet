@@ -21,6 +21,7 @@ PROJECT_SOURCEFILES+=../../../graph-operations.c
 PROJECT_SOURCEFILES+=../../../serialize.c
 PROJECT_SOURCEFILES+=../../../pbroadcast.c
 PROJECT_SOURCEFILES+=../../../neighbor-discovery.c
+PROJECT_SOURCEFILES+=../../../positions.c
 CFLAGS += -I../../../
 
 CFLAGS += -D__K_HOP_DEBUG__=1

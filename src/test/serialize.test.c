@@ -196,7 +196,7 @@ UNIT_TEST(multi_sub_graph_test)
 
 	//Create a graph which serialization is bigger than the PACKETBUF_SIZE (128)
 	//Smallest functional node size is 2 Byte and edge is 5 Byte
-	for (size = 2; size < 21; size++) //19 edges and nodes
+	for (size = 2; size < 11; size++) //9 edges and nodes
 	{
 		p_node_t node;
 		node.addr = rimeaddr_null;
@@ -210,9 +210,9 @@ UNIT_TEST(multi_sub_graph_test)
 
 	UNIT_TEST_BEGIN();
 
-	//This test works only with the smallest possible node/edge size
-	UNIT_TEST_ASSERT(sizeof(p_node_t) == 2);
-	UNIT_TEST_ASSERT(sizeof(p_edge_t) == 5);
+	//This test works only with this node/edge size
+	UNIT_TEST_ASSERT(sizeof(p_node_t) == 6);
+	UNIT_TEST_ASSERT(sizeof(p_edge_t) == 10);
 
 	//This test works only with this configuration
 	UNIT_TEST_ASSERT(K >= 1);
@@ -239,7 +239,7 @@ UNIT_TEST(multi_sub_graph_test)
 
 	//add new root
 	p_node_t new_root = {rimeaddr_null};
-	new_root.addr.u8[0] = 0x0F; //Node number 15
+	new_root.addr.u8[0] = 0x07; //Node number 7
 	rimeaddr_set_node_addr(&(new_root.addr));
 	add_node(new_root);
 
@@ -256,8 +256,8 @@ UNIT_TEST(multi_sub_graph_test)
 	uint8_t node_count = get_node_count();
 	uint8_t edge_count = get_edge_count();
 
-	UNIT_TEST_ASSERT(node_count == 20); //19 drains + root + new root, but new root is a drain
-	UNIT_TEST_ASSERT(edge_count == 19); //19 edges from root + one extra edge to new root, but new root is a drain
+	UNIT_TEST_ASSERT(node_count == 10); //9 drains + root + new root, but new root is a drain
+	UNIT_TEST_ASSERT(edge_count == 9); //9 edges from root + one extra edge to new root, but new root is a drain
 
 	//cleanup and test if every edge/node was correctly de/serialized
 	for (i = 1; i < size; i++)
@@ -364,9 +364,9 @@ UNIT_TEST(long_graph_test)
 
 	UNIT_TEST_BEGIN();
 
-	//This test works only with the smallest possible node/edge size (or a bit more)
-	UNIT_TEST_ASSERT(sizeof(p_node_t) == 2);
-	UNIT_TEST_ASSERT(sizeof(p_edge_t) == 5);
+	//This test works only with this node/edge size (or a bit more)
+	UNIT_TEST_ASSERT(sizeof(p_node_t) == 6);
+	UNIT_TEST_ASSERT(sizeof(p_edge_t) == 10);
 
 	//This test works only with this configuration
 	UNIT_TEST_ASSERT(K == 3);

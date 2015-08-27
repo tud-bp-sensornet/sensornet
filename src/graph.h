@@ -10,6 +10,7 @@
 
 #include "contiki.h"
 #include "net/rime.h"
+#include "positions.h"
 
 /**
  * \brief Needs to be called at the start of main once to initialize the memory
@@ -23,8 +24,7 @@ void init_graph();
  */
 typedef struct {
 	rimeaddr_t addr;
-	//int16_t pos_x;
-	//int16_t pos_y;
+	position_t pos;
 } p_node_t;
 
 /**
@@ -82,6 +82,8 @@ typedef struct {
 	rimeaddr_t src;
 	rimeaddr_t dst;
 	uint8_t ttl;
+	uint16_t rssi;
+	uint16_t lqi;
 } p_edge_t;
 
 /**

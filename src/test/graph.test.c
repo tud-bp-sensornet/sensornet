@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "graph.h"
+#include "positions.h"
 
 /**
  * Register unit tests that will be executed by using
@@ -15,6 +16,7 @@ UNIT_TEST_REGISTER(find_nodes, "Test finding nodes");
 UNIT_TEST_REGISTER(find_edges, "Test finding edges");
 UNIT_TEST_REGISTER(in_out_edges, "Test incoming and outgoing edges of a node");
 UNIT_TEST_REGISTER(test_NULL_param, "Test if functions return without doing anything if a parameter is NULL");
+UNIT_TEST_REGISTER(test_members, "Test if all members of the node and edge struct are saved correctly");
 
 /**
  * Test adding and removing some nodes
@@ -127,7 +129,7 @@ UNIT_TEST(add_nodes)
 
 	//Test what happens if there are more nodes added than MEMB allocated space
 	uint8_t i;
-	for (i = 0; i < (MAX_NODES+1); i++)
+	for (i = 0; i < (MAX_NODES + 1); i++)
 	{
 		ntemp.addr = rimeaddr_null;
 		ntemp.addr.u8[0] = (unsigned char) i;
@@ -160,7 +162,7 @@ UNIT_TEST(add_edges)
 {
 	p_edge_t e1, e2, e3, e4, e5, e6, e1_new;
 	p_edge_t etemp;
-	p_edge_t ** edge_array;
+	p_edge_t **edge_array;
 	uint8_t counter;
 
 	UNIT_TEST_BEGIN();
@@ -420,7 +422,7 @@ UNIT_TEST(add_edges)
 
 	//Test what happens if there are more edges added than MEMB allocated space
 	uint8_t i;
-	for (i = 0; i < (MAX_EDGES+1); i++)
+	for (i = 0; i < (MAX_EDGES + 1); i++)
 	{
 		etemp.dst = rimeaddr_null;
 		etemp.src = rimeaddr_null;
@@ -1024,7 +1026,77 @@ UNIT_TEST(test_NULL_param)
 	UNIT_TEST_END();
 }
 
-int main() {
+/**
+ * Test if all members of the node and edge struct are saved correctly
+ * Tests the functions:
+ * void add_node(const p_node_t node)
+ * void remove_node(const rimeaddr_t *addr)
+ * p_node_t *find_node(const rimeaddr_t *addr)
+ * void add_edge(const p_edge_t edge)
+ * void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+ * p_edge_t *find_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+ */
+UNIT_TEST(test_members)
+{
+	position_t pos = {0, 0};
+	p_node_t n1 = {rimeaddr_null, pos};
+	p_edge_t e1 = {rimeaddr_null, rimeaddr_null, 0, 0, 0};
+
+	UNIT_TEST_BEGIN();
+
+	//If new members are added, modify this test
+	UNIT_TEST_ASSERT(sizeof(p_node_t) == 6);
+	UNIT_TEST_ASSERT(sizeof(p_edge_t) == 10);
+
+	add_node(n1);
+	add_edge(e1);
+
+	p_node_t *node = find_node(&(n1.addr));
+	UNIT_TEST_ASSERT(node->pos.x == pos.x);
+	UNIT_TEST_ASSERT(node->pos.y == pos.y);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node->addr), &rimeaddr_null));
+
+	p_edge_t *edge = find_edge(&(e1.src), &(e1.dst));
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge->src), &rimeaddr_null));
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge->dst), &rimeaddr_null));
+	UNIT_TEST_ASSERT(edge->ttl == 0);
+	UNIT_TEST_ASSERT(edge->rssi == 0);
+	UNIT_TEST_ASSERT(edge->lqi == 0);
+
+	pos.x = 1;
+	pos.y = 1;
+	n1.addr.u8[0] = 1;
+	n1.pos = pos;
+
+	e1.src.u8[0] = 1;
+	e1.dst.u8[0] = 2;
+	e1.ttl = 3;
+	e1.rssi = 4;
+	e1.lqi = 5;
+
+	add_node(n1);
+	add_edge(e1);
+
+	node = find_node(&(n1.addr));
+	UNIT_TEST_ASSERT(node->pos.x == pos.x);
+	UNIT_TEST_ASSERT(node->pos.y == pos.y);
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node->addr), &(n1.addr)));
+
+	edge = find_edge(&(e1.src), &(e1.dst));
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge->src), &(e1.src)));
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(edge->ttl == 3);
+	UNIT_TEST_ASSERT(edge->rssi == 4);
+	UNIT_TEST_ASSERT(edge->lqi == 5);
+
+	remove_node(&(node->addr));
+	remove_edge(&(edge->src), &(edge->dst));
+
+	UNIT_TEST_END();
+}
+
+int main()
+{
 	init_graph();
 	UNIT_TEST_RUN(add_nodes);
 	UNIT_TEST_RUN(add_edges);
@@ -1032,5 +1104,6 @@ int main() {
 	UNIT_TEST_RUN(find_edges);
 	UNIT_TEST_RUN(in_out_edges);
 	UNIT_TEST_RUN(test_NULL_param);
+	UNIT_TEST_RUN(test_members);
 	return EXIT_SUCCESS;
 }

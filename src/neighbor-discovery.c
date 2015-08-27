@@ -79,7 +79,7 @@ PROCESS_THREAD(neighbor_discovery_process, ev, data)
 	init_graph();
 
 	//We are root
-	p_node_t root = {rimeaddr_node_addr};
+	p_node_t root = {rimeaddr_node_addr, get_stored_position_of(&rimeaddr_node_addr)};
 	add_node(root);
 
 	while (1)

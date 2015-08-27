@@ -232,6 +232,8 @@ void deserialize(const rimeaddr_t *sender, const void *packet, size_t length)
 	edge.src = *sender;
 	edge.dst = rimeaddr_node_addr;
 	edge.ttl = 0x1E; //TODO: Replace with correct ttl
+	edge.rssi = packetbuf_attr(PACKETBUF_ATTR_RSSI);
+	edge.lqi = packetbuf_attr(PACKETBUF_ATTR_LINK_QUALITY);
 	add_edge(edge);
 
 	uint8_t i;
