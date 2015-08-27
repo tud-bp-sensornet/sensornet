@@ -211,7 +211,6 @@ UNIT_TEST(multi_sub_graph_test)
 	UNIT_TEST_BEGIN();
 
 	//This test works only with this node/edge size
-	printf("node %d edge %d\n", sizeof(p_node_t), sizeof(p_edge_t));
 	UNIT_TEST_ASSERT(sizeof(p_node_t) == 6);
 	UNIT_TEST_ASSERT(sizeof(p_edge_t) == 10);
 
