@@ -7,6 +7,8 @@
 #define __ROUTING_DEBUG__ 0
 #endif
 
+#include <string.h>
+
 #include "graph.h"
 #include "routing.h"
 #include "positions.h"
@@ -20,7 +22,7 @@
 #define PRINTF(...)
 #endif
 
-rimeaddr_t get_nearest_neighbour()
+rimeaddr_t get_nearest_neighbour(rimeaddr_t *dst)
 {
 	//Get all edges we know
 	uint8_t edge_count = 0;
@@ -31,7 +33,7 @@ rimeaddr_t get_nearest_neighbour()
 	rimeaddr_t nearest_neighbour = rimeaddr_null;
 	int16_t neighbour_distance = 0x7FFF; //32767 maximum value
 
-	position_t dst_pos = get_stored_position_of(&node_destination);
+	position_t dst_pos = get_stored_position_of(dst);
 
 	for (i = 0; i < edge_count; i++)
 	{
@@ -50,7 +52,7 @@ rimeaddr_t get_nearest_neighbour()
 			//Calculate euklidean distance
 			//No need for sqrt, we do not need the exact distance
 			int16_t distance = (dst_pos.x - neighbor_pos.x) * (dst_pos.x - neighbor_pos.x) + (dst_pos.y - neighbor_pos.y) * (dst_pos.y - neighbor_pos.y);
-			PRINTF("get_nearest_neighbour: Distance from %d to %d is: %d\n", node_destination.u8[0], edges[i]->dst.u8[0], distance);
+			PRINTF("get_nearest_neighbour: Distance from %d to %d is: %d\n", dst->u8[0], edges[i]->dst.u8[0], distance);
 
 			if (neighbour_distance > distance)
 			{
@@ -87,16 +89,15 @@ static void recv_uc(struct runicast_conn *c, const rimeaddr_t *from, uint8_t seq
 	}
 	last_received_packet_hash = current_hash;
 
-	PRINTF("Got unicast from: %d Content: %s\n", from->u8[0], (char *)packetbuf_dataptr());
+	PRINTF("Got unicast from: %d Content: %s\n", from->u8[0], (char *)(packetbuf_dataptr() + sizeof(rimeaddr_t)));
 
 	//Are we the destination?
-	rimeaddr_t dst = rimeaddr_null;
-	dst.u8[0] = node_destination.u8[0];
-	if (!rimeaddr_cmp(&rimeaddr_node_addr, &dst))
+	rimeaddr_t *dst = (rimeaddr_t *)packetbuf_dataptr();
+	if (!rimeaddr_cmp(&rimeaddr_node_addr, dst))
 	{
 		//Forward message
 		packetbuf_copyfrom(packetbuf_dataptr(), packetbuf_datalen());
-		rimeaddr_t receiver = get_nearest_neighbour();
+		rimeaddr_t receiver = get_nearest_neighbour(dst);
 		if (!rimeaddr_cmp(&receiver, &rimeaddr_null))
 		{
 			PRINTF("Will forward to: %d\n", receiver.u8[0]);
@@ -109,7 +110,7 @@ static void recv_uc(struct runicast_conn *c, const rimeaddr_t *from, uint8_t seq
 
 		if (router_callback != NULL)
 		{
-			router_callback(packetbuf_dataptr(), packetbuf_datalen());
+			router_callback(packetbuf_dataptr() + sizeof(rimeaddr_t), packetbuf_datalen() - sizeof(rimeaddr_t));
 		}
 	}
 }
@@ -126,10 +127,16 @@ void close_router()
 	runicast_close(&uc);
 }
 
-int8_t send_message(const void *packet_data, size_t length)
+int8_t send_message(const void *packet_data, size_t length, rimeaddr_t *dst)
 {
-	packetbuf_copyfrom(packet_data, length);
-	rimeaddr_t receiver = get_nearest_neighbour();
+	//Set packetbuf to message length + destination rimeaddr length
+	packetbuf_set_datalen(sizeof(rimeaddr_t) + length);
+	//Copy rimeaddr_t
+	memcpy(packetbuf_dataptr(), dst, sizeof(rimeaddr_t));
+	//Copy message
+	memcpy(packetbuf_dataptr() + sizeof(rimeaddr_t), packet_data, length);
+
+	rimeaddr_t receiver = get_nearest_neighbour(dst);
 
 	if (!rimeaddr_cmp(&receiver, &rimeaddr_null))
 	{
