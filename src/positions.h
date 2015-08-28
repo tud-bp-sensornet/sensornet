@@ -17,16 +17,6 @@ typedef struct {
 } position_t;
 
 /**
- * This value holds the destination node
- */
-extern rimeaddr_t node_destination;
-
-/**
- * This value holds the number of nodes we have the positions from
- */
-extern uint8_t node_amount;
-
-/**
  * \brief      Returns the stored position of a node.
  * \param addr Rimeaddr of the node you want to know the position of.
  * \retval     The x and y position of the node.

@@ -7,6 +7,8 @@
 #include "routing.h"
 #include "positions.h"
 
+rimeaddr_t node_destination = {{0x04}};
+
 /**
  * Register unit tests that will be executed by using
  * the UNIT_TEST_RUN macro.
@@ -85,7 +87,7 @@ UNIT_TEST(find_nearest_test)
 	UNIT_TEST_BEGIN();
 
 	rimeaddr_t addr = get_nearest_neighbour(&node_destination);
-
+	
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&addr, &(n1.addr)));
 
 	//Add edge r -> n2
