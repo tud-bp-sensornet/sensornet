@@ -1,25 +1,28 @@
 #include "positions.h"
 #include "contiki.h"
 
-/**
- * These arrays represent the x and y positions of the nodes in 2D
- */
-int16_t pos_x[6] = {50, 90, 130, 130, 130, 170};
-int16_t pos_y[6] = {0, 0, 0, 40, -40, -40};
+// Array of node positions
+#ifndef NODE_POSITION_ARRAY
+#define NODE_POSITION_ARRAY {0,0}
+#endif
+
+// Length of the array above
+#ifndef NODE_POSITION_ARRAY_LENGTH
+#define NODE_POSITION_ARRAY_LENGTH 1
+#endif
+
+// Smallest rime address of the array above
+#ifndef POSITION_ARRAY_RIMEADDR_OFFSET
+#define POSITION_ARRAY_RIMEADDR_OFFSET 1
+#endif
 
 /**
- * This value holds the destination node
+ * This array represents the x and y positions of the nodes in 2D
  */
-rimeaddr_t node_destination = {{0x04}};
-
-/**
- * This value holds the number of nodes we have the positions from
- */
-uint8_t node_amount = 0x06;
+position_t pos[NODE_POSITION_ARRAY_LENGTH] = {NODE_POSITION_ARRAY};
 
 position_t get_stored_position_of(const rimeaddr_t *addr)
 {
-	int16_t x = pos_x[addr->u8[0] - 1];
-	int16_t y = pos_y[addr->u8[0] - 1];
-	return (position_t){x, y};
+	int16_t rimeaddr_as_int = (addr->u8[1] << 8) + (addr->u8[0]);
+	return pos[rimeaddr_as_int - (POSITION_ARRAY_RIMEADDR_OFFSET)];
 }
