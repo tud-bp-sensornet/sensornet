@@ -1,0 +1,62 @@
+#include <stdio.h>
+
+#include "contiki.h"
+#include "graph.h"
+#include "graph-operations.h"
+#include "serialize.h"
+#include "pbroadcast.h"
+#include "random.h"
+#include "neighbor-discovery.h"
+
+#if __NEIGHBOR_DISCOVERY_DEBUG__
+#include <stdio.h>
+#define PRINTF(...) printf(__VA_ARGS__)
+#else
+#define PRINTF(...)
+#endif
+
+PROCESS(simple_process, "Simple process");
+AUTOSTART_PROCESSES(&simple_process);
+
+void debug_output_current_graph1()
+{
+	int i;
+	uint8_t count;
+
+	p_node_t *root = find_node(&rimeaddr_node_addr);
+	PRINTF("* ROOT: %d.%d ", root->addr.u8[0], root->addr.u8[1]);
+
+	p_node_t **nodes = get_all_nodes(&count);
+
+	PRINTF("Nodes: ");
+
+	for (i = 0; i < count; i++)
+	{
+		PRINTF("(%d.%d)", nodes[i]->addr.u8[0], nodes[i]->addr.u8[1]);
+	}
+
+	PRINTF(" Edges: ");
+
+	p_edge_t **edges = get_all_edges(&count);
+
+	for (i = 0; i < count; i++)
+	{
+		PRINTF("(%d.%d->%d.%d)", edges[i]->src.u8[0], edges[i]->src.u8[1], edges[i]->dst.u8[0], edges[i]->dst.u8[1]);
+	}
+
+	PRINTF("\n");
+}
+
+PROCESS_THREAD(simple_process, ev, data)
+{
+	PROCESS_BEGIN();
+	
+	static struct ctimer ct;
+	ctimer_set(&ct, CLOCK_SECOND * 45, debug_output_current_graph1, NULL);
+	
+	process_start(&neighbor_discovery_process, NULL);
+
+	printf("K = %d, MAX_NODES = %d, MAX_EDGES = %d, RIMEADDR = %d.%d\n", (int) K, (int) MAX_NODES, (int) MAX_EDGES, rimeaddr_node_addr.u8[0], rimeaddr_node_addr.u8[1]);
+
+	PROCESS_END();
+}

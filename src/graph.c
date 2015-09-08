@@ -6,6 +6,17 @@
 
 #include "graph.h"
 
+#ifndef __GRAPH_DEBUG__
+#define __GRAPH_DEBUG__ 0
+#endif
+
+#if __GRAPH_DEBUG__
+#include <stdio.h>
+#define PRINTF(...) printf(__VA_ARGS__)
+#else
+#define PRINTF(...)
+#endif
+
 //Static memory containing the saved node and edge information of the graph created by the k-hop-algorithm
 MEMB(node_memory, p_node_t, MAX_NODES);
 MEMB(edge_memory, p_edge_t, MAX_EDGES);
@@ -24,10 +35,30 @@ static uint8_t edge_count;
  */
 void init_graph()
 {
+	PRINTF("[graph.c] Initializing graph.\n");
+
 	memb_init(&node_memory);
 	memb_init(&edge_memory);
-	node_memory_array = (p_node_t**) malloc(sizeof(p_node_t*) * MAX_NODES);
-	edge_memory_array = (p_edge_t**) malloc(sizeof(p_edge_t*) * MAX_EDGES);
+
+	if (node_memory_array == NULL)
+	{
+		node_memory_array = (p_node_t**) malloc(sizeof(p_node_t*) * MAX_NODES);
+	}
+
+	if (edge_memory_array == NULL)
+	{
+		edge_memory_array = (p_edge_t**) malloc(sizeof(p_edge_t*) * MAX_EDGES);
+	}
+
+	#if __GRAPH_DEBUG__
+	if (node_memory_array == NULL) PRINTF("[graph.c] Malloc of node_memory_array failed.\n");
+	if (edge_memory_array == NULL) PRINTF("[graph.c] Malloc of node_memory_array failed.\n");
+	#endif
+
+	// Fill up arrays with nullpointers
+	memset(node_memory_array, 0, sizeof(p_node_t*) * MAX_NODES);
+	memset(edge_memory_array, 0, sizeof(p_edge_t*) * MAX_EDGES);
+
 	node_count = 0;
 	edge_count = 0;
 }
@@ -45,13 +76,23 @@ void init_graph()
  */
 void add_node(const p_node_t node)
 {
+	PRINTF("[graph.c] Adding node %d.%d!\n", node.addr.u8[0], node.addr.u8[1]);
+
 	//Exit the function early, if the node already exists and the contents got updated with the information of the new node
 	p_node_t *search_node = find_node(&(node.addr));
 	if (search_node != NULL)
 	{
         memcpy(search_node, &node, sizeof(p_node_t));
+        PRINTF("[graph.c] Updated node %d.%d.\n", node.addr.u8[0], node.addr.u8[1]);
 		return;
 	}
+	#if __GRAPH_DEBUG__
+	else
+	{
+		PRINTF("[graph.c] Node %d.%d is not yet in the graph.\n", node.addr.u8[0], node.addr.u8[1]);
+	}
+	#endif
+
 	p_node_t *allocated_node = (p_node_t*) memb_alloc(&node_memory);
 	//only perform further actions if the node could be allocated correctly
 	if (allocated_node != NULL)
@@ -66,11 +107,25 @@ void add_node(const p_node_t node)
 				//copy content
 				node_memory_array[i] = allocated_node;
 				memcpy(allocated_node, &node, sizeof(p_node_t));
+				PRINTF("[graph.c] Added node %d.%d.\n", node.addr.u8[0], node.addr.u8[1]);
 				//exit loop
 				break;
 			}
 		}
+
+		#if __GRAPH_DEBUG__
+		if (i == MAX_NODES)
+		{
+			PRINTF("[graph.c] Node was not added due to lack of space.\n");
+		}
+		#endif
 	}
+	#if __GRAPH_DEBUG__
+	else
+	{
+		PRINTF("[graph.c] Node %d.%d could not be allocated.\n", node.addr.u8[0], node.addr.u8[1]);
+	}
+	#endif
 }
 
 /**
@@ -101,6 +156,7 @@ void remove_node(const rimeaddr_t *addr)
 				node_memory_array[j] = node_memory_array[j+1];
 			}
 			node_memory_array[node_count] = NULL;
+			PRINTF("[graph.c] Removed node %d.%d.\n", addr->u8[0], addr->u8[1]);
 			break;
 		}
 	}
@@ -180,6 +236,7 @@ void add_edge(const p_edge_t edge)
 	if (search_edge != NULL)
 	{
 		memcpy(search_edge, &edge, sizeof(p_edge_t));
+		PRINTF("[graph.c] Updated edge %d.%d -> %d.%d.\n", edge.src.u8[0], edge.src.u8[1], edge.dst.u8[0], edge.dst.u8[1]);
 		return;
 	}
 	p_edge_t *allocated_edge = (p_edge_t*) memb_alloc(&edge_memory);
@@ -196,11 +253,18 @@ void add_edge(const p_edge_t edge)
 				//copy content
 				edge_memory_array[i] = allocated_edge;
 				memcpy(allocated_edge, &edge, sizeof(p_edge_t));
+				PRINTF("[graph.c] Allocated edge %d.%d -> %d.%d.\n", edge.src.u8[0], edge.src.u8[1], edge.dst.u8[0], edge.dst.u8[1]);
 				//exit loop
 				break;
 			}
 		}
 	}
+	#if __GRAPH_DEBUG__
+	else
+	{
+		PRINTF("[graph.c] Edge %d.%d -> %d.%d could not be allocated.\n", edge.src.u8[0], edge.src.u8[1], edge.dst.u8[0], edge.dst.u8[1]);
+	}
+	#endif
 }
 
 /**
@@ -232,6 +296,7 @@ void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
 				edge_memory_array[j] = edge_memory_array[j+1];
 			}
 			edge_memory_array[edge_count] = NULL;
+			PRINTF("[graph.c] Removed edge %d.%d -> %d.%d.\n", src->u8[0], src->u8[1], dst->u8[0], dst->u8[1]);
 			break;
 		}
 	}
