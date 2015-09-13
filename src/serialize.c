@@ -3,7 +3,9 @@
  * \author                     tud-bp-sensornet
  */
 
+#ifndef __SERIALIZE_DEBUG__
 #define __SERIALIZE_DEBUG__ 0
+#endif
 
 #include <string.h>
 
@@ -25,8 +27,8 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 {
 
-	PRINTF("Debug: Node size: %d Edge size: %d\n", sizeof(p_node_t), sizeof(p_edge_t));
-	PRINTF("Debug: PACKETBUF SIZE: %d\n", PACKETBUF_SIZE);
+	PRINTF("[serialize.c] Node size: %d Edge size: %d\n", sizeof(p_node_t), sizeof(p_edge_t));
+	PRINTF("[serialize.c] PACKETBUF SIZE: %d\n", PACKETBUF_SIZE);
 
 	//On K==0 no information will be exchanged
 	//If minimal package length (2 Nodes and one Edge) is bigger than PACKETBUF_SIZE, do nothing.
@@ -41,7 +43,7 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 
 	if (memory_base == NULL)
 	{
-		PRINTF("Debug: Could not allocate memory. Function will not proceed.\n");
+		PRINTF("[serialize.c] Could not allocate memory. Function will not proceed.\n");
 		return;
 	}
 
@@ -49,7 +51,7 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 
 	if (root == NULL)
 	{
-		PRINTF("Debug: Could not find root in graph. Function will not proceed.\n");
+		PRINTF("[serialize.c] Could not find root in graph. Function will not proceed.\n");
 		free(memory_base);
 		return;
 	}
@@ -87,13 +89,13 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 		if (hops[l].hop_count <= K - 1)
 		{
 			//Package this node
-			PRINTF("Debug: Pack node %d\n", hops[l].addr.u8[0]);
+			PRINTF("[serialize.c] Pack node %d\n", hops[l].addr.u8[0]);
 
 			p_node_t *nd = find_node(&(hops[l].addr));
 
 			if (nd == NULL)
 			{
-				PRINTF("Debug: Could not find node in graph. Function will not proceed.\n");
+				PRINTF("[serialize.c] Could not find node in graph. Function will not proceed.\n");
 				free(memory_base);
 				free(hops);
 				return;
@@ -112,7 +114,7 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 
 	void *memory_current = memory_base;
 
-	PRINTF("Debug: Pack root node %d\n", root->addr.u8[0]);
+	PRINTF("[serialize.c] Pack root node %d\n", root->addr.u8[0]);
 	memcpy(memory_current, root, sizeof(p_node_t));
 	memory_current = memory_current + sizeof(p_node_t);
 
@@ -120,12 +122,12 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 	uint8_t edge_count;
 	p_edge_t **edges = get_outgoing_edges(&(root->addr), &edge_count);
 
-	PRINTF("Debug: Node has %d edges.\n", edge_count);
+	PRINTF("[serialize.c] Node has %d edges.\n", edge_count);
 
 	//Root without outgoing edges has to be sent
 	if ((edge_count == 0x00 || edges == NULL) && rimeaddr_cmp(&(root->addr), &rimeaddr_node_addr))
 	{
-		PRINTF("Debug: Send package.\n");
+		PRINTF("[serialize.c] Send package.\n");
 		packet_complete(memory_base, sizeof(p_node_t));
 	}
 
@@ -133,7 +135,7 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 	//(it was already sent as a drain in another package)
 	if (edge_count == 0x00 || edges == NULL)
 	{
-		PRINTF("Debug: Do not send.\n");
+		PRINTF("[serialize.c] Do not send.\n");
 		return;
 	}
 
@@ -176,7 +178,7 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 			continue;
 		}
 
-		PRINTF("Debug: Pack edge to %d\n", edges[k]->dst.u8[0]);
+		PRINTF("[serialize.c] Pack edge to %d\n", edges[k]->dst.u8[0]);
 
 		//Increment package size counter
 		j = j + (sizeof(p_node_t) + sizeof(p_edge_t));
@@ -190,21 +192,21 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 
 		if (drain == NULL)
 		{
-			PRINTF("Debug: Cannot find drain. Function will not proceed.\n");
+			PRINTF("[serialize.c] Cannot find drain. Function will not proceed.\n");
 			free(edges);
 			return;
 		}
 
-		PRINTF("Debug: Pack node %d\n", drain->addr.u8[0]);
+		PRINTF("[serialize.c] Pack node %d\n", drain->addr.u8[0]);
 
 		memcpy(memory_current, drain, sizeof(p_node_t));
 		memory_current = memory_current + sizeof(p_node_t);
 
 		//Package will get too big in next iteration
-		PRINTF("Debug: Size is now: %d\n", j);
+		PRINTF("[serialize.c] Size is now: %d\n", j);
 		if (j + (sizeof(p_node_t) + sizeof(p_edge_t)) > PACKETBUF_SIZE && k + 1 < edge_count)
 		{
-			PRINTF("Debug: Send package (too big). Size: %d\n", j);
+			PRINTF("[serialize.c] Send package (too big). Size: %d\n", j);
 			//Send subgraph
 			packet_complete(memory_base, j);
 
@@ -220,7 +222,7 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 	}
 
 	//Send subgraph
-	PRINTF("Debug: Send package.\n");
+	PRINTF("[serialize.c] Send package.\n");
 	packet_complete(memory_base, (size_t)j);
 }
 /*---------------------------------------------------------------------------*/
@@ -244,15 +246,18 @@ void deserialize(const rimeaddr_t *sender, const void *packet, size_t length)
 		if (j % 2 == 0)
 		{
 			//Add node or update
-			add_node(*((p_node_t *)(packet + i)));
-			PRINTF("Debug: Added Node: %d now %d\n", ((p_node_t *)(packet + i))->addr.u8[0], get_node_count());
+			const p_node_t *node_ptr = packet + i;
+			p_node_t node = *node_ptr;
+			add_node(node);
+			PRINTF("[serialize.c] Added Node: %d.%d, count is now %d.\n", node_ptr->addr.u8[0], node_ptr->addr.u8[1], get_node_count());
 			i = i + sizeof(p_node_t);
 		}
 		else
 		{
 			//Add edge or update
-			add_edge(*((p_edge_t *)(packet + i)));
-			PRINTF("Debug: Added Edge to: %d\n", ((p_edge_t *)(packet + i))->dst.u8[0]);
+			const p_edge_t *edge_ptr = packet + i;
+			add_edge(*edge_ptr);
+			PRINTF("[serialize.c] Added Edge: %d->%d\n", edge_ptr->src.u8[0], edge_ptr->dst.u8[1]);
 			i = i + sizeof(p_edge_t);
 		}
 	}

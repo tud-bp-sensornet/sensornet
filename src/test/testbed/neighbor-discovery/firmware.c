@@ -7,6 +7,7 @@
 #include "pbroadcast.h"
 #include "random.h"
 #include "neighbor-discovery.h"
+#include "cc2420.h"
 
 #if __NEIGHBOR_DISCOVERY_DEBUG__
 #include <stdio.h>
@@ -28,16 +29,16 @@ void debug_output_current_graph1()
 
 	p_node_t **nodes = get_all_nodes(&count);
 
-	PRINTF("Nodes: ");
+	PRINTF("Nodes (%d): ", count);
 
 	for (i = 0; i < count; i++)
 	{
 		PRINTF("(%d.%d)", nodes[i]->addr.u8[0], nodes[i]->addr.u8[1]);
 	}
 
-	PRINTF(" Edges: ");
-
 	p_edge_t **edges = get_all_edges(&count);
+
+	PRINTF(" Edges (%d): ", count);
 
 	for (i = 0; i < count; i++)
 	{
@@ -51,8 +52,10 @@ PROCESS_THREAD(simple_process, ev, data)
 {
 	PROCESS_BEGIN();
 	
+	cc2420_set_txpower(8);
+
 	static struct ctimer ct;
-	ctimer_set(&ct, CLOCK_SECOND * 45, debug_output_current_graph1, NULL);
+	ctimer_set(&ct, CLOCK_SECOND * 60, debug_output_current_graph1, NULL);
 	
 	process_start(&neighbor_discovery_process, NULL);
 
