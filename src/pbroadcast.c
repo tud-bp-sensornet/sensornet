@@ -108,13 +108,13 @@ int p_broadcast_send(struct p_broadcast_conn *c, const void *data, size_t length
 
 	if (length > MAX_BROADCAST_PAYLOAD_SIZE)
 	{
-		PRINTF("[pbroadcast.c] Error: Broadcast packet is too long.\n");
+		PRINTF("[pbroadcast.c] ^ Error: Broadcast packet is too long.\n");
 		return 0;
 	}
 
 	if (c == NULL)
 	{
-		PRINTF("[pbroadcast.c] Error: Broadcast Connection is NULL\n");
+		PRINTF("[pbroadcast.c] ^ Error: Broadcast Connection is NULL\n");
 		return 0;
 	}
 
