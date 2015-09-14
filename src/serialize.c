@@ -26,10 +26,6 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 /*---------------------------------------------------------------------------*/
 void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 {
-
-	PRINTF("[serialize.c] Node size: %d Edge size: %d\n", sizeof(p_node_t), sizeof(p_edge_t));
-	PRINTF("[serialize.c] PACKETBUF SIZE: %d\n", PACKETBUF_SIZE);
-
 	//On K==0 no information will be exchanged
 	//If minimal package length (2 Nodes and one Edge) is bigger than PACKETBUF_SIZE, do nothing.
 	if (K == 0 || (sizeof(p_node_t) * 2 + sizeof(p_edge_t)) > PACKETBUF_SIZE)
@@ -249,15 +245,17 @@ void deserialize(const rimeaddr_t *sender, const void *packet, size_t length)
 			const p_node_t *node_ptr = packet + i;
 			p_node_t node = *node_ptr;
 			add_node(node);
-			PRINTF("[serialize.c] Added Node: %d.%d, count is now %d.\n", node_ptr->addr.u8[0], node_ptr->addr.u8[1], get_node_count());
+			PRINTF("[serialize.c] Added Node: %d.%d, count is now %d.\n", node.addr.u8[0], node.addr.u8[1], get_node_count());
 			i = i + sizeof(p_node_t);
 		}
 		else
 		{
 			//Add edge or update
 			const p_edge_t *edge_ptr = packet + i;
-			add_edge(*edge_ptr);
-			PRINTF("[serialize.c] Added Edge: %d->%d\n", edge_ptr->src.u8[0], edge_ptr->dst.u8[1]);
+			p_edge_t edge = *edge_ptr;
+			add_edge(edge);
+			PRINTF("[serialize.c] Added Edge: %d.%d->%d.%d, count is now %d.\n", 
+				edge.src.u8[0], edge.src.u8[1], edge.dst.u8[0], edge.dst.u8[1], get_edge_count());
 			i = i + sizeof(p_edge_t);
 		}
 	}
