@@ -61,7 +61,7 @@ PROCESS_THREAD(simple_process, ev, data)
 
 	printf("K = %d, MAX_NODES = %d, MAX_EDGES = %d, RIMEADDR = %d.%d\n", (int) K, (int) MAX_NODES, (int) MAX_EDGES, rimeaddr_node_addr.u8[0], rimeaddr_node_addr.u8[1]);
 	printf("NODE_MEM = %dB, EDGE_MEM = %dB\n", (int)(sizeof(p_node_t) * MAX_NODES), (int)(sizeof(p_edge_t) * MAX_EDGES));
-	printf("PACKETBUF_SIZE = %d\n", PACKETBUF_SIZE);
+	printf("PACKETBUF_SIZE = %d, TXPOWER = %d, INTERVAL = %d - %d\n", PACKETBUF_SIZE, cc2420_get_txpower(), DISCOVERY_INTERVAL_MIN, DISCOVERY_INTERVAL_MAX);
 
 	PROCESS_END();
 }
