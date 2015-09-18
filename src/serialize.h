@@ -15,6 +15,8 @@
  * \param packet_complete       A function pointer which will be called if a (sub) graph was serialized
  * \param packet_data           A pointer to the memory where the (sub) graph is stored
  * \param length                The length of the serialized (sub) graph
+ * \param max_packet_length     Maximum length of a packet produces by this function. Note that this length must
+ *                              be between the length of a minimal subgraph (two nodes, one edge) and PACKETBUF_SIZE.
  *
  *                              This function serializes our local view graph into several (sub) graphs.
  *                              It will not serialize nodes and eges in more than K-1 hops distance and
@@ -31,7 +33,7 @@
  *                              not get called.
  *
  */
-void serialize(void (*packet_complete)(const void *packet_data, size_t length));
+void serialize(void (*packet_complete)(const void *packet_data, size_t length), size_t max_packet_length);
 
 /**
  * \brief                       Deserializes the serialized (sub) graph and updates the graph (local view)

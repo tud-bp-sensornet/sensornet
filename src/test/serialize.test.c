@@ -146,7 +146,7 @@ UNIT_TEST(root_test)
 
 	UNIT_TEST_BEGIN();
 
-	serialize(packet_complete_root);
+	serialize(packet_complete_root, 128);
 
 	UNIT_TEST_ASSERT(tmp_length == sizeof(p_node_t));
 	UNIT_TEST_ASSERT(((p_node_t *)tmp_packet_data)->addr.u8[0] == 0x01);
@@ -172,7 +172,7 @@ UNIT_TEST(null_test)
 
 	UNIT_TEST_BEGIN();
 
-	serialize(packet_complete_root);
+	serialize(packet_complete_root, 128);
 
 	//Just do not break
 
@@ -219,7 +219,7 @@ UNIT_TEST(multi_sub_graph_test)
 	UNIT_TEST_ASSERT(MAX_NODES >= 20);
 	UNIT_TEST_ASSERT(MAX_EDGES >= 19);
 
-	serialize(packet_complete_multi);
+	serialize(packet_complete_multi, 128);
 
 	UNIT_TEST_ASSERT(called == 0x02); //Function should be called 2 times
 
@@ -373,7 +373,7 @@ UNIT_TEST(long_graph_test)
 	UNIT_TEST_ASSERT(MAX_NODES >= 7);
 	UNIT_TEST_ASSERT(MAX_EDGES >= 12);
 
-	serialize(packet_complete_long);
+	serialize(packet_complete_long, 128);
 
 	UNIT_TEST_ASSERT(cnt == 0x05);
 

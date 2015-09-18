@@ -22,21 +22,22 @@
 #define PRINTF(...)
 #endif
 
-void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t *hops, uint8_t reachable_count, uint8_t hop, void (*packet_complete)(const void *packet_data, size_t length));
+void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t *hops, uint8_t reachable_count, uint8_t hop, 
+	void (*packet_complete)(const void *packet_data, size_t length), size_t max_packet_length);
 
 /*---------------------------------------------------------------------------*/
-void serialize(void (*packet_complete)(const void *packet_data, size_t length))
+void serialize(void (*packet_complete)(const void *packet_data, size_t length), size_t max_packet_length)
 {
 	//On K==0 no information will be exchanged
-	//If minimal package length (2 Nodes and one Edge) is bigger than MAX_BROADCAST_PAYLOAD_SIZE, do nothing.
-	if (K == 0 || (sizeof(p_node_t) * 2 + sizeof(p_edge_t)) > MAX_BROADCAST_PAYLOAD_SIZE)
+	//If minimal package length (2 Nodes and one Edge) is bigger than max_packet_length, do nothing.
+	if (K == 0 || (sizeof(p_node_t) * 2 + sizeof(p_edge_t)) > max_packet_length || max_packet_length > PACKETBUF_SIZE)
 	{
 		return;
 	}
 
 	//Single memory to avoid fragmentation
 	//Memory layout: p_node_t src, (p_edge_t src_drain, p_node_t drain)*
-	void *memory_base = malloc(MAX_BROADCAST_PAYLOAD_SIZE);
+	void *memory_base = malloc(max_packet_length);
 
 	if (memory_base == NULL)
 	{
@@ -65,7 +66,7 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 	//Package root and all outgoing edges and edge destinations from root (on K >= 2) (reachable in 1 hops)
 	if (K >= 2)
 	{
-		package_and_send_edges_and_nodes(memory_base, root, NULL, 0x00, 0x00, packet_complete);
+		package_and_send_edges_and_nodes(memory_base, root, NULL, 0x00, 0x00, packet_complete, max_packet_length);
 	}
 	else
 	{
@@ -98,7 +99,7 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 				return;
 			}
 
-			package_and_send_edges_and_nodes(memory_base, nd, hops, reachable_count, hops[l].hop_count, packet_complete);
+			package_and_send_edges_and_nodes(memory_base, nd, hops, reachable_count, hops[l].hop_count, packet_complete, max_packet_length);
 		}
 	}
 
@@ -106,7 +107,8 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length))
 	free(hops);
 }
 /*---------------------------------------------------------------------------*/
-void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t *hops, uint8_t reachable_count, uint8_t hop, void (*packet_complete)(const void *packet_data, size_t length))
+void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t *hops, uint8_t reachable_count, uint8_t hop, 
+	void (*packet_complete)(const void *packet_data, size_t length), size_t max_packet_length)
 {
 
 	void *memory_current = memory_base;
@@ -201,7 +203,7 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 
 		//Package will get too big in next iteration
 		PRINTF("[serialize.c] Size is now: %d\n", j);
-		if (j + (sizeof(p_node_t) + sizeof(p_edge_t)) > MAX_BROADCAST_PAYLOAD_SIZE && k + 1 < edge_count)
+		if (j + (sizeof(p_node_t) + sizeof(p_edge_t)) > max_packet_length && k + 1 < edge_count)
 		{
 			PRINTF("[serialize.c] Send package (too big). Size: %d\n", j);
 			//Send subgraph

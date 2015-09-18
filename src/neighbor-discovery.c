@@ -97,7 +97,7 @@ PROCESS_THREAD(neighbor_discovery_process, ev, data)
 		#endif
 
 		//Create subgraphs and broadcast them
-		serialize(packet_complete);
+		serialize(packet_complete, MAX_BROADCAST_PAYLOAD_SIZE);
 	}
 
 	PROCESS_END();
