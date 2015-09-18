@@ -384,6 +384,13 @@ p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
 
 	// Allocate memory to be returned
 	p_edge_t** outgoing_edge_array = (p_edge_t**) malloc(sizeof(p_edge_t*) * (*count));
+	if (outgoing_edge_array == NULL)
+	{
+		PRINTF("[graph.c] Failed allocating outgoing edge array.\n");
+		*count = 0;
+		return NULL;
+	}
+
 	uint8_t current_num = 0;
 
 	// Insert the outgoing edges into the array to be returned
@@ -437,6 +444,13 @@ p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count)
 
 	// Allocate memory to be returned
 	p_edge_t** ingoing_edge_array = (p_edge_t**) malloc(sizeof(p_edge_t*) * (*count));
+	if (ingoing_edge_array == NULL)
+	{
+		PRINTF("[graph.c] Failed allocating ingoing edge array.\n");
+		*count = 0;
+		return NULL;
+	}
+	
 	uint8_t current_num = 0;
 
 	// Insert the ingoing edges into the array to be returned
