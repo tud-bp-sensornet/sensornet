@@ -160,9 +160,11 @@ UNIT_TEST(add_nodes)
  */
 UNIT_TEST(add_edges)
 {
+	p_node_t n1, n2, n3, n4, n7;
 	p_edge_t e1, e2, e3, e4, e5, e6, e1_new;
 	p_edge_t etemp;
 	p_edge_t **edge_array;
+	p_node_t **node_array;
 	uint8_t counter;
 
 	UNIT_TEST_BEGIN();
@@ -203,11 +205,22 @@ UNIT_TEST(add_edges)
 	e6.ttl = 0;
 	e1_new.ttl = 1;
 	edge_array = get_all_edges(&counter);
+	n1.addr = e1.dst;
+	n2.addr = e1.src;
+	n3.addr = e2.src;
+	n4.addr = e3.dst;
+	n7.addr = e3.src;
 
 	UNIT_TEST_ASSERT(get_node_count() == 0);
 	UNIT_TEST_ASSERT(get_edge_count() == 0);
 	UNIT_TEST_ASSERT(counter == 0);
 	UNIT_TEST_ASSERT(edge_array[0] == NULL);
+
+	add_node(n1);
+	add_node(n2);
+	add_node(n3);
+	add_node(n4);
+	add_node(n7);
 
 	add_edge(e1);
 	edge_array = get_all_edges(&counter);
@@ -407,6 +420,12 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(get_edge_count() == 0);
 	UNIT_TEST_ASSERT(edge_array[0] == NULL);
 
+	remove_node(&(n1.addr));
+	remove_node(&(n2.addr));
+	remove_node(&(n3.addr));
+	remove_node(&(n4.addr));
+	remove_node(&(n7.addr));
+
 	//Try to remove edges when there are non saved
 
 	remove_edge(&(e1.src), &(e1.dst));
@@ -421,12 +440,28 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(edge_array[0] == NULL);
 
 	//Test what happens if there are more edges added than MEMB allocated space
+	
+	//Can we create enough edges?
+	UNIT_TEST_ASSERT(MAX_NODES*(MAX_NODES-1) > MAX_EDGES);
+	
+	//Add MAX_NODES nodes
 	uint8_t i;
+	for (i = 1; i <= MAX_NODES; i++)
+	{
+		p_node_t n = {rimeaddr_null};
+		n.addr.u8[0] = (unsigned char) i;
+		add_node(n);
+	}
+	
+	UNIT_TEST_ASSERT(get_node_count() == MAX_NODES);
+	
+	//Add MAX_EDGES + 1 edges 
 	for (i = 0; i < (MAX_EDGES + 1); i++)
 	{
 		etemp.dst = rimeaddr_null;
 		etemp.src = rimeaddr_null;
-		etemp.src.u8[0] = (unsigned char) i;
+		etemp.src.u8[0] = ((unsigned char)(i/MAX_NODES)) + 1;
+		etemp.dst.u8[0] = (unsigned char)(i % MAX_NODES) + 1;
 		etemp.ttl = 0;
 		add_edge(etemp);
 	}
@@ -439,6 +474,13 @@ UNIT_TEST(add_edges)
 		remove_edge(&(edge_array[0]->src), &(edge_array[0]->dst));
 	}
 
+	node_array = get_all_nodes(&counter);
+	for (i = 0; i < counter; i++)
+	{
+		remove_node(&(node_array[0]->addr));
+	}
+
+	UNIT_TEST_ASSERT(get_node_count() == 0);
 	UNIT_TEST_ASSERT(get_edge_count() == 0);
 	UNIT_TEST_ASSERT(edge_array[0] == NULL);
 
@@ -544,6 +586,7 @@ UNIT_TEST(find_nodes)
  */
 UNIT_TEST(find_edges)
 {
+	p_node_t n1, n2, n3, n4, n7;
 	p_edge_t e1, e2, e3, e4, e5;
 	p_edge_t **edge_array;
 	uint8_t counter;
@@ -576,6 +619,11 @@ UNIT_TEST(find_edges)
 	e4.ttl = 0;
 	e5.ttl = 0;
 	edge_array = get_all_edges(&counter);
+	n1.addr = e1.dst;
+	n2.addr = e1.src;
+	n3.addr = e2.src;
+	n4.addr = e3.dst;
+	n7.addr = e3.src;
 
 	UNIT_TEST_ASSERT(get_node_count() == 0);
 	UNIT_TEST_ASSERT(get_edge_count() == 0);
@@ -586,6 +634,12 @@ UNIT_TEST(find_edges)
 	UNIT_TEST_ASSERT(find_edge(&(e3.src), &(e3.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e4.src), &(e4.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e5.src), &(e5.dst)) == NULL);
+
+	add_node(n1);
+	add_node(n2);
+	add_node(n3);
+	add_node(n4);
+	add_node(n7);
 
 	add_edge(e1);
 
@@ -693,6 +747,11 @@ UNIT_TEST(find_edges)
 	UNIT_TEST_ASSERT(find_edge(&(e4.src), &(e4.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e5.src), &(e5.dst)) == NULL);
 
+	remove_node(&(n1.addr));
+	remove_node(&(n2.addr));
+	remove_node(&(n3.addr));
+	remove_node(&(n4.addr));
+	remove_node(&(n7.addr));
 
 	edge_array = get_all_edges(&counter);
 	UNIT_TEST_ASSERT(get_node_count() == 0);
@@ -832,6 +891,12 @@ UNIT_TEST(in_out_edges)
 	/**Add edges and test if the change is correct*/
 	/**********************************************/
 
+	add_node(n1);
+	add_node(n2);
+	add_node(n3);
+	add_node(n4);
+	add_node(n5);
+
 	add_edge(e11);
 	add_edge(e12);
 	add_edge(e13);
@@ -908,6 +973,12 @@ UNIT_TEST(in_out_edges)
 	remove_edge(&(e31.src), &(e31.dst));
 	remove_edge(&(e32.src), &(e32.dst));
 	remove_edge(&(e41.src), &(e41.dst));
+	
+	remove_node(&(n1.addr));
+	remove_node(&(n2.addr));
+	remove_node(&(n3.addr));
+	remove_node(&(n4.addr));
+	remove_node(&(n5.addr));
 
 	/**********************************************/
 	/****Check if the cleanup worked correctly*****/
@@ -942,7 +1013,7 @@ UNIT_TEST(in_out_edges)
  */
 UNIT_TEST(test_NULL_param)
 {
-	p_node_t n1;
+	p_node_t n1, n2;
 	p_edge_t e1;
 	p_node_t **node_array;
 	p_edge_t **edge_array;
@@ -957,6 +1028,8 @@ UNIT_TEST(test_NULL_param)
 	e1.dst.u8[0] = 0x01;
 	e1.src.u8[0] = 0x02;
 	e1.ttl = 0;
+	n2.addr = rimeaddr_null;
+	n2.addr.u8[0] = 0x02;
 	node_array = get_all_nodes(&counter1);
 	edge_array = get_all_edges(&counter2);
 
@@ -968,16 +1041,18 @@ UNIT_TEST(test_NULL_param)
 	UNIT_TEST_ASSERT(edge_array[0] == NULL);
 
 	add_node(n1);
+	add_node(n2);
 	add_edge(e1);
 	node_array = get_all_nodes(&counter1);
 	edge_array = get_all_edges(&counter2);
 
-	UNIT_TEST_ASSERT(get_node_count() == 1);
+	UNIT_TEST_ASSERT(get_node_count() == 2);
 	UNIT_TEST_ASSERT(get_edge_count() == 1);
-	UNIT_TEST_ASSERT(counter1 == 1);
+	UNIT_TEST_ASSERT(counter1 == 2);
 	UNIT_TEST_ASSERT(counter2 == 1);
 	UNIT_TEST_ASSERT(node_array[0] != NULL);
-	UNIT_TEST_ASSERT(node_array[1] == NULL);
+	UNIT_TEST_ASSERT(node_array[1] != NULL);
+	UNIT_TEST_ASSERT(node_array[2] == NULL);
 	UNIT_TEST_ASSERT(edge_array[0] != NULL);
 	UNIT_TEST_ASSERT(edge_array[1] == NULL);
 
@@ -1001,17 +1076,19 @@ UNIT_TEST(test_NULL_param)
 	remove_edge(NULL, NULL);
 	node_array = get_all_nodes(&counter1);
 	edge_array = get_all_edges(&counter2);
-	UNIT_TEST_ASSERT(get_node_count() == 1);
+	UNIT_TEST_ASSERT(get_node_count() == 2);
 	UNIT_TEST_ASSERT(get_edge_count() == 1);
-	UNIT_TEST_ASSERT(counter1 == 1);
+	UNIT_TEST_ASSERT(counter1 == 2);
 	UNIT_TEST_ASSERT(counter2 == 1);
 	UNIT_TEST_ASSERT(node_array[0] != NULL);
-	UNIT_TEST_ASSERT(node_array[1] == NULL);
+	UNIT_TEST_ASSERT(node_array[1] != NULL);
+	UNIT_TEST_ASSERT(node_array[2] == NULL);
 	UNIT_TEST_ASSERT(edge_array[0] != NULL);
 	UNIT_TEST_ASSERT(edge_array[1] == NULL);
 
 	//cleanup
 	remove_node(&(n1.addr));
+	remove_node(&(n2.addr));
 	remove_edge(&(e1.src), &(e1.dst));
 	node_array = get_all_nodes(&counter1);
 	edge_array = get_all_edges(&counter2);
@@ -1040,7 +1117,9 @@ UNIT_TEST(test_members)
 {
 	position_t pos = {0, 0};
 	p_node_t n1 = {rimeaddr_null, pos};
-	p_edge_t e1 = {rimeaddr_null, rimeaddr_null, 0, 0, 0};
+	p_node_t n2 = {rimeaddr_null, pos};
+	n2.addr.u8[0] = 2;
+	p_edge_t e1 = {rimeaddr_null, n2.addr, 0, 0, 0};
 
 	UNIT_TEST_BEGIN();
 
@@ -1049,6 +1128,7 @@ UNIT_TEST(test_members)
 	UNIT_TEST_ASSERT(sizeof(p_edge_t) == 10);
 
 	add_node(n1);
+	add_node(n2);
 	add_edge(e1);
 
 	p_node_t *node = find_node(&(n1.addr));
@@ -1058,7 +1138,7 @@ UNIT_TEST(test_members)
 
 	p_edge_t *edge = find_edge(&(e1.src), &(e1.dst));
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge->src), &rimeaddr_null));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge->dst), &rimeaddr_null));
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge->dst), &(n2.addr)));
 	UNIT_TEST_ASSERT(edge->ttl == 0);
 	UNIT_TEST_ASSERT(edge->rssi == 0);
 	UNIT_TEST_ASSERT(edge->lqi == 0);
@@ -1090,6 +1170,7 @@ UNIT_TEST(test_members)
 	UNIT_TEST_ASSERT(edge->lqi == 5);
 
 	remove_node(&(node->addr));
+	remove_node(&(n2.addr));
 	remove_edge(&(edge->src), &(edge->dst));
 
 	UNIT_TEST_END();

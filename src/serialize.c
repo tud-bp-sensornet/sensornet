@@ -235,32 +235,33 @@ void deserialize(const rimeaddr_t *sender, const void *packet, size_t length)
 	edge.ttl = 0x1E; //TODO: Replace with correct ttl
 	edge.rssi = packetbuf_attr(PACKETBUF_ATTR_RSSI);
 	edge.lqi = packetbuf_attr(PACKETBUF_ATTR_LINK_QUALITY);
+	
+	const p_node_t *node_ptr = packet;
+	p_node_t node = *node_ptr;
+	add_node(node);
+	
 	add_edge(edge);
 
+	//Memory layout: p_node_t src, (p_edge_t src_drain, p_node_t drain)*
 	uint8_t i;
-	uint8_t j;
-	for (i = 0, j = 0; i < length; j++)
+	for (i = sizeof(p_node_t) + sizeof(p_edge_t); i < length; i = i + sizeof(p_edge_t))
 	{
-		//Memory layout: p_node_t src, (p_edge_t src_drain, p_node_t drain)*
-		if (j % 2 == 0)
-		{
-			//Add node or update
-			const p_node_t *node_ptr = packet + i;
-			p_node_t node = *node_ptr;
-			add_node(node);
-			PRINTF("[serialize.c] Added Node: %d.%d, count is now %d.\n", node.addr.u8[0], node.addr.u8[1], get_node_count());
-			i = i + sizeof(p_node_t);
-		}
-		else
-		{
-			//Add edge or update
-			const p_edge_t *edge_ptr = packet + i;
-			p_edge_t edge = *edge_ptr;
-			add_edge(edge);
-			PRINTF("[serialize.c] Added Edge: %d.%d->%d.%d, count is now %d.\n", 
-				edge.src.u8[0], edge.src.u8[1], edge.dst.u8[0], edge.dst.u8[1], get_edge_count());
-			i = i + sizeof(p_edge_t);
-		}
+		//First add all nodes or update them
+		const p_node_t *node_ptr = packet + i;
+		p_node_t node = *node_ptr;
+		add_node(node);
+		PRINTF("[serialize.c] Added Node: %d.%d, count is now %d.\n", node.addr.u8[0], node.addr.u8[1], get_node_count());
+		i = i + sizeof(p_node_t);
+	}
+
+	for (i = sizeof(p_node_t); i < length; i = i + sizeof(p_node_t))
+	{
+		//Then add all edges or update them
+		const p_edge_t *edge_ptr = packet + i;
+		p_edge_t edge = *edge_ptr;
+		add_edge(edge);
+		PRINTF("[serialize.c] Added Edge: %d.%d->%d.%d, count is now %d.\n", edge.src.u8[0], edge.src.u8[1], edge.dst.u8[0], edge.dst.u8[1], get_edge_count());
+		i = i + sizeof(p_edge_t);
 	}
 }
 /*---------------------------------------------------------------------------*/

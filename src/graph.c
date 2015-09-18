@@ -256,6 +256,13 @@ void add_edge(const p_edge_t edge)
 		PRINTF("[graph.c] ^ Edge was not added due to lack of space.\n");
 		return;
 	}
+	
+	// Exit if src or dst is not in our node memory
+	if(find_node(&(edge.src)) == NULL || find_node(&(edge.dst)) == NULL)
+	{
+		PRINTF("[graph.c] ^ Edge was not added due to lack of dst or src in node memory.\n");
+		return;
+	}
 
 	// Add edge to graph
 	p_edge_t *allocated_edge = (p_edge_t*) memb_alloc(&edge_memory);
