@@ -27,19 +27,26 @@ void debug_output_current_graph()
 
 	p_node_t **nodes = get_all_nodes(&count);
 
+	PRINTF("[neighbor-discovery.c] --- Current Graph ---\n");
 	PRINTF("[neighbor-discovery.c] Nodes (%d): ", count);
 
 	for (i = 0; i < count; i++)
 	{
+		if (i >= 40 && i % 40 == 0) PRINTF("[...] \n[neighbor-discovery.c] ^ ");
+
 		PRINTF("(%d.%d)", nodes[i]->addr.u8[0], nodes[i]->addr.u8[1]);
 	}
 
+	PRINTF("\n");
+
 	p_edge_t **edges = get_all_edges(&count);
 
-	PRINTF(" Edges (%d): ", count);
+	PRINTF("[neighbor-discovery.c] Edges (%d): ", count);
 
 	for (i = 0; i < count; i++)
 	{
+		if (i >= 40 && i % 40 == 0) PRINTF("[...] \n[neighbor-discovery.c] ^ ");
+
 		PRINTF("(%d.%d->%d.%d)", edges[i]->src.u8[0], edges[i]->src.u8[1], edges[i]->dst.u8[0], edges[i]->dst.u8[1]);
 	}
 

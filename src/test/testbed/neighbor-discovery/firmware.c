@@ -24,24 +24,28 @@ void debug_output_current_graph1()
 	int i;
 	uint8_t count;
 
-	p_node_t *root = find_node(&rimeaddr_node_addr);
-	PRINTF("* ROOT: %d.%d ", root->addr.u8[0], root->addr.u8[1]);
-
 	p_node_t **nodes = get_all_nodes(&count);
 
-	PRINTF("Nodes (%d): ", count);
+	PRINTF("[firmware.c] --- Current Graph ---\n");
+	PRINTF("[firmware.c] Nodes (%d): ", count);
 
 	for (i = 0; i < count; i++)
 	{
+		if (i >= 40 && i % 40 == 0) PRINTF("[...] \n[firmware.c] ^ ");
+
 		PRINTF("(%d.%d)", nodes[i]->addr.u8[0], nodes[i]->addr.u8[1]);
 	}
 
+	PRINTF("\n");
+
 	p_edge_t **edges = get_all_edges(&count);
 
-	PRINTF(" Edges (%d): ", count);
+	PRINTF("[firmware.c] Edges (%d): ", count);
 
 	for (i = 0; i < count; i++)
 	{
+		if (i >= 40 && i % 40 == 0) PRINTF("[...] \n[firmware.c] ^ ");
+
 		PRINTF("(%d.%d->%d.%d)", edges[i]->src.u8[0], edges[i]->src.u8[1], edges[i]->dst.u8[0], edges[i]->dst.u8[1]);
 	}
 
