@@ -5,12 +5,14 @@ all: $(CONTIKI_PROJECT)
 K = 3
 MAX_NODES = 20
 MAX_EDGES = 100
+TTL = 30
 
 CFLAGS += -Wall
 
 CFLAGS += -DK=$(K)
 CFLAGS += -DMAX_NODES=$(MAX_NODES)
 CFLAGS += -DMAX_EDGES=$(MAX_EDGES)
+CFLAGS += -DTTL=$(TTL)
 
 # include all needed C files here
 #PROJECT_SOURCEFILES+=

@@ -22,8 +22,8 @@
 #define PRINTF(...)
 #endif
 
-void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t *hops, uint8_t reachable_count, uint8_t hop, 
-	void (*packet_complete)(const void *packet_data, size_t length), size_t max_packet_length);
+void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t *hops, uint8_t reachable_count, uint8_t hop,
+                                      void (*packet_complete)(const void *packet_data, size_t length), size_t max_packet_length);
 
 /*---------------------------------------------------------------------------*/
 void serialize(void (*packet_complete)(const void *packet_data, size_t length), size_t max_packet_length)
@@ -107,8 +107,8 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length), 
 	free(hops);
 }
 /*---------------------------------------------------------------------------*/
-void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t *hops, uint8_t reachable_count, uint8_t hop, 
-	void (*packet_complete)(const void *packet_data, size_t length), size_t max_packet_length)
+void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t *hops, uint8_t reachable_count, uint8_t hop,
+                                      void (*packet_complete)(const void *packet_data, size_t length), size_t max_packet_length)
 {
 
 	void *memory_current = memory_base;
@@ -232,14 +232,14 @@ void deserialize(const rimeaddr_t *sender, const void *packet, size_t length)
 	p_edge_t edge;
 	edge.src = *sender;
 	edge.dst = rimeaddr_node_addr;
-	edge.ttl = 0x1E; //TODO: Replace with correct ttl
+	edge.ttl = TTL;
 	edge.rssi = packetbuf_attr(PACKETBUF_ATTR_RSSI);
 	edge.lqi = packetbuf_attr(PACKETBUF_ATTR_LINK_QUALITY);
-	
+
 	const p_node_t *node_ptr = packet;
 	p_node_t node = *node_ptr;
 	add_node(node);
-	
+
 	add_edge(edge);
 
 	//Memory layout: p_node_t src, (p_edge_t src_drain, p_node_t drain)*
