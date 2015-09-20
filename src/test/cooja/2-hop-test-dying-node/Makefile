@@ -1,0 +1,42 @@
+CONTIKI = ../../../../lib/contiki
+
+# default parameters
+K = 2
+MAX_NODES = 20
+MAX_EDGES = 100
+DISCOVERY_INTERVAL_MIN = 2
+DISCOVERY_INTERVAL_MAX = 4
+NODE_POSITION_ARRAY = {50,0},{90,0},{130,0},{130,40},{130,-40},{170,-40}
+NODE_POSITION_ARRAY_LENGTH = 6
+TTL = 1
+
+CFLAGS += -Wall
+
+CFLAGS += -DK=$(K)
+CFLAGS += -DMAX_NODES=$(MAX_NODES)
+CFLAGS += -DMAX_EDGES=$(MAX_EDGES)
+CFLAGS += -DDISCOVERY_INTERVAL_MIN=$(DISCOVERY_INTERVAL_MIN)
+CFLAGS += -DDISCOVERY_INTERVAL_MAX=$(DISCOVERY_INTERVAL_MAX)
+CFLAGS += -DNODE_POSITION_ARRAY=$(NODE_POSITION_ARRAY)
+CFLAGS += -DNODE_POSITION_ARRAY_LENGTH=$(NODE_POSITION_ARRAY_LENGTH)
+CFLAGS += -DTTL=$(TTL)
+
+PROJECT_SOURCEFILES+=../../../graph.c
+PROJECT_SOURCEFILES+=../../../graph-operations.c
+PROJECT_SOURCEFILES+=../../../serialize.c
+PROJECT_SOURCEFILES+=../../../pbroadcast.c
+PROJECT_SOURCEFILES+=../../../neighbor-discovery.c
+PROJECT_SOURCEFILES+=../../../positions.c
+CFLAGS += -I../../../
+
+CFLAGS += -D__K_HOP_DEBUG__=1
+
+TESTS=$(wildcard ??-*.csc)
+all: $(TESTS)
+
+# build and call wrapper
+run-unittest: $(TESTS)
+	sh simexec.sh
+
+CONTIKI_WITH_RIME = 1
+include $(CONTIKI)/Makefile.include

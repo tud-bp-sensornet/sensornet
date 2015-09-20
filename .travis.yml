@@ -28,3 +28,4 @@ script:
   - make -C src/test/cooja/routing run-unittest
   - make -C src/test/cooja/routing-50percent-drop run-unittest
   - make -C src/test/cooja/2-hop-test-low-ttl run-unittest
+  - make -C src/test/cooja/2-hop-test-dying-node run-unittest
