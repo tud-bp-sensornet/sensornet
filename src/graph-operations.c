@@ -203,15 +203,8 @@ p_hop_t *get_hop_counts(uint8_t *count)
 void purge()
 {
 	uint16_t this_time = clock_seconds();
-	int32_t diff = this_time - last_time;
+	uint16_t diff = this_time - last_time;
 	uint8_t decrement;
-
-	//Test for clock overflow
-	if (diff < 0)
-	{
-		//correct diff
-		diff = ((uint16_t)pow(2, (sizeof(unsigned long) * 8) - 1)) + diff;
-	}
 
 	if (seconds + diff >= 60)
 	{
