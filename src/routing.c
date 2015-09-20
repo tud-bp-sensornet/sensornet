@@ -43,7 +43,7 @@ rimeaddr_t get_nearest_neighbour(rimeaddr_t *dst)
 			
 			if(node == NULL)
 			{
-				PRINTF("get_nearest_neighbour: Could not find node!\n");
+				PRINTF("[routing.c] get_nearest_neighbour: Could not find node!\n");
 				continue;
 			}
 			
@@ -52,7 +52,7 @@ rimeaddr_t get_nearest_neighbour(rimeaddr_t *dst)
 			//Calculate euklidean distance
 			//No need for sqrt, we do not need the exact distance
 			int16_t distance = (dst_pos.x - neighbor_pos.x) * (dst_pos.x - neighbor_pos.x) + (dst_pos.y - neighbor_pos.y) * (dst_pos.y - neighbor_pos.y);
-			PRINTF("get_nearest_neighbour: Distance from %d to %d is: %d\n", dst->u8[0], edges[i]->dst.u8[0], distance);
+			PRINTF("[routing.c] get_nearest_neighbour: Distance from %d to %d is: %d\n", dst->u8[0], edges[i]->dst.u8[0], distance);
 
 			if (neighbour_distance > distance)
 			{
@@ -62,7 +62,7 @@ rimeaddr_t get_nearest_neighbour(rimeaddr_t *dst)
 		}
 	}
 
-	PRINTF("get_nearest_neighbour: Nearest is: %d\n", nearest_neighbour.u8[0]);
+	PRINTF("[routing.c] get_nearest_neighbour: Nearest is: %d\n", nearest_neighbour.u8[0]);
 	return nearest_neighbour;
 }
 
@@ -89,7 +89,7 @@ static void recv_uc(struct runicast_conn *c, const rimeaddr_t *from, uint8_t seq
 	}
 	last_received_packet_hash = current_hash;
 
-	PRINTF("Got unicast from: %d Content: %s\n", from->u8[0], (char *)(packetbuf_dataptr() + sizeof(rimeaddr_t)));
+	PRINTF("[routing.c] Got unicast from: %d Content: %s\n", from->u8[0], (char *)(packetbuf_dataptr() + sizeof(rimeaddr_t)));
 
 	//Are we the destination?
 	rimeaddr_t *dst = (rimeaddr_t *)packetbuf_dataptr();
@@ -100,13 +100,13 @@ static void recv_uc(struct runicast_conn *c, const rimeaddr_t *from, uint8_t seq
 		rimeaddr_t receiver = get_nearest_neighbour(dst);
 		if (!rimeaddr_cmp(&receiver, &rimeaddr_null))
 		{
-			PRINTF("Will forward to: %d\n", receiver.u8[0]);
+			PRINTF("[routing.c] Will forward to: %d\n", receiver.u8[0]);
 			runicast_send(&uc, &receiver, 255);
 		}
 	}
 	else
 	{
-		PRINTF("Got it!\n");
+		PRINTF("[routing.c] Got it!\n");
 
 		if (router_callback != NULL)
 		{
@@ -140,13 +140,13 @@ int8_t send_message(const void *packet_data, size_t length, rimeaddr_t *dst)
 
 	if (!rimeaddr_cmp(&receiver, &rimeaddr_null))
 	{
-		PRINTF("Will send initial unicast to: %d\n", receiver.u8[0]);
+		PRINTF("[routing.c] Will send initial unicast to: %d\n", receiver.u8[0]);
 		runicast_send(&uc, &receiver, 255);
 		return 1;
 	}
 	else
 	{
-		PRINTF("No neighbour to send to\n");
+		PRINTF("[routing.c] No neighbour to send to\n");
 		return 0;
 	}
 }
