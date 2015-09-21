@@ -29,8 +29,7 @@ void send_message_after_3_minutes()
 {
 	printf("[firmware.c] 3 minutes have passed!\n");
 
-	// If we're node 38, send msg to 33!
-	if (rimeaddr_node_addr.u8[0] == 38)
+	if (rimeaddr_node_addr.u8[0] == 50)
 	{
 		rimeaddr_t dst = {{33,0}};
 		send_message("Feuer!", 7, &dst);
@@ -42,7 +41,7 @@ PROCESS_THREAD(simple_process, ev, data)
 {
 	PROCESS_BEGIN();
 	
-	cc2420_set_txpower(8);
+	cc2420_set_txpower(12);
 	init_router(&message_received);
 
 	static struct ctimer ct;

@@ -31,7 +31,7 @@ rimeaddr_t get_nearest_neighbour(rimeaddr_t *dst)
 	//Iterate over all outgoing edges from root
 	uint8_t i;
 	rimeaddr_t nearest_neighbour = rimeaddr_null;
-	int16_t neighbour_distance = 0x7FFF; //32767 maximum value
+	uint32_t neighbour_distance = 0xFFFFFFFF;
 
 	position_t dst_pos = get_stored_position_of(dst);
 
@@ -51,8 +51,13 @@ rimeaddr_t get_nearest_neighbour(rimeaddr_t *dst)
 
 			//Calculate euklidean distance
 			//No need for sqrt, we do not need the exact distance
-			int16_t distance = (dst_pos.x - neighbor_pos.x) * (dst_pos.x - neighbor_pos.x) + (dst_pos.y - neighbor_pos.y) * (dst_pos.y - neighbor_pos.y);
-			PRINTF("[routing.c] get_nearest_neighbour: Distance from %d to %d is: %d\n", dst->u8[0], edges[i]->dst.u8[0], distance);
+			int32_t xdiff = dst_pos.x - neighbor_pos.x;
+			int32_t ydiff = dst_pos.y - neighbor_pos.y;
+			uint32_t xdiff_squared = xdiff * xdiff;
+			uint32_t ydiff_squared = ydiff * ydiff;
+			uint32_t distance = xdiff_squared + ydiff_squared;
+
+			PRINTF("[routing.c] get_nearest_neighbour: Distance from %d to %d is: %"PRIu32"\n", dst->u8[0], edges[i]->dst.u8[0], distance);
 
 			if (neighbour_distance > distance)
 			{
@@ -68,9 +73,12 @@ rimeaddr_t get_nearest_neighbour(rimeaddr_t *dst)
 
 /*------------------------------------------------*/
 
-static uint16_t packet_hash(const void *data, size_t length)
+static uint16_t packet_hash(const rimeaddr_t *sender, const void *data, size_t length)
 {
-	return crc16_data(data, length, 0) & 0xFFFF;
+	unsigned short hash = crc16_data(data, length, 0) & 0xFFFF;
+	hash = crc16_add(sender->u8[0], hash);
+	hash = crc16_add(sender->u8[1], hash);
+	return hash & 0xFFFF;
 }
 
 static struct runicast_conn uc;
@@ -82,7 +90,7 @@ static void recv_uc(struct runicast_conn *c, const rimeaddr_t *from, uint8_t seq
 	// runicast will spam the receiver until it receives an acknowledgement
 	// this means that we may receive multiples of the same message in the meantime
 	// hash the packet and ignore it if we've already received it
-	uint16_t current_hash = packet_hash(packetbuf_dataptr(), packetbuf_datalen());
+	uint16_t current_hash = packet_hash(from, packetbuf_dataptr(), packetbuf_datalen());
 	if (last_received_packet_hash == current_hash)
 	{
 		return;
