@@ -57,7 +57,8 @@ rimeaddr_t get_nearest_neighbour(rimeaddr_t *dst)
 			uint32_t ydiff_squared = ydiff * ydiff;
 			uint32_t distance = xdiff_squared + ydiff_squared;
 
-			PRINTF("[routing.c] get_nearest_neighbour: Distance from %d to %d is: %"PRIu32"\n", dst->u8[0], edges[i]->dst.u8[0], distance);
+			PRINTF("[routing.c] get_nearest_neighbour: Distance from %d.%d to %d.%d is: %"PRIu32"\n", 
+				dst->u8[0], dst->u8[1], edges[i]->dst.u8[0], edges[i]->dst.u8[1], distance);
 
 			if (neighbour_distance > distance)
 			{
@@ -67,7 +68,7 @@ rimeaddr_t get_nearest_neighbour(rimeaddr_t *dst)
 		}
 	}
 
-	PRINTF("[routing.c] get_nearest_neighbour: Nearest is: %d\n", nearest_neighbour.u8[0]);
+	PRINTF("[routing.c] get_nearest_neighbour: Nearest is: %d.%d\n", nearest_neighbour.u8[0], nearest_neighbour.u8[1]);
 	return nearest_neighbour;
 }
 
@@ -97,19 +98,25 @@ static void recv_uc(struct runicast_conn *c, const rimeaddr_t *from, uint8_t seq
 	}
 	last_received_packet_hash = current_hash;
 
-	PRINTF("[routing.c] Got unicast from: %d Content: %s\n", from->u8[0], (char *)(packetbuf_dataptr() + sizeof(rimeaddr_t)));
+	PRINTF("[routing.c] Got unicast from: %d.%d Content: %s\n", from->u8[0], from->u8[1], (char *)(packetbuf_dataptr() + sizeof(rimeaddr_t)));
 
 	//Are we the destination?
-	rimeaddr_t *dst = (rimeaddr_t *)packetbuf_dataptr();
-	if (!rimeaddr_cmp(&rimeaddr_node_addr, dst))
+	rimeaddr_t dst = *(rimeaddr_t*)packetbuf_dataptr();
+	if (!rimeaddr_cmp(&rimeaddr_node_addr, &dst))
 	{
 		//Forward message
 		packetbuf_copyfrom(packetbuf_dataptr(), packetbuf_datalen());
-		rimeaddr_t receiver = get_nearest_neighbour(dst);
+		rimeaddr_t receiver = get_nearest_neighbour(&dst);
 		if (!rimeaddr_cmp(&receiver, &rimeaddr_null))
 		{
-			PRINTF("[routing.c] Will forward to: %d\n", receiver.u8[0]);
-			runicast_send(&uc, &receiver, 255);
+			PRINTF("[routing.c] Will forward to: %d.%d\n", receiver.u8[0], receiver.u8[1]);
+			
+			uint8_t tries = 0;
+			while (!runicast_send(&uc, &receiver, 255))
+			{
+				tries++;
+				PRINTF("[routing.c] runicast_send failed! Retrying (%d) ...\n", tries);
+			}
 		}
 	}
 	else
