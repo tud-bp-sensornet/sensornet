@@ -18,15 +18,20 @@ void message_received(const void *packet_data, size_t length)
 	printf("[firmware.c] Received msg: %s\n", (char*)packet_data);
 }
 
-void send_message_after_3_minutes()
+void send_message_after_5_minutes()
 {
-	printf("[firmware.c] 3 minutes have passed!\n");
+	printf("[firmware.c] 5 minutes have passed!\n");
 
-	if (rimeaddr_node_addr.u8[0] == 50)
+	if (rimeaddr_node_addr.u8[0] == 50 || rimeaddr_node_addr.u8[0] == 2 || rimeaddr_node_addr.u8[0] == 9 || 
+		rimeaddr_node_addr.u8[0] == 36 || rimeaddr_node_addr.u8[0] == 31 || rimeaddr_node_addr.u8[0] == 19)
 	{
 		rimeaddr_t dst = {{33,0}};
-		send_message("Feuer!", 7, &dst);
-		printf("[firmware.c] Sent message!\n");
+
+		char msg[25];
+		int len = snprintf(msg, 25, "Feuer bei %d.%d!\n", rimeaddr_node_addr.u8[0], rimeaddr_node_addr.u8[1]);
+		send_message(msg, len+1, &dst);
+
+		printf("[firmware.c] Sent message of size %d!\n", len);
 	}
 }
 
@@ -34,11 +39,11 @@ PROCESS_THREAD(simple_process, ev, data)
 {
 	PROCESS_BEGIN();
 	
-	cc2420_set_txpower(12);
+	cc2420_set_txpower(16);
 	init_router(&message_received);
 
 	static struct ctimer ct;
-	ctimer_set(&ct, CLOCK_SECOND * 60 * 3, send_message_after_3_minutes, NULL);
+	ctimer_set(&ct, CLOCK_SECOND * 60 * 5, send_message_after_5_minutes, NULL);
 	
 	process_start(&neighbor_discovery_process, NULL);
 
