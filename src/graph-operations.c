@@ -1,9 +1,16 @@
 /**
- * \file File for the graph operations containing all help functions working on the graph
+ * \file graph-operations.c
+ * File for the graph operations containing all help functions working on the graph.
  * \author tud-bp-sensornet
  */
 
+/**
+ * \def __GRAPH_OPERATIONS_DEBUG__
+ * \brief Set to 1 to activate debug output.
+*/
+#ifndef __GRAPH_OPERATIONS_DEBUG__
 #define __GRAPH_OPERATIONS_DEBUG__ 0
+#endif
 
 #include <stdlib.h>
 #include <math.h>
@@ -11,14 +18,19 @@
 
 #include "graph-operations.h"
 
+//\cond
 #if __GRAPH_OPERATIONS_DEBUG__
 #include <stdio.h>
 #define PRINTF(...) printf(__VA_ARGS__)
 #else
 #define PRINTF(...)
 #endif
+//\endcond
 
-unsigned long last_time = 0;
+//The last time purge was called
+static unsigned long last_time = 0;
+
+//Seconds passed but ttl was not yet decremented
 static uint8_t seconds = 0;
 
 /*---------------------------------------------------------------------------*/

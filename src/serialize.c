@@ -1,8 +1,13 @@
 /**
- * \file                       A serializer and deserializer
- * \author                     tud-bp-sensornet
+ * \file serialize.c
+ * A serializer and deserializer.
+ * \author tud-bp-sensornet
  */
 
+/**
+ * \def __SERIALIZE_DEBUG__
+ * \brief Set to 1 to activate debug output.
+*/
 #ifndef __SERIALIZE_DEBUG__
 #define __SERIALIZE_DEBUG__ 0
 #endif
@@ -15,15 +20,19 @@
 #include "graph-operations.h"
 #include <stdio.h>
 
+//\cond
 #if __SERIALIZE_DEBUG__
 #include <stdio.h>
 #define PRINTF(...) printf(__VA_ARGS__)
 #else
 #define PRINTF(...)
 #endif
+//\endcond
 
+//\cond
 void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t *hops, uint8_t reachable_count, uint8_t hop,
                                       void (*packet_complete)(const void *packet_data, size_t length), size_t max_packet_length);
+//\endcond
 
 /*---------------------------------------------------------------------------*/
 void serialize(void (*packet_complete)(const void *packet_data, size_t length), size_t max_packet_length)

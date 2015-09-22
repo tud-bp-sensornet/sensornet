@@ -1,6 +1,7 @@
 /**
- * \file           Identified broadcast Rime layer ontop of anonymous broadcast (abc)
- * \author         tud-bp-sensornet
+ * \file pbroadcast.c
+ * Identified broadcast Rime layer ontop of anonymous broadcast (abc).
+ * \author tud-bp-sensornet
  */
 
 #include <string.h>
@@ -8,37 +9,44 @@
 #include "crc16.h"
 #include "pbroadcast.h"
 
+/**
+ * \def __BROADCAST_DEBUG__
+ * \brief Set to 1 to activate debug output.
+*/
 #ifndef __BROADCAST_DEBUG__
 #define __BROADCAST_DEBUG__ 0
 #endif
 
+//\cond
 #if __BROADCAST_DEBUG__
-	#include <stdio.h>
-	#define PRINTF(...) printf(__VA_ARGS__)
-	void debug_dump_data(void *data, size_t data_length)
+#include <stdio.h>
+#define PRINTF(...) printf(__VA_ARGS__)
+void debug_dump_data(void *data, size_t data_length)
+{
+	int i;
+	for (i = 0; i < data_length; i++)
 	{
-		int i;
-		for (i = 0; i < data_length; i++)
-		{
-			printf("%02X ", ((char*)packetbuf_dataptr())[i] & 0xFF);
-		}
+		printf("%02X ", ((char *)packetbuf_dataptr())[i] & 0xFF);
 	}
-	#define DEBUG_DUMP_DATA(data, data_length) debug_dump_data(data, data_length)
+}
+#define DEBUG_DUMP_DATA(data, data_length) debug_dump_data(data, data_length)
 #else
-	#define PRINTF(...)
-	#define DEBUG_DUMP_DATA(data, data_length)
+#define PRINTF(...)
+#define DEBUG_DUMP_DATA(data, data_length)
 #endif
+//\endcond
 
+/*---------------------------------------------------------------------------*/
 static uint16_t packet_hash(const void *data, size_t length)
 {
 	return crc16_data(data, length, 0) & 0xFFFF;
 }
-
+/*---------------------------------------------------------------------------*/
 static const struct packetbuf_attrlist attributes[] =
 {
 	BROADCAST_ATTRIBUTES PACKETBUF_ATTR_LAST
 };
-
+/*---------------------------------------------------------------------------*/
 static void recv_from_abc(struct abc_conn *bc)
 {
 
@@ -75,9 +83,9 @@ static void recv_from_abc(struct abc_conn *bc)
 		c->received(c, &sender, packetbuf_dataptr(), packetbuf_datalen() - sizeof(uint16_t));
 	}
 }
-
+/*---------------------------------------------------------------------------*/
 static const struct abc_callbacks callbacks = {recv_from_abc};
-
+/*---------------------------------------------------------------------------*/
 void p_broadcast_open(struct p_broadcast_conn *c, uint16_t channel)
 {
 	if (c == NULL)
@@ -89,7 +97,7 @@ void p_broadcast_open(struct p_broadcast_conn *c, uint16_t channel)
 	abc_open(&(c->abc), channel, &callbacks);
 	channel_set_attributes(channel, attributes);
 }
-
+/*---------------------------------------------------------------------------*/
 void p_broadcast_close(struct p_broadcast_conn *c)
 {
 
@@ -101,7 +109,7 @@ void p_broadcast_close(struct p_broadcast_conn *c)
 
 	abc_close(&(c->abc));
 }
-
+/*---------------------------------------------------------------------------*/
 int p_broadcast_send(struct p_broadcast_conn *c, const void *data, size_t length)
 {
 	PRINTF("[pbroadcast.c] Sending message of size %d\n", (int)length);

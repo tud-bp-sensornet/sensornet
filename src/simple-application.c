@@ -1,3 +1,9 @@
+/**
+ * \file simple-application.c
+ * The simple application starts neighbor-discovery and sends a routing package on buttonpress.
+ * \author tud-bp-sensornet
+ */
+
 #include "contiki.h"
 #include "graph.h"
 #include "graph-operations.h"
@@ -10,11 +16,17 @@
 
 #include "dev/button-sensor.h"
 
+//\cond
 PROCESS(simple_application_process, "Simple application process");
 AUTOSTART_PROCESSES(&simple_application_process);
+//\endcond
 
+/**
+ * \brief The destination rimeaddr_t to send routing packages to.
+*/
 rimeaddr_t node_destination = {{0x04}};
 
+//\cond
 PROCESS_THREAD(simple_application_process, ev, data)
 {
 	process_start(&neighbor_discovery_process, NULL);
@@ -36,3 +48,4 @@ PROCESS_THREAD(simple_application_process, ev, data)
 
 	PROCESS_END();
 }
+//\endcond

@@ -1,3 +1,9 @@
+/**
+ * \file neighbor-discovery.c
+ * The neighbor discovery process.
+ * \author tud-bp-sensornet
+ */
+
 #include "neighbor-discovery.h"
 #include "contiki.h"
 #include "graph.h"
@@ -8,17 +14,24 @@
 #include "routing.h"
 #include "positions.h"
 
+/**
+ * \def __NEIGHBOR_DISCOVERY_DEBUG__
+ * \brief Set to 1 to activate debug output.
+*/
 #ifndef __NEIGHBOR_DISCOVERY_DEBUG__
 #define __NEIGHBOR_DISCOVERY_DEBUG__ 0
 #endif
 
+//\cond
 #if __NEIGHBOR_DISCOVERY_DEBUG__
 #include <stdio.h>
 #define PRINTF(...) printf(__VA_ARGS__)
 #else
 #define PRINTF(...)
 #endif
+//\endcond
 
+/*---------------------------------------------------------------------------*/
 #if __NEIGHBOR_DISCOVERY_DEBUG__
 void debug_output_current_graph()
 {
@@ -53,17 +66,19 @@ void debug_output_current_graph()
 	PRINTF("\n");
 }
 #endif
-
+/*---------------------------------------------------------------------------*/
+//\cond
 PROCESS(neighbor_discovery_process, "K Hop Neighbor Discovery process");
-
+//\endcond
+/*---------------------------------------------------------------------------*/
 static struct p_broadcast_conn broadcast;
-
+/*---------------------------------------------------------------------------*/
 static void recv(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, const void *data, size_t length)
 {
 	//Update graph
 	deserialize(sender, data, length);
 }
-
+/*---------------------------------------------------------------------------*/
 static void packet_complete(const void *packet_data, size_t length)
 {
 	//Broadcast subgraph
@@ -72,7 +87,8 @@ static void packet_complete(const void *packet_data, size_t length)
 		//TODO: Errorhandling
 	}
 }
-
+/*---------------------------------------------------------------------------*/
+//\cond
 PROCESS_THREAD(neighbor_discovery_process, ev, data)
 {
 	PROCESS_EXITHANDLER(p_broadcast_close(&broadcast));
@@ -91,7 +107,7 @@ PROCESS_THREAD(neighbor_discovery_process, ev, data)
 
 	while (1)
 	{
-		/* Delay 60-120 seconds */
+		/* Delay DISCOVERY_INTERVAL_MIN-DISCOVERY_INTERVAL_MAX seconds */
 		etimer_set(&et, CLOCK_SECOND * DISCOVERY_INTERVAL_MIN + random_rand() % (CLOCK_SECOND * DISCOVERY_INTERVAL_MAX));
 
 		PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
@@ -99,9 +115,9 @@ PROCESS_THREAD(neighbor_discovery_process, ev, data)
 		//Purge edges with expired ttl
 		purge();
 
-		#if __NEIGHBOR_DISCOVERY_DEBUG__
+#if __NEIGHBOR_DISCOVERY_DEBUG__
 		debug_output_current_graph();
-		#endif
+#endif
 
 		//Create subgraphs and broadcast them
 		serialize(packet_complete, MAX_BROADCAST_PAYLOAD_SIZE);
@@ -109,3 +125,5 @@ PROCESS_THREAD(neighbor_discovery_process, ev, data)
 
 	PROCESS_END();
 }
+//\endcond
+/*---------------------------------------------------------------------------*/
