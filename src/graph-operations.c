@@ -39,7 +39,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	//Don't do anything if parameters are NULL
 	if (count == NULL)
 	{
-		PRINTF("Debug: Count was a NULL pointer. Function will not proceed.\n");
+		PRINTF("[graph-operations.c/get_hop_counts] Count was a NULL pointer. Function will not proceed.\n");
 		return NULL;
 	}
 
@@ -50,7 +50,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	//If there are 0-1 nodes or edges do nothing
 	if (node_count <= 0x01 || edge_count == 0x00)
 	{
-		PRINTF("Debug: Empty Graph. Function will not proceed.\n");
+		PRINTF("[graph-operations.c/get_hop_counts] Empty Graph. Function will not proceed.\n");
 		*count = 0x00;
 		return NULL;
 	}
@@ -60,7 +60,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	//Test if memory could be allocated
 	if (hop_dict == NULL)
 	{
-		PRINTF("Debug: Could not allocate memory. Function will not proceed.\n");
+		PRINTF("[graph-operations.c/get_hop_counts] Could not allocate memory. Function will not proceed.\n");
 		return NULL;
 	}
 
@@ -86,7 +86,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 			{
 				if (rimeaddr_cmp(&(all_edges[i]->dst), &(hop_dict[k].addr)))
 				{
-					PRINTF("Debug: %d already in hop_count (outgoing direct)\n", all_edges[i]->dst.u8[0]);
+					PRINTF("[graph-operations.c/get_hop_counts] %d already in hop_count (outgoing direct)\n", all_edges[i]->dst.u8[0]);
 					//...if the node is not in our hop_dict have not seen it yet...
 					is_in = 1;
 					break;
@@ -96,7 +96,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 			//...but now we have.
 			if (is_in == 0)
 			{
-				PRINTF("Debug: Add node (outgoing direct): %d\n", all_edges[i]->dst.u8[0]);
+				PRINTF("[graph-operations.c/get_hop_counts] Add node (outgoing direct): %d\n", all_edges[i]->dst.u8[0]);
 				tmp_hop_ptr->addr = all_edges[i]->dst;
 				tmp_hop_ptr->hop_count = 0x01;
 				tmp_hop_ptr++;
@@ -115,7 +115,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 					if (rimeaddr_cmp(&(all_edges[i]->src), &(hop_dict[k].addr)))
 					{
 						//...if the node is not in our hop_dict have not seen it yet...
-						PRINTF("Debug: %d already in hop_count (ingoing direct)\n", all_edges[i]->src.u8[0]);
+						PRINTF("[graph-operations.c/get_hop_counts] %d already in hop_count (ingoing direct)\n", all_edges[i]->src.u8[0]);
 						is_in = 1;
 						break;
 					}
@@ -124,7 +124,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 				//...but now we have.
 				if (is_in == 0)
 				{
-					PRINTF("Debug: Add node (ingoing direct): %d\n", all_edges[i]->src.u8[0]);
+					PRINTF("[graph-operations.c/get_hop_counts] Add node (ingoing direct): %d\n", all_edges[i]->src.u8[0]);
 					tmp_hop_ptr->addr = all_edges[i]->src;
 					tmp_hop_ptr->hop_count = 0x01;
 					tmp_hop_ptr++;
@@ -147,7 +147,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 
 			if (tmp_outgoing == NULL && tmp_ingoing == NULL)
 			{
-				PRINTF("Debug: Node has no ingoing and outgoing edges.\n");
+				PRINTF("[graph-operations.c/get_hop_counts] Node has no ingoing and outgoing edges.\n");
 				break;
 			}
 
@@ -163,7 +163,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 					if (rimeaddr_cmp(&(tmp_outgoing[j]->dst), &(hop_dict[k].addr)) || rimeaddr_cmp(&(tmp_outgoing[j]->dst), &rimeaddr_node_addr))
 					{
 						//...if the node is not in our hop_dict we weren't able to reach it yet...
-						PRINTF("Debug: %d already in hop_count (outgoing)\n", tmp_outgoing[j]->dst.u8[0]);
+						PRINTF("[graph-operations.c/get_hop_counts] %d already in hop_count (outgoing)\n", tmp_outgoing[j]->dst.u8[0]);
 						is_in = 1;
 						break;
 					}
@@ -172,7 +172,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 				//...but now we are able to.
 				if (is_in == 0)
 				{
-					PRINTF("Debug: Add node (outgoing): %d\n", tmp_outgoing[j]->dst.u8[0]);
+					PRINTF("[graph-operations.c/get_hop_counts] Add node (outgoing): %d\n", tmp_outgoing[j]->dst.u8[0]);
 					tmp_hop_ptr->addr = tmp_outgoing[j]->dst;
 					tmp_hop_ptr->hop_count = hop_dict[i].hop_count + 0x01;
 					tmp_hop_ptr++;
@@ -188,7 +188,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 				{
 					if (rimeaddr_cmp(&(tmp_ingoing[j]->src), &(hop_dict[k].addr)) || rimeaddr_cmp(&(tmp_ingoing[j]->src), &rimeaddr_node_addr))
 					{
-						PRINTF("Debug: %d already in hop_count (ingoing)\n", tmp_ingoing[j]->src.u8[0]);
+						PRINTF("[graph-operations.c/get_hop_counts] %d already in hop_count (ingoing)\n", tmp_ingoing[j]->src.u8[0]);
 						is_in = 1;
 						break;
 					}
@@ -196,7 +196,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 
 				if (is_in == 0)
 				{
-					PRINTF("Debug: Add node (ingoing): %d\n", tmp_ingoing[j]->src.u8[0]);
+					PRINTF("[graph-operations.c/get_hop_counts] Add node (ingoing): %d\n", tmp_ingoing[j]->src.u8[0]);
 					tmp_hop_ptr->addr = tmp_ingoing[j]->src;
 					tmp_hop_ptr->hop_count = hop_dict[i].hop_count + 0x01;
 					tmp_hop_ptr++;
@@ -231,7 +231,7 @@ void purge()
 
 		if (all_edges == NULL)
 		{
-			PRINTF("Debug: There are no edges in the graph. Function will not proceed.\n");
+			PRINTF("[graph-operations.c/purge] There are no edges in the graph. Function will not proceed.\n");
 			return;
 		}
 
