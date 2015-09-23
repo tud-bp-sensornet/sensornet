@@ -48,35 +48,35 @@ while (!msg.equals("endloop"))
 		}
 		break;
 	case 2:
-		if (!(msg.equals("[routing.c] Got unicast from: 1 Content: Fire!") && id == 2))
+		if (!(msg.equals("[routing.c] Got unicast from: 1.0 Content: Fire!") && id == 2))
 		{
 			test_success = false;
 			log.log("2nd message was wrong!\n");
 		}
 		break;
 	case 3:
-		if (!(msg.equals("[routing.c] Will forward to: 3") && id == 2))
+		if (!(msg.equals("[routing.c] Will forward to: 3.0") && id == 2))
 		{
 			test_success = false;
 			log.log("3rd message was wrong!\n");
 		}
 		break;
 	case 4:
-		if (!(msg.equals("[routing.c] Got unicast from: 2 Content: Fire!") && id == 3))
+		if (!(msg.equals("[routing.c] Got unicast from: 2.0 Content: Fire!") && id == 3))
 		{
 			test_success = false;
 			log.log("4th message was wrong!\n");
 		}
 		break;
 	case 5:
-		if (!(msg.equals("[routing.c] Will forward to: 4") && id == 3))
+		if (!(msg.equals("[routing.c] Will forward to: 4.0") && id == 3))
 		{
 			test_success = false;
 			log.log("5th message was wrong!\n");
 		}
 		break;
 	case 6:
-		if (!(msg.equals("[routing.c] Got unicast from: 3 Content: Fire!") && id == 4))
+		if (!(msg.equals("[routing.c] Got unicast from: 3.0 Content: Fire!") && id == 4))
 		{
 			test_success = false;
 			log.log("6th message was wrong!\n");
