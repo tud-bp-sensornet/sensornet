@@ -34,7 +34,7 @@ PROCESS_THREAD(simple_process, ev, data)
 {
 	PROCESS_BEGIN();
 	
-	cc2420_set_txpower(12);
+	cc2420_set_txpower(10);
 	init_router(&message_received);
 
 	static struct ctimer ct;

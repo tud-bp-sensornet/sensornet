@@ -118,10 +118,9 @@ static void recv_uc(struct runicast_conn *c, const rimeaddr_t *from, uint8_t seq
 			PRINTF("[routing.c] Will forward to: %d.%d\n", receiver.u8[0], receiver.u8[1]);
 
 			uint8_t tries = 0;
-			while (!runicast_send(&uc, &receiver, 255))
+			while (!runicast_send(&uc, &receiver, 255) && tries <= 250)
 			{
-				tries++;
-				PRINTF("[routing.c] runicast_send failed! Retrying (%d) ...\n", tries);
+				PRINTF("[routing.c] runicast_send failed! Retrying (%d) ...\n", tries++);
 			}
 		}
 	}
