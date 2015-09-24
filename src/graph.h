@@ -86,7 +86,7 @@ typedef struct
 {
 	rimeaddr_t src; ///< The source nodes rimeaddr_t.
 	rimeaddr_t dst; ///< The destination nodes rimeaddr_t.
-	uint8_t ttl; ///< The TTL in minutes.
+	uint16_t ttl; ///< The TTL in minutes.
 	uint16_t rssi; ///< The Receive Signal Strength Indicator.
 	uint16_t lqi; ///< The Link Quality Indicator.
 } p_edge_t;

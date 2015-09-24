@@ -240,7 +240,7 @@ void purge()
 		for (i = 0; i < count - deleted; i++)
 		{
 			//If ttl is over
-			if (all_edges[i]->ttl - decrement <= 0)
+			if (all_edges[i]->ttl <= decrement)
 			{
 				//Save rimeaddr
 				rimeaddr_t src = all_edges[i]->src;

@@ -60,7 +60,7 @@ void debug_output_current_graph()
 	{
 		if (i >= 40 && i % 40 == 0) PRINTF("[...] \n[neighbor-discovery.c] ^ ");
 
-		PRINTF("(%d.%d->%d.%d)", edges[i]->src.u8[0], edges[i]->src.u8[1], edges[i]->dst.u8[0], edges[i]->dst.u8[1]);
+		PRINTF("(%d.%d->%d.%d;%d)", edges[i]->src.u8[0], edges[i]->src.u8[1], edges[i]->dst.u8[0], edges[i]->dst.u8[1], edges[i]->ttl);
 	}
 
 	PRINTF("\n");
@@ -108,7 +108,7 @@ PROCESS_THREAD(neighbor_discovery_process, ev, data)
 	while (1)
 	{
 		/* Delay DISCOVERY_INTERVAL_MIN-DISCOVERY_INTERVAL_MAX seconds */
-		etimer_set(&et, CLOCK_SECOND * DISCOVERY_INTERVAL_MIN + random_rand() % (CLOCK_SECOND * DISCOVERY_INTERVAL_MAX));
+		etimer_set(&et, CLOCK_SECOND * DISCOVERY_INTERVAL_MIN + random_rand() % (CLOCK_SECOND * DISCOVERY_INTERVAL_MAX-DISCOVERY_INTERVAL_MIN));
 
 		PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
 

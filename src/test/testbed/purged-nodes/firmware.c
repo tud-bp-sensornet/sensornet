@@ -27,8 +27,9 @@ PROCESS_THREAD(simple_process, ev, data)
 	
 	cc2420_set_txpower(12);
 
+	// Timer is set to 10 minutes by default. Test runtime should be ~20 minutes.
 	static struct ctimer ct;
-	ctimer_set(&ct, CLOCK_SECOND * 60, disable_some_nodes, NULL);
+	ctimer_set(&ct, CLOCK_SECOND * 60 * 10, disable_some_nodes, NULL);
 	
 	process_start(&neighbor_discovery_process, NULL);
 
