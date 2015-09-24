@@ -337,8 +337,8 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(edge_array[4] != NULL);
 	UNIT_TEST_ASSERT(edge_array[5] != NULL);
 	UNIT_TEST_ASSERT(edge_array[6] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e1.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1.dst)) && (edge_array[0]->ttl == e1.ttl));
-	UNIT_TEST_ASSERT((rimeaddr_cmp(&(edge_array[0]->src), &(e1_new.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1_new.dst)) && (edge_array[0]->ttl == e1_new.ttl)) == 0);
+	UNIT_TEST_ASSERT((rimeaddr_cmp(&(edge_array[0]->src), &(e1.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1.dst)) && (edge_array[0]->ttl == e1.ttl)) == 0); // !!
+	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e1_new.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1_new.dst)) && (edge_array[0]->ttl == e1_new.ttl));
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[1]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[2]->src), &(e3.src)) && rimeaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
 	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[3]->src), &(e4.src)) && rimeaddr_cmp(&(edge_array[3]->dst), &(e4.dst)));

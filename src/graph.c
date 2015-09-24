@@ -184,6 +184,12 @@ void add_edge(const p_edge_t edge)
 	p_edge_t *search_edge = find_edge(&(edge.src), &(edge.dst));
 	if (search_edge != NULL)
 	{
+		if (search_edge->ttl > edge.ttl)
+		{
+			PRINTF("[graph.c] ^ Edge exists, but transmitted info is older --> no update.\n");
+			return;
+		}
+
 		memcpy(search_edge, &edge, sizeof(p_edge_t));
 		PRINTF("[graph.c] ^ Updated edge %d.%d -> %d.%d.\n",
 		       edge.src.u8[0], edge.src.u8[1], edge.dst.u8[0], edge.dst.u8[1]);
