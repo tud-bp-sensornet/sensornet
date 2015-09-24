@@ -8,25 +8,16 @@
 #include "random.h"
 #include "neighbor-discovery.h"
 #include "cc2420.h"
-#include "routing.h"
 
 PROCESS(simple_process, "Simple process");
 AUTOSTART_PROCESSES(&simple_process);
 
-void message_received(const void *packet_data, size_t length)
+void disable_some_nodes()
 {
-	printf("[firmware.c] Received msg: %s\n", (char*)packet_data);
-}
-
-void send_message_after_3_minutes()
-{
-	printf("[firmware.c] 3 minutes have passed!\n");
-
-	if (rimeaddr_node_addr.u8[0] == 50)
+	if (rimeaddr_node_addr.u8[0] % 2 == 0)
 	{
-		rimeaddr_t dst = {{33,0}};
-		send_message("Feuer!", 7, &dst);
-		printf("[firmware.c] Sent message!\n");
+		printf("[firmware.c] --- Mote ID is even --> Turning off neighbor-discovery! ---\n");
+		process_exit(&neighbor_discovery_process);
 	}
 }
 
@@ -35,10 +26,9 @@ PROCESS_THREAD(simple_process, ev, data)
 	PROCESS_BEGIN();
 	
 	cc2420_set_txpower(12);
-	init_router(&message_received);
 
 	static struct ctimer ct;
-	ctimer_set(&ct, CLOCK_SECOND * 60 * 3, send_message_after_3_minutes, NULL);
+	ctimer_set(&ct, CLOCK_SECOND * 60, disable_some_nodes, NULL);
 	
 	process_start(&neighbor_discovery_process, NULL);
 

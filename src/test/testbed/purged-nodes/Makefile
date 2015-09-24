@@ -3,10 +3,11 @@ CONTIKI = ../../../../lib/contiki
 # default parameters
 K = 2
 MAX_NODES = 20
-MAX_EDGES = 120
-DISCOVERY_INTERVAL_MIN = 15
-DISCOVERY_INTERVAL_MAX = 25
-TTL = 30
+MAX_EDGES = 100
+DISCOVERY_INTERVAL_MIN = 2
+DISCOVERY_INTERVAL_MAX = 4
+# ttl 1 minute
+TTL = 1
 
 # piloty1
 POSITION_ARRAY_RIMEADDR_OFFSET = 1
@@ -29,7 +30,6 @@ CFLAGS += -DTTL=$(TTL)
 CFLAGS += -D__NEIGHBOR_DISCOVERY_DEBUG__=1
 #CFLAGS += -D__BROADCAST_DEBUG__=1
 #CFLAGS += -D__SERIALIZE_DEBUG__=1
-CFLAGS += -D__ROUTING_DEBUG__=1
 
 PROJECT_SOURCEFILES+=../../../graph.c
 PROJECT_SOURCEFILES+=../../../graph-operations.c
@@ -37,7 +37,6 @@ PROJECT_SOURCEFILES+=../../../serialize.c
 PROJECT_SOURCEFILES+=../../../pbroadcast.c
 PROJECT_SOURCEFILES+=../../../neighbor-discovery.c
 PROJECT_SOURCEFILES+=../../../positions.c
-PROJECT_SOURCEFILES+=../../../routing.c
 CFLAGS += -I../../../
 
 CONTIKI_WITH_RIME = 1
