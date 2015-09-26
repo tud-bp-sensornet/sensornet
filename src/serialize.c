@@ -257,7 +257,8 @@ void deserialize(const rimeaddr_t *sender, const void *packet, size_t length)
 	{
 		//First add all nodes or update them
 		const p_node_t *node_ptr = packet + i;
-		p_node_t node = *node_ptr;
+		p_node_t node;
+		memcpy(&node, node_ptr, sizeof(p_node_t));
 		add_node(node);
 		PRINTF("[serialize.c] Added Node: %d.%d, count is now %d.\n", node.addr.u8[0], node.addr.u8[1], get_node_count());
 		i = i + sizeof(p_node_t);
@@ -267,9 +268,11 @@ void deserialize(const rimeaddr_t *sender, const void *packet, size_t length)
 	{
 		//Then add all edges or update them
 		const p_edge_t *edge_ptr = packet + i;
-		p_edge_t edge = *edge_ptr;
+		p_edge_t edge;
+		memcpy(&edge, edge_ptr, sizeof(p_edge_t));
 		add_edge(edge);
-		PRINTF("[serialize.c] Added Edge: %d.%d->%d.%d, count is now %d.\n", edge.src.u8[0], edge.src.u8[1], edge.dst.u8[0], edge.dst.u8[1], get_edge_count());
+		PRINTF("[serialize.c] Added Edge: %d.%d->%d.%d (ttl: %u), count is now %d.\n", 
+			edge.src.u8[0], edge.src.u8[1], edge.dst.u8[0], edge.dst.u8[1], edge.ttl, get_edge_count());
 		i = i + sizeof(p_edge_t);
 	}
 }

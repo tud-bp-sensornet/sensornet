@@ -60,7 +60,7 @@ void debug_output_current_graph()
 	{
 		if (i >= 40 && i % 40 == 0) PRINTF("[...] \n[neighbor-discovery.c] ^ ");
 
-		PRINTF("(%d.%d->%d.%d;%d)", edges[i]->src.u8[0], edges[i]->src.u8[1], edges[i]->dst.u8[0], edges[i]->dst.u8[1], edges[i]->ttl);
+		PRINTF("(%d.%d->%d.%d;%u)", edges[i]->src.u8[0], edges[i]->src.u8[1], edges[i]->dst.u8[0], edges[i]->dst.u8[1], edges[i]->ttl);
 	}
 
 	PRINTF("\n");
@@ -96,7 +96,7 @@ PROCESS_THREAD(neighbor_discovery_process, ev, data)
 
 	broadcast.received = recv;
 
-	p_broadcast_open(&broadcast, 129);
+	p_broadcast_open(&broadcast, 10000);
 
 	static struct etimer et;
 	init_graph();

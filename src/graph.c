@@ -177,7 +177,7 @@ uint8_t get_node_count()
 /*---------------------------------------------------------------------------*/
 void add_edge(const p_edge_t edge)
 {
-	PRINTF("[graph.c] Adding edge %d.%d -> %d.%d (ttl: %d, rssi: %d, lqi: %d).\n",
+	PRINTF("[graph.c] Adding edge %d.%d -> %d.%d (ttl: %u, rssi: %d, lqi: %d).\n",
 	       edge.src.u8[0], edge.src.u8[1], edge.dst.u8[0], edge.dst.u8[1], edge.ttl, edge.rssi, edge.lqi);
 
 	// Update edge if it already exists in graph
