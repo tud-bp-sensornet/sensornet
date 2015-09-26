@@ -12,6 +12,14 @@
 #include "rimeaddr.h"
 
 /**
+ * \def NEIGHBOR_DISCOVERY_CHANNEL
+ * \brief Rime channel routing operates on.
+*/
+#ifndef ROUTING_CHANNEL
+#define ROUTING_CHANNEL 146
+#endif
+
+/**
  * \brief Returns the nearest neighbour of root to the provided node.
  * \param dst The node the nearest neighbour should be found to.
  * \return The rimeaddr_t of the nearest neighbour.

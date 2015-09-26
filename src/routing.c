@@ -139,7 +139,7 @@ static const struct runicast_callbacks runicast_callbacks = {recv_uc};
 /*---------------------------------------------------------------------------*/
 void init_router(void (*message_received)(const void *packet_data, size_t length))
 {
-	runicast_open(&uc, 146, &runicast_callbacks);
+	runicast_open(&uc, ROUTING_CHANNEL, &runicast_callbacks);
 	router_callback = message_received;
 }
 /*---------------------------------------------------------------------------*/

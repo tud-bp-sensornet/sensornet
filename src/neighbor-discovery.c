@@ -96,7 +96,7 @@ PROCESS_THREAD(neighbor_discovery_process, ev, data)
 
 	broadcast.received = recv;
 
-	p_broadcast_open(&broadcast, 10000);
+	p_broadcast_open(&broadcast, NEIGHBOR_DISCOVERY_CHANNEL);
 
 	static struct etimer et;
 	init_graph();
@@ -112,8 +112,10 @@ PROCESS_THREAD(neighbor_discovery_process, ev, data)
 
 		PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
 
+#if !(NO_PURGE)
 		//Purge edges with expired ttl
 		purge();
+#endif
 
 #if __NEIGHBOR_DISCOVERY_DEBUG__
 		debug_output_current_graph();
