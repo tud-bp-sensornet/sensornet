@@ -5,7 +5,7 @@ all: $(CONTIKI_PROJECT)
 K = 3
 MAX_NODES = 20
 MAX_EDGES = 100
-TTL = 30
+TTL = 180
 
 CFLAGS += -Wall
 

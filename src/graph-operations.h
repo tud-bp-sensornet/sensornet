@@ -41,7 +41,6 @@ p_hop_t *get_hop_counts(uint8_t *count);
 /**
  * \brief Deletes all edges with a ttl <= 0 and decrements all remaining edges by the time difference this function was last called.
  *
- * As ttl is in minutes, purge will accumulate differences of seconds until >= 1 minute has passed before decrementing the ttl.
  * Do not call this function with a frequency of < 1 second.
  * Must be called at minimum once before a clock overflow happens.
  * Multiple clock overflows without calling purge will result in undefined behaviour when purge is called.

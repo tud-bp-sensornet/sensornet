@@ -30,9 +30,6 @@
 //The last time purge was called
 static unsigned long last_time = 0;
 
-//Seconds passed but ttl was not yet decremented
-static uint8_t seconds = 0;
-
 /*---------------------------------------------------------------------------*/
 p_hop_t *get_hop_counts(uint8_t *count)
 {
@@ -216,110 +213,96 @@ void purge()
 {
 	uint16_t this_time = clock_seconds();
 	uint16_t diff = this_time - last_time;
-	uint8_t decrement;
 
-	if (seconds + diff >= 60)
+	//Iterate over all edges and remove them when ttl <= 0
+	uint8_t count;
+	p_edge_t **all_edges = get_all_edges(&count);
+
+	if (all_edges == NULL)
 	{
-		//Value to decrement in minutes
-		decrement = (seconds +  diff) / 60;
-		//Rest amount of decrement time
-		seconds = (seconds + diff) % 60;
-
-		//Iterate over all edges and remove them when ttl <= 0
-		uint8_t count;
-		p_edge_t **all_edges = get_all_edges(&count);
-
-		if (all_edges == NULL)
-		{
-			PRINTF("[graph-operations.c/purge] There are no edges in the graph. Function will not proceed.\n");
-			return;
-		}
-
-		uint8_t i;
-		uint8_t deleted = 0;
-		for (i = 0; i < count - deleted; i++)
-		{
-			//If ttl is over
-			if (all_edges[i]->ttl <= decrement)
-			{
-				//Save rimeaddr
-				rimeaddr_t src = all_edges[i]->src;
-				rimeaddr_t dst = all_edges[i]->dst;
-
-				//Remove this edge
-				remove_edge(&(all_edges[i]->src), &(all_edges[i]->dst));
-
-				//Do not delete root
-				if (!rimeaddr_cmp(&src, &rimeaddr_node_addr))
-				{
-					//Check for orphan nodes
-					uint8_t src_out_count;
-					p_edge_t **src_out = get_outgoing_edges(&src, &src_out_count);
-
-					uint8_t src_in_count;
-					p_edge_t **src_in = get_ingoing_edges(&src, &src_in_count);
-
-					//Delete orphan nodes
-					if (src_out_count == 0 && src_in_count == 0)
-					{
-						remove_node(&src);
-					}
-					else
-					{
-						if (src_out != NULL)
-						{
-							free(src_out);
-						}
-
-						if (src_in != NULL)
-						{
-							free(src_in);
-						}
-					}
-				}
-
-				if (!rimeaddr_cmp(&dst, &rimeaddr_node_addr))
-				{
-					uint8_t dst_out_count;
-					p_edge_t **dst_out = get_outgoing_edges(&dst, &dst_out_count);
-
-					uint8_t dst_in_count;
-					p_edge_t **dst_in = get_ingoing_edges(&dst, &dst_in_count);
-
-					if (dst_out_count == 0 && dst_in_count == 0)
-					{
-						remove_node(&dst);
-					}
-					else
-					{
-						if (dst_out != NULL)
-						{
-							free(dst_out);
-						}
-
-						if (dst_in != NULL)
-						{
-							free(dst_in);
-						}
-					}
-
-				}
-
-				//Array will be rearranged, adapt to new array
-				i--;
-				deleted++;
-			}
-			else
-			{
-				//Set new - decreased - ttl
-				all_edges[i]->ttl = all_edges[i]->ttl - decrement;
-			}
-		}
-
+		PRINTF("[graph-operations.c/purge] There are no edges in the graph. Function will not proceed.\n");
+		return;
 	}
-	else
+
+	uint8_t i;
+	uint8_t deleted = 0;
+	for (i = 0; i < count - deleted; i++)
 	{
-		seconds += diff;
+		//If ttl is over
+		if (all_edges[i]->ttl <= diff)
+		{
+			//Save rimeaddr
+			rimeaddr_t src = all_edges[i]->src;
+			rimeaddr_t dst = all_edges[i]->dst;
+
+			//Remove this edge
+			remove_edge(&(all_edges[i]->src), &(all_edges[i]->dst));
+
+			//Do not delete root
+			if (!rimeaddr_cmp(&src, &rimeaddr_node_addr))
+			{
+				//Check for orphan nodes
+				uint8_t src_out_count;
+				p_edge_t **src_out = get_outgoing_edges(&src, &src_out_count);
+
+				uint8_t src_in_count;
+				p_edge_t **src_in = get_ingoing_edges(&src, &src_in_count);
+
+				//Delete orphan nodes
+				if (src_out_count == 0 && src_in_count == 0)
+				{
+					remove_node(&src);
+				}
+				else
+				{
+					if (src_out != NULL)
+					{
+						free(src_out);
+					}
+
+					if (src_in != NULL)
+					{
+						free(src_in);
+					}
+				}
+			}
+
+			if (!rimeaddr_cmp(&dst, &rimeaddr_node_addr))
+			{
+				uint8_t dst_out_count;
+				p_edge_t **dst_out = get_outgoing_edges(&dst, &dst_out_count);
+
+				uint8_t dst_in_count;
+				p_edge_t **dst_in = get_ingoing_edges(&dst, &dst_in_count);
+
+				if (dst_out_count == 0 && dst_in_count == 0)
+				{
+					remove_node(&dst);
+				}
+				else
+				{
+					if (dst_out != NULL)
+					{
+						free(dst_out);
+					}
+
+					if (dst_in != NULL)
+					{
+						free(dst_in);
+					}
+				}
+
+			}
+
+			//Array will be rearranged, adapt to new array
+			i--;
+			deleted++;
+		}
+		else
+		{
+			//Set new - decreased - ttl
+			all_edges[i]->ttl = all_edges[i]->ttl - diff;
+		}
 	}
 
 	last_time = clock_seconds();

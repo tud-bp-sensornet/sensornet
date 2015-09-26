@@ -80,13 +80,13 @@ p_node_t *find_node(const rimeaddr_t *addr);
  *
  * The edges are saved to represent the local view of the sensor to his neighbours.
  * It contains information of the edge necessary for the routing protocol.
- * It contains a ttl (in minutes) that is used to delete an edge if there wasn't an update in a certain amount of time.
+ * It contains a ttl (in seconds) that is used to delete an edge if there wasn't an update in a certain amount of time.
  */
 typedef struct
 {
 	rimeaddr_t src; ///< The source nodes rimeaddr_t.
 	rimeaddr_t dst; ///< The destination nodes rimeaddr_t.
-	uint16_t ttl; ///< The TTL in minutes.
+	uint16_t ttl; ///< The TTL in seconds.
 	uint16_t rssi; ///< The Receive Signal Strength Indicator.
 	uint16_t lqi; ///< The Link Quality Indicator.
 } p_edge_t;

@@ -1,6 +1,6 @@
 CONTIKI = ../../../../lib/contiki
 
-TTL = 30
+TTL = 1800
 
 PROJECT_SOURCEFILES+=../../../pbroadcast.c
 CFLAGS += -I../../../
