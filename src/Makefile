@@ -1,30 +1,8 @@
 CONTIKI_PROJECT = simple-application
 all: $(CONTIKI_PROJECT)
 
-# default parameters
-K = 3
-MAX_NODES = 20
-MAX_EDGES = 100
-TTL = 180
-
-CFLAGS += -Wall
-
-CFLAGS += -DK=$(K)
-CFLAGS += -DMAX_NODES=$(MAX_NODES)
-CFLAGS += -DMAX_EDGES=$(MAX_EDGES)
-CFLAGS += -DTTL=$(TTL)
-
-# include all needed C files here
-#PROJECT_SOURCEFILES+=
-PROJECT_SOURCEFILES+=graph.c
-PROJECT_SOURCEFILES+=graph-operations.c
-PROJECT_SOURCEFILES+=serialize.c
-PROJECT_SOURCEFILES+=pbroadcast.c
-PROJECT_SOURCEFILES+=routing.c
-PROJECT_SOURCEFILES+=positions.c
-PROJECT_SOURCEFILES+=neighbor-discovery.c
-
 CONTIKI=../lib/contiki
-CONTIKI_WITH_RIME = 1
+SENSORNET=.
 
+include $(SENSORNET)/Makefile.include
 include $(CONTIKI)/Makefile.include
