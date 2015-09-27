@@ -76,10 +76,10 @@ assert_mote_output(1, "END SEND FAULTY PACKET");
 
 assert_mote_output(2, "BROADCAST RECEIVED WITH CORRECT HASH, SIZE=64, FIRST BYTE=32");
 assert_mote_output(2, "broadcast received from 1.0 (size 64): 20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F 40 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E 4F 50 51 52 53 54 55 56 57 58 59 5A 5B 5C 5D 5E 5F ");
-assert_mote_output(2, "[pbroadcast.c] ^ Incorrect hash (expected 5027, but is 1B9D); discarding received packet.");
+assert_mote_output(2, "[pbroadcast.c] ^ Incorrect hash (expected 7F7E, but is B12F); discarding received packet.");
 
 assert_mote_output(3, "BROADCAST RECEIVED WITH CORRECT HASH, SIZE=64, FIRST BYTE=32");
 assert_mote_output(3, "broadcast received from 1.0 (size 64): 20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F 40 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E 4F 50 51 52 53 54 55 56 57 58 59 5A 5B 5C 5D 5E 5F ");
-assert_mote_output(3, "[pbroadcast.c] ^ Incorrect hash (expected 5027, but is 1B9D); discarding received packet.");
+assert_mote_output(3, "[pbroadcast.c] ^ Incorrect hash (expected 7F7E, but is B12F); discarding received packet.");
 
 if (test_success) log.testOK(); else log.testFailed();

@@ -26,9 +26,12 @@ void fill_with_data(void *data, size_t length, uint16_t base)
 // the hash and should therefore discard the packet as it is obviously not correct.
 static struct abc_conn abc;
 static const struct abc_callbacks callbacks = {NULL};
+static const struct packetbuf_attrlist attributes[] = { BROADCAST_ATTRIBUTES PACKETBUF_ATTR_LAST };
 void broadcast_faulty_message()
 {
 	abc_open(&abc, 128, &callbacks);
+	channel_set_attributes(128, attributes);
+
 	void *packet = malloc(64);
 
 	if (packet == NULL)
@@ -38,6 +41,11 @@ void broadcast_faulty_message()
 	}
 
 	fill_with_data(packet, 64, 64);
+
+	packetbuf_clear();
+	packetbuf_set_addr(PACKETBUF_ADDR_SENDER, &linkaddr_node_addr);
+	packetbuf_set_datalen(64);
+
 	memcpy(packetbuf_dataptr(), packet, 64);
 	free(packet);
 	abc_send(&abc);
