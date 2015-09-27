@@ -13,7 +13,7 @@ if [ ! -f $CONTIKI/tools/cooja/apps/mspsim/lib/cooja_mspsim.jar ]; then
 	cd $OLDPWD
 fi
 
-java -Xshare:auto -jar $CONTIKI/tools/cooja/dist/cooja.jar -nogui=$CSC -contiki=$CONTIKI #> /dev/null
+java -Xshare:auto -jar $CONTIKI/tools/cooja/dist/cooja.jar -nogui=$CSC -contiki=$CONTIKI > /dev/null
 cat COOJA.testlog
 
 if grep -q "TEST OK" COOJA.testlog; then
