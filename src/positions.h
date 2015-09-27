@@ -30,8 +30,8 @@
  * \def POSITION_ARRAY_linkaddr_OFFSET
  * \brief Smallest rime address of the array above.
 */
-#ifndef POSITION_ARRAY_linkaddr_OFFSET
-#define POSITION_ARRAY_linkaddr_OFFSET 1
+#ifndef POSITION_ARRAY_RIMEADDR_OFFSET
+#define POSITION_ARRAY_RIMEADDR_OFFSET 1
 #endif
 
 /**

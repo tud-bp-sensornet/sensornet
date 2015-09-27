@@ -55,15 +55,15 @@ void debug_output_current_graph1()
 PROCESS_THREAD(simple_process, ev, data)
 {
 	PROCESS_BEGIN();
-	
+
 	cc2420_set_txpower(8);
 
 	static struct ctimer ct;
 	ctimer_set(&ct, CLOCK_SECOND * 60, debug_output_current_graph1, NULL);
-	
+
 	process_start(&neighbor_discovery_process, NULL);
 
-	printf("K = %d, MAX_NODES = %d, MAX_EDGES = %d, linkaddr = %d.%d\n", (int) K, (int) MAX_NODES, (int) MAX_EDGES, linkaddr_node_addr.u8[0], linkaddr_node_addr.u8[1]);
+	printf("K = %d, MAX_NODES = %d, MAX_EDGES = %d, LINKADDR = %d.%d\n", (int) K, (int) MAX_NODES, (int) MAX_EDGES, linkaddr_node_addr.u8[0], linkaddr_node_addr.u8[1]);
 	printf("NODE_MEM = %dB, EDGE_MEM = %dB\n", (int)(sizeof(p_node_t) * MAX_NODES), (int)(sizeof(p_edge_t) * MAX_EDGES));
 	printf("PACKETBUF_SIZE = %d, TXPOWER = %d, INTERVAL = %d - %d\n", PACKETBUF_SIZE, cc2420_get_txpower(), DISCOVERY_INTERVAL_MIN, DISCOVERY_INTERVAL_MAX);
 
