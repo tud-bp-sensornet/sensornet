@@ -146,7 +146,7 @@ UNIT_TEST(root_test)
 
 	UNIT_TEST_BEGIN();
 
-	serialize(packet_complete_root);
+	serialize(packet_complete_root, 128);
 
 	UNIT_TEST_ASSERT(tmp_length == sizeof(p_node_t));
 	UNIT_TEST_ASSERT(((p_node_t *)tmp_packet_data)->addr.u8[0] == 0x01);
@@ -172,7 +172,7 @@ UNIT_TEST(null_test)
 
 	UNIT_TEST_BEGIN();
 
-	serialize(packet_complete_root);
+	serialize(packet_complete_root, 128);
 
 	//Just do not break
 
@@ -193,7 +193,7 @@ UNIT_TEST(multi_sub_graph_test)
 	root.addr.u8[0] = 0x01;
 	rimeaddr_set_node_addr(&(root.addr));
 	add_node(root);
-
+	
 	//Create a graph which serialization is bigger than the PACKETBUF_SIZE (128)
 	//Smallest functional node size is 2 Byte and edge is 5 Byte
 	for (size = 2; size < 11; size++) //9 edges and nodes
@@ -203,8 +203,7 @@ UNIT_TEST(multi_sub_graph_test)
 		node.addr.u8[0] = size;
 		add_node(node);
 
-		p_edge_t edge = {root.addr, rimeaddr_null, 0x00};
-		edge.dst.u8[0] = size;
+		p_edge_t edge = {root.addr, node.addr, 0x00};
 		add_edge(edge);
 	}
 
@@ -219,7 +218,7 @@ UNIT_TEST(multi_sub_graph_test)
 	UNIT_TEST_ASSERT(MAX_NODES >= 20);
 	UNIT_TEST_ASSERT(MAX_EDGES >= 19);
 
-	serialize(packet_complete_multi);
+	serialize(packet_complete_multi, 128);
 
 	UNIT_TEST_ASSERT(called == 0x02); //Function should be called 2 times
 
@@ -236,7 +235,7 @@ UNIT_TEST(multi_sub_graph_test)
 		remove_edge(&node2, &node);
 
 	}
-
+	
 	//add new root
 	p_node_t new_root = {rimeaddr_null};
 	new_root.addr.u8[0] = 0x07; //Node number 7
@@ -373,7 +372,7 @@ UNIT_TEST(long_graph_test)
 	UNIT_TEST_ASSERT(MAX_NODES >= 7);
 	UNIT_TEST_ASSERT(MAX_EDGES >= 12);
 
-	serialize(packet_complete_long);
+	serialize(packet_complete_long, 128);
 
 	UNIT_TEST_ASSERT(cnt == 0x05);
 

@@ -1,9 +1,14 @@
 CONTIKI = ../../../../lib/contiki
+SENSORNET = ../../..
 
-PROJECT_SOURCEFILES+=../../../pbroadcast.c
-CFLAGS += -I../../../
+# test parameters
+DISCOVERY_INTERVAL_MIN = 2
+DISCOVERY_INTERVAL_MAX = 4
+NODE_POSITION_ARRAY = {50,0},{90,0},{130,0},{130,40},{130,-40},{170,-40}
+NODE_POSITION_ARRAY_LENGTH = 6
+TTL = 1800
 
-CFLAGS += -D__BROADCAST_DEBUG__=1
+__BROADCAST_DEBUG__ = 1
 
 TESTS=$(wildcard ??-*.csc)
 all: $(TESTS)
@@ -12,5 +17,5 @@ all: $(TESTS)
 run-unittest: $(TESTS)
 	sh simexec.sh
 
-CONTIKI_WITH_RIME = 1
+include $(SENSORNET)/Makefile.include
 include $(CONTIKI)/Makefile.include

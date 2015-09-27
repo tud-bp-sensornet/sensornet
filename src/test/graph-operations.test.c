@@ -366,9 +366,9 @@ UNIT_TEST(delete_and_decrement_purge)
 	n0.addr.u8[0] = 0x06;
 	n1.addr.u8[0] = 0x07;
 
-	p_edge_t er11 = {r.addr, n11.addr, 0x01}; //1 minute ttl
-	p_edge_t er12 = {r.addr, n12.addr, 0x0A}; //10 minute ttl
-	p_edge_t e10 = {n1.addr, n0.addr, 0x01}; //1 minute ttl
+	p_edge_t er11 = {r.addr, n11.addr, 60}; //1 minute ttl
+	p_edge_t er12 = {r.addr, n12.addr, 600}; //10 minute ttl
+	p_edge_t e10 = {n1.addr, n0.addr, 60}; //1 minute ttl
 
 	rimeaddr_set_node_addr(&(r.addr));
 
@@ -384,6 +384,8 @@ UNIT_TEST(delete_and_decrement_purge)
 
 	UNIT_TEST_BEGIN();
 
+	UNIT_TEST_ASSERT(TTL == 180);
+
 	clock_set_seconds((unsigned long) 300); //Set clock to 5 minutes
 
 	purge();
@@ -396,7 +398,7 @@ UNIT_TEST(delete_and_decrement_purge)
 	UNIT_TEST_ASSERT(all_edges[0]->src.u8[0] == r.addr.u8[0]);
 	UNIT_TEST_ASSERT(all_edges[0]->dst.u8[0] == n12.addr.u8[0]);
 	UNIT_TEST_ASSERT(edge_count == 0x01);
-	UNIT_TEST_ASSERT(all_edges[0]->ttl == 0x05); //5 Minutes left
+	UNIT_TEST_ASSERT(all_edges[0]->ttl == 300); //5 Minutes left
 
 	//Nodes only 2 nodes left
 	UNIT_TEST_ASSERT(all_nodes[0]->addr.u8[0] == r.addr.u8[0]);

@@ -1,5 +1,6 @@
 /**
- * \file Header file for the graph operations containing all help functions working on the graph
+ * \file graph-operations.h
+ * Header file for the graph operations containing all help functions working on the graph.
  * \author tud-bp-sensornet
  */
 
@@ -10,19 +11,21 @@
 #include "contiki.h"
 
 /**
- * This struct represents an association between a node and it's hop count to root (this node)
- * The node is represented with its rimeaddr.
+ * \struct p_hop_t
+ * \brief This struct represents an association between a node and it's hop count to root (this node).
+ *
+ * The node is represented with its rimeaddr_t.
  */
 typedef struct
 {
-	rimeaddr_t addr;
-	uint8_t hop_count;
+	rimeaddr_t addr; ///< The rimeaddr-t of the node.
+	uint8_t hop_count; ///< The hop count to root.
 } p_hop_t;
 
 /**
  * \brief Returns an array of p_hop_t with the shortest hopcount for every node to root (excluding root) traversing the graph as if edges are not directed.
- * \param count A pointer to an uint8 value that will be set to the current amount of reachable nodes (ignoring edge direction) from root
- * \retval The pointer to the array of p_hop_t
+ * \param count A pointer to an uint8 value that will be set to the current amount of reachable nodes (ignoring edge direction) from root.
+ * \return The pointer to the array of p_hop_t.
  *
  * Returns an array of p_hop_t. The array should be freed, by the caller.
  * Array layout:
@@ -37,9 +40,8 @@ p_hop_t *get_hop_counts(uint8_t *count);
 
 /**
  * \brief Deletes all edges with a ttl <= 0 and decrements all remaining edges by the time difference this function was last called.
- * \param void
- * \retval void
  *
+ * Do not call this function with a frequency of < 1 second.
  * Must be called at minimum once before a clock overflow happens.
  * Multiple clock overflows without calling purge will result in undefined behaviour when purge is called.
  * Will delete a node iff node has no ingoing and outgoing edges.
