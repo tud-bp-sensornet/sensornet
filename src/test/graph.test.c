@@ -22,7 +22,7 @@ UNIT_TEST_REGISTER(test_members, "Test if all members of the node and edge struc
  * Test adding and removing some nodes
  * Tests the functions:
  * void add_node(const p_node_t node)
- * void remove_node(const rimeaddr_t *addr)
+ * void remove_node(const linkaddr_t *addr)
  * p_node_t **get_all_nodes(uint8_t * count)
  * uint8_t get_node_count()
  */
@@ -35,9 +35,9 @@ UNIT_TEST(add_nodes)
 
 	UNIT_TEST_BEGIN();
 
-	n1.addr = rimeaddr_null;
-	n2.addr = rimeaddr_null;
-	n3.addr = rimeaddr_null;
+	n1.addr = linkaddr_null;
+	n2.addr = linkaddr_null;
+	n3.addr = linkaddr_null;
 	n1.addr.u8[0] = 0x01;
 	n2.addr.u8[0] = 0x02;
 	n3.addr.u8[0] = 0x03;
@@ -84,9 +84,9 @@ UNIT_TEST(add_nodes)
 	UNIT_TEST_ASSERT(node_array[1] != NULL);
 	UNIT_TEST_ASSERT(node_array[2] != NULL);
 	UNIT_TEST_ASSERT(node_array[3] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node_array[0]->addr), &(n1.addr)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node_array[1]->addr), &(n2.addr)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node_array[2]->addr), &(n3.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(node_array[0]->addr), &(n1.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(node_array[1]->addr), &(n2.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(node_array[2]->addr), &(n3.addr)));
 
 	remove_node(&(n3.addr));
 
@@ -94,8 +94,8 @@ UNIT_TEST(add_nodes)
 	UNIT_TEST_ASSERT(node_array[0] != NULL);
 	UNIT_TEST_ASSERT(node_array[1] != NULL);
 	UNIT_TEST_ASSERT(node_array[2] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node_array[0]->addr), &(n1.addr)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node_array[1]->addr), &(n2.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(node_array[0]->addr), &(n1.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(node_array[1]->addr), &(n2.addr)));
 
 	remove_node(&(n3.addr));
 
@@ -103,15 +103,15 @@ UNIT_TEST(add_nodes)
 	UNIT_TEST_ASSERT(node_array[0] != NULL);
 	UNIT_TEST_ASSERT(node_array[1] != NULL);
 	UNIT_TEST_ASSERT(node_array[2] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node_array[0]->addr), &(n1.addr)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node_array[1]->addr), &(n2.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(node_array[0]->addr), &(n1.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(node_array[1]->addr), &(n2.addr)));
 
 	remove_node(&(n1.addr));
 
 	UNIT_TEST_ASSERT(get_node_count() == 1);
 	UNIT_TEST_ASSERT(node_array[0] != NULL);
 	UNIT_TEST_ASSERT(node_array[1] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node_array[0]->addr), &(n2.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(node_array[0]->addr), &(n2.addr)));
 
 	remove_node(&(n2.addr));
 
@@ -131,7 +131,7 @@ UNIT_TEST(add_nodes)
 	uint8_t i;
 	for (i = 0; i < (MAX_NODES + 1); i++)
 	{
-		ntemp.addr = rimeaddr_null;
+		ntemp.addr = linkaddr_null;
 		ntemp.addr.u8[0] = (unsigned char) i;
 		add_node(ntemp);
 	}
@@ -154,7 +154,7 @@ UNIT_TEST(add_nodes)
  * Test adding and removing some edges
  * Tests the functions:
  * void add_edge(const p_edge_t edge)
- * void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+ * void remove_edge(const linkaddr_t *src, const linkaddr_t *dst)
  * p_edge_t **get_all_edges(uint8_t * count)
  * uint8_t get_edge_count()
  */
@@ -169,20 +169,20 @@ UNIT_TEST(add_edges)
 
 	UNIT_TEST_BEGIN();
 
-	e1.dst = rimeaddr_null;
-	e1.src = rimeaddr_null;
-	e2.dst = rimeaddr_null;
-	e2.src = rimeaddr_null;
-	e3.dst = rimeaddr_null;
-	e3.src = rimeaddr_null;
-	e4.dst = rimeaddr_null;
-	e4.src = rimeaddr_null;
-	e5.dst = rimeaddr_null;
-	e5.src = rimeaddr_null;
-	e6.dst = rimeaddr_null;
-	e6.src = rimeaddr_null;
-	e1_new.dst = rimeaddr_null;
-	e1_new.src = rimeaddr_null;
+	e1.dst = linkaddr_null;
+	e1.src = linkaddr_null;
+	e2.dst = linkaddr_null;
+	e2.src = linkaddr_null;
+	e3.dst = linkaddr_null;
+	e3.src = linkaddr_null;
+	e4.dst = linkaddr_null;
+	e4.src = linkaddr_null;
+	e5.dst = linkaddr_null;
+	e5.src = linkaddr_null;
+	e6.dst = linkaddr_null;
+	e6.src = linkaddr_null;
+	e1_new.dst = linkaddr_null;
+	e1_new.src = linkaddr_null;
 	e1.dst.u8[0] = 0x01;
 	e1.src.u8[0] = 0x02;
 	e2.dst.u8[0] = 0x02;
@@ -297,13 +297,13 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(edge_array[4] != NULL);
 	UNIT_TEST_ASSERT(edge_array[5] != NULL);
 	UNIT_TEST_ASSERT(edge_array[6] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e1.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1.dst)) && (edge_array[0]->ttl == e1.ttl));
-	UNIT_TEST_ASSERT((rimeaddr_cmp(&(edge_array[0]->src), &(e1_new.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1_new.dst)) && (edge_array[0]->ttl == e1_new.ttl)) == 0);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[1]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[2]->src), &(e3.src)) && rimeaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[3]->src), &(e4.src)) && rimeaddr_cmp(&(edge_array[3]->dst), &(e4.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[4]->src), &(e5.src)) && rimeaddr_cmp(&(edge_array[4]->dst), &(e5.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[5]->src), &(e6.src)) && rimeaddr_cmp(&(edge_array[5]->dst), &(e6.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[0]->src), &(e1.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e1.dst)) && (edge_array[0]->ttl == e1.ttl));
+	UNIT_TEST_ASSERT((linkaddr_cmp(&(edge_array[0]->src), &(e1_new.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e1_new.dst)) && (edge_array[0]->ttl == e1_new.ttl)) == 0);
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[1]->src), &(e2.src)) && linkaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[2]->src), &(e3.src)) && linkaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[3]->src), &(e4.src)) && linkaddr_cmp(&(edge_array[3]->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[4]->src), &(e5.src)) && linkaddr_cmp(&(edge_array[4]->dst), &(e5.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[5]->src), &(e6.src)) && linkaddr_cmp(&(edge_array[5]->dst), &(e6.dst)));
 
 	add_edge(e1_new);
 	edge_array = get_all_edges(&counter);
@@ -317,13 +317,13 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(edge_array[4] != NULL);
 	UNIT_TEST_ASSERT(edge_array[5] != NULL);
 	UNIT_TEST_ASSERT(edge_array[6] == NULL);
-	UNIT_TEST_ASSERT((rimeaddr_cmp(&(edge_array[0]->src), &(e1.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1.dst)) && (edge_array[0]->ttl == e1.ttl)) == 0);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e1_new.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1_new.dst)) && (edge_array[0]->ttl == e1_new.ttl));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[1]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[2]->src), &(e3.src)) && rimeaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[3]->src), &(e4.src)) && rimeaddr_cmp(&(edge_array[3]->dst), &(e4.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[4]->src), &(e5.src)) && rimeaddr_cmp(&(edge_array[4]->dst), &(e5.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[5]->src), &(e6.src)) && rimeaddr_cmp(&(edge_array[5]->dst), &(e6.dst)));
+	UNIT_TEST_ASSERT((linkaddr_cmp(&(edge_array[0]->src), &(e1.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e1.dst)) && (edge_array[0]->ttl == e1.ttl)) == 0);
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[0]->src), &(e1_new.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e1_new.dst)) && (edge_array[0]->ttl == e1_new.ttl));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[1]->src), &(e2.src)) && linkaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[2]->src), &(e3.src)) && linkaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[3]->src), &(e4.src)) && linkaddr_cmp(&(edge_array[3]->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[4]->src), &(e5.src)) && linkaddr_cmp(&(edge_array[4]->dst), &(e5.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[5]->src), &(e6.src)) && linkaddr_cmp(&(edge_array[5]->dst), &(e6.dst)));
 
 	add_edge(e1);
 	edge_array = get_all_edges(&counter);
@@ -337,13 +337,13 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(edge_array[4] != NULL);
 	UNIT_TEST_ASSERT(edge_array[5] != NULL);
 	UNIT_TEST_ASSERT(edge_array[6] == NULL);
-	UNIT_TEST_ASSERT((rimeaddr_cmp(&(edge_array[0]->src), &(e1.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1.dst)) && (edge_array[0]->ttl == e1.ttl)) == 0); // !!
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e1_new.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1_new.dst)) && (edge_array[0]->ttl == e1_new.ttl));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[1]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[2]->src), &(e3.src)) && rimeaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[3]->src), &(e4.src)) && rimeaddr_cmp(&(edge_array[3]->dst), &(e4.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[4]->src), &(e5.src)) && rimeaddr_cmp(&(edge_array[4]->dst), &(e5.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[5]->src), &(e6.src)) && rimeaddr_cmp(&(edge_array[5]->dst), &(e6.dst)));
+	UNIT_TEST_ASSERT((linkaddr_cmp(&(edge_array[0]->src), &(e1.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e1.dst)) && (edge_array[0]->ttl == e1.ttl)) == 0); // !!
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[0]->src), &(e1_new.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e1_new.dst)) && (edge_array[0]->ttl == e1_new.ttl));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[1]->src), &(e2.src)) && linkaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[2]->src), &(e3.src)) && linkaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[3]->src), &(e4.src)) && linkaddr_cmp(&(edge_array[3]->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[4]->src), &(e5.src)) && linkaddr_cmp(&(edge_array[4]->dst), &(e5.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[5]->src), &(e6.src)) && linkaddr_cmp(&(edge_array[5]->dst), &(e6.dst)));
 
 	remove_edge(&(e6.src), &(e6.dst));
 
@@ -354,11 +354,11 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(edge_array[3] != NULL);
 	UNIT_TEST_ASSERT(edge_array[4] != NULL);
 	UNIT_TEST_ASSERT(edge_array[5] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e1.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[1]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[2]->src), &(e3.src)) && rimeaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[3]->src), &(e4.src)) && rimeaddr_cmp(&(edge_array[3]->dst), &(e4.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[4]->src), &(e5.src)) && rimeaddr_cmp(&(edge_array[4]->dst), &(e5.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[0]->src), &(e1.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[1]->src), &(e2.src)) && linkaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[2]->src), &(e3.src)) && linkaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[3]->src), &(e4.src)) && linkaddr_cmp(&(edge_array[3]->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[4]->src), &(e5.src)) && linkaddr_cmp(&(edge_array[4]->dst), &(e5.dst)));
 
 	remove_edge(&(e6.src), &(e6.dst));
 
@@ -369,11 +369,11 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(edge_array[3] != NULL);
 	UNIT_TEST_ASSERT(edge_array[4] != NULL);
 	UNIT_TEST_ASSERT(edge_array[5] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e1.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[1]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[2]->src), &(e3.src)) && rimeaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[3]->src), &(e4.src)) && rimeaddr_cmp(&(edge_array[3]->dst), &(e4.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[4]->src), &(e5.src)) && rimeaddr_cmp(&(edge_array[4]->dst), &(e5.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[0]->src), &(e1.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[1]->src), &(e2.src)) && linkaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[2]->src), &(e3.src)) && linkaddr_cmp(&(edge_array[2]->dst), &(e3.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[3]->src), &(e4.src)) && linkaddr_cmp(&(edge_array[3]->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[4]->src), &(e5.src)) && linkaddr_cmp(&(edge_array[4]->dst), &(e5.dst)));
 
 	remove_edge(&(e3.src), &(e3.dst));
 
@@ -383,10 +383,10 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(edge_array[2] != NULL);
 	UNIT_TEST_ASSERT(edge_array[3] != NULL);
 	UNIT_TEST_ASSERT(edge_array[4] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e1.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e1.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[1]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[2]->src), &(e4.src)) && rimeaddr_cmp(&(edge_array[2]->dst), &(e4.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[3]->src), &(e5.src)) && rimeaddr_cmp(&(edge_array[3]->dst), &(e5.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[0]->src), &(e1.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[1]->src), &(e2.src)) && linkaddr_cmp(&(edge_array[1]->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[2]->src), &(e4.src)) && linkaddr_cmp(&(edge_array[2]->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[3]->src), &(e5.src)) && linkaddr_cmp(&(edge_array[3]->dst), &(e5.dst)));
 
 	remove_edge(&(e1.src), &(e1.dst));
 
@@ -395,9 +395,9 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(edge_array[1] != NULL);
 	UNIT_TEST_ASSERT(edge_array[2] != NULL);
 	UNIT_TEST_ASSERT(edge_array[3] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[1]->src), &(e4.src)) && rimeaddr_cmp(&(edge_array[1]->dst), &(e4.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[2]->src), &(e5.src)) && rimeaddr_cmp(&(edge_array[2]->dst), &(e5.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[0]->src), &(e2.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[1]->src), &(e4.src)) && linkaddr_cmp(&(edge_array[1]->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[2]->src), &(e5.src)) && linkaddr_cmp(&(edge_array[2]->dst), &(e5.dst)));
 
 	remove_edge(&(e5.src), &(e5.dst));
 
@@ -405,15 +405,15 @@ UNIT_TEST(add_edges)
 	UNIT_TEST_ASSERT(edge_array[0] != NULL);
 	UNIT_TEST_ASSERT(edge_array[1] != NULL);
 	UNIT_TEST_ASSERT(edge_array[2] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[1]->src), &(e4.src)) && rimeaddr_cmp(&(edge_array[1]->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[0]->src), &(e2.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[1]->src), &(e4.src)) && linkaddr_cmp(&(edge_array[1]->dst), &(e4.dst)));
 
 	remove_edge(&(e4.src), &(e4.dst));
 
 	UNIT_TEST_ASSERT(get_edge_count() == 1);
 	UNIT_TEST_ASSERT(edge_array[0] != NULL);
 	UNIT_TEST_ASSERT(edge_array[1] == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge_array[0]->src), &(e2.src)) && rimeaddr_cmp(&(edge_array[0]->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge_array[0]->src), &(e2.src)) && linkaddr_cmp(&(edge_array[0]->dst), &(e2.dst)));
 
 	remove_edge(&(e2.src), &(e2.dst));
 
@@ -448,7 +448,7 @@ UNIT_TEST(add_edges)
 	uint8_t i;
 	for (i = 1; i <= MAX_NODES; i++)
 	{
-		p_node_t n = {rimeaddr_null};
+		p_node_t n = {linkaddr_null};
 		n.addr.u8[0] = (unsigned char) i;
 		add_node(n);
 	}
@@ -458,8 +458,8 @@ UNIT_TEST(add_edges)
 	//Add MAX_EDGES + 1 edges 
 	for (i = 0; i < (MAX_EDGES + 1); i++)
 	{
-		etemp.dst = rimeaddr_null;
-		etemp.src = rimeaddr_null;
+		etemp.dst = linkaddr_null;
+		etemp.src = linkaddr_null;
 		etemp.src.u8[0] = ((unsigned char)(i/MAX_NODES)) + 1;
 		etemp.dst.u8[0] = (unsigned char)(i % MAX_NODES) + 1;
 		etemp.ttl = 0;
@@ -490,9 +490,9 @@ UNIT_TEST(add_edges)
 /**
  * Test find_node after adding and removing some nodes
  * Tests the functions:
- * p_node_t *find_node(const rimeaddr_t *addr)
+ * p_node_t *find_node(const linkaddr_t *addr)
  * void add_node(const p_node_t node)
- * void remove_node(const rimeaddr_t *addr)
+ * void remove_node(const linkaddr_t *addr)
  * p_node_t **get_all_nodes(uint8_t * count)
  * uint8_t get_node_count()
  */
@@ -504,9 +504,9 @@ UNIT_TEST(find_nodes)
 
 	UNIT_TEST_BEGIN();
 
-	n1.addr = rimeaddr_null;
-	n2.addr = rimeaddr_null;
-	n3.addr = rimeaddr_null;
+	n1.addr = linkaddr_null;
+	n2.addr = linkaddr_null;
+	n3.addr = linkaddr_null;
 	n1.addr.u8[0] = 0x01;
 	n2.addr.u8[0] = 0x02;
 	n3.addr.u8[0] = 0x03;
@@ -525,39 +525,39 @@ UNIT_TEST(find_nodes)
 	UNIT_TEST_ASSERT(find_node(&(n1.addr)) != NULL);
 	UNIT_TEST_ASSERT(find_node(&(n2.addr)) == NULL);
 	UNIT_TEST_ASSERT(find_node(&(n3.addr)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_node(&(n1.addr))->addr), &(n1.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_node(&(n1.addr))->addr), &(n1.addr)));
 
 	add_node(n2);
 
 	UNIT_TEST_ASSERT(find_node(&(n1.addr)) != NULL);
 	UNIT_TEST_ASSERT(find_node(&(n2.addr)) != NULL);
 	UNIT_TEST_ASSERT(find_node(&(n3.addr)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_node(&(n1.addr))->addr), &(n1.addr)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_node(&(n2.addr))->addr), &(n2.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_node(&(n1.addr))->addr), &(n1.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_node(&(n2.addr))->addr), &(n2.addr)));
 
 	add_node(n3);
 
 	UNIT_TEST_ASSERT(find_node(&(n1.addr)) != NULL);
 	UNIT_TEST_ASSERT(find_node(&(n2.addr)) != NULL);
 	UNIT_TEST_ASSERT(find_node(&(n3.addr)) != NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_node(&(n1.addr))->addr), &(n1.addr)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_node(&(n2.addr))->addr), &(n2.addr)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_node(&(n3.addr))->addr), &(n3.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_node(&(n1.addr))->addr), &(n1.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_node(&(n2.addr))->addr), &(n2.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_node(&(n3.addr))->addr), &(n3.addr)));
 
 	remove_node(&(n3.addr));
 
 	UNIT_TEST_ASSERT(find_node(&(n1.addr)) != NULL);
 	UNIT_TEST_ASSERT(find_node(&(n2.addr)) != NULL);
 	UNIT_TEST_ASSERT(find_node(&(n3.addr)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_node(&(n1.addr))->addr), &(n1.addr)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_node(&(n2.addr))->addr), &(n2.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_node(&(n1.addr))->addr), &(n1.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_node(&(n2.addr))->addr), &(n2.addr)));
 
 	remove_node(&(n1.addr));
 
 	UNIT_TEST_ASSERT(find_node(&(n1.addr)) == NULL);
 	UNIT_TEST_ASSERT(find_node(&(n2.addr)) != NULL);
 	UNIT_TEST_ASSERT(find_node(&(n3.addr)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_node(&(n2.addr))->addr), &(n2.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_node(&(n2.addr))->addr), &(n2.addr)));
 
 	remove_node(&(n2.addr));
 
@@ -578,9 +578,9 @@ UNIT_TEST(find_nodes)
 /**
  * Test find_edge after adding and removing some edges
  * Tests the functions:
- * p_edge_t *find_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+ * p_edge_t *find_edge(const linkaddr_t *src, const linkaddr_t *dst)
  * void add_edge(const p_edge_t edge)
- * void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+ * void remove_edge(const linkaddr_t *src, const linkaddr_t *dst)
  * p_edge_t **get_all_edges(uint8_t * count)
  * uint8_t get_edge_count()
  */
@@ -593,16 +593,16 @@ UNIT_TEST(find_edges)
 
 	UNIT_TEST_BEGIN();
 
-	e1.dst = rimeaddr_null;
-	e1.src = rimeaddr_null;
-	e2.dst = rimeaddr_null;
-	e2.src = rimeaddr_null;
-	e3.dst = rimeaddr_null;
-	e3.src = rimeaddr_null;
-	e4.dst = rimeaddr_null;
-	e4.src = rimeaddr_null;
-	e5.dst = rimeaddr_null;
-	e5.src = rimeaddr_null;
+	e1.dst = linkaddr_null;
+	e1.src = linkaddr_null;
+	e2.dst = linkaddr_null;
+	e2.src = linkaddr_null;
+	e3.dst = linkaddr_null;
+	e3.src = linkaddr_null;
+	e4.dst = linkaddr_null;
+	e4.src = linkaddr_null;
+	e5.dst = linkaddr_null;
+	e5.src = linkaddr_null;
 	e1.dst.u8[0] = 0x01;
 	e1.src.u8[0] = 0x02;
 	e2.dst.u8[0] = 0x02;
@@ -648,7 +648,7 @@ UNIT_TEST(find_edges)
 	UNIT_TEST_ASSERT(find_edge(&(e3.src), &(e3.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e4.src), &(e4.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e5.src), &(e5.dst)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
 
 	add_edge(e2);
 
@@ -657,8 +657,8 @@ UNIT_TEST(find_edges)
 	UNIT_TEST_ASSERT(find_edge(&(e3.src), &(e3.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e4.src), &(e4.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e5.src), &(e5.dst)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
 
 	add_edge(e3);
 
@@ -667,9 +667,9 @@ UNIT_TEST(find_edges)
 	UNIT_TEST_ASSERT(find_edge(&(e3.src), &(e3.dst)) != NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e4.src), &(e4.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e5.src), &(e5.dst)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->src), &(e3.src)) && rimeaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->dst), &(e3.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->src), &(e3.src)) && linkaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->dst), &(e3.dst)));
 
 	add_edge(e4);
 
@@ -678,10 +678,10 @@ UNIT_TEST(find_edges)
 	UNIT_TEST_ASSERT(find_edge(&(e3.src), &(e3.dst)) != NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e4.src), &(e4.dst)) != NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e5.src), &(e5.dst)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->src), &(e3.src)) && rimeaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->dst), &(e3.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->src), &(e4.src)) && rimeaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->src), &(e3.src)) && linkaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->dst), &(e3.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->src), &(e4.src)) && linkaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->dst), &(e4.dst)));
 
 	add_edge(e5);
 
@@ -690,11 +690,11 @@ UNIT_TEST(find_edges)
 	UNIT_TEST_ASSERT(find_edge(&(e3.src), &(e3.dst)) != NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e4.src), &(e4.dst)) != NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e5.src), &(e5.dst)) != NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->src), &(e3.src)) && rimeaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->dst), &(e3.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->src), &(e4.src)) && rimeaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->dst), &(e4.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e5.src), &(e5.dst))->src), &(e5.src)) && rimeaddr_cmp(&(find_edge(&(e5.src), &(e5.dst))->dst), &(e5.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->src), &(e3.src)) && linkaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->dst), &(e3.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->src), &(e4.src)) && linkaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e5.src), &(e5.dst))->src), &(e5.src)) && linkaddr_cmp(&(find_edge(&(e5.src), &(e5.dst))->dst), &(e5.dst)));
 
 
 	remove_edge(&(e5.src), &(e5.dst));
@@ -704,10 +704,10 @@ UNIT_TEST(find_edges)
 	UNIT_TEST_ASSERT(find_edge(&(e3.src), &(e3.dst)) != NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e4.src), &(e4.dst)) != NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e5.src), &(e5.dst)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->src), &(e3.src)) && rimeaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->dst), &(e3.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->src), &(e4.src)) && rimeaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->src), &(e3.src)) && linkaddr_cmp(&(find_edge(&(e3.src), &(e3.dst))->dst), &(e3.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->src), &(e4.src)) && linkaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->dst), &(e4.dst)));
 
 	remove_edge(&(e3.src), &(e3.dst));
 
@@ -716,9 +716,9 @@ UNIT_TEST(find_edges)
 	UNIT_TEST_ASSERT(find_edge(&(e3.src), &(e3.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e4.src), &(e4.dst)) != NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e5.src), &(e5.dst)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && rimeaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->src), &(e4.src)) && rimeaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->src), &(e1.src)) && linkaddr_cmp(&(find_edge(&(e1.src), &(e1.dst))->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->src), &(e4.src)) && linkaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->dst), &(e4.dst)));
 
 	remove_edge(&(e1.src), &(e1.dst));
 
@@ -727,8 +727,8 @@ UNIT_TEST(find_edges)
 	UNIT_TEST_ASSERT(find_edge(&(e3.src), &(e3.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e4.src), &(e4.dst)) != NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e5.src), &(e5.dst)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->src), &(e4.src)) && rimeaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->dst), &(e4.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->src), &(e4.src)) && linkaddr_cmp(&(find_edge(&(e4.src), &(e4.dst))->dst), &(e4.dst)));
 
 	remove_edge(&(e4.src), &(e4.dst));
 
@@ -737,7 +737,7 @@ UNIT_TEST(find_edges)
 	UNIT_TEST_ASSERT(find_edge(&(e3.src), &(e3.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e4.src), &(e4.dst)) == NULL);
 	UNIT_TEST_ASSERT(find_edge(&(e5.src), &(e5.dst)) == NULL);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && rimeaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->src), &(e2.src)) && linkaddr_cmp(&(find_edge(&(e2.src), &(e2.dst))->dst), &(e2.dst)));
 
 	remove_edge(&(e2.src), &(e2.dst));
 
@@ -765,10 +765,10 @@ UNIT_TEST(find_edges)
 /**
  * Test incoming and outgoing edges of a node
  * Tests the functions:
- * p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
- * p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count)
+ * p_edge_t **get_outgoing_edges(const linkaddr_t *src_addr, uint8_t *count)
+ * p_edge_t **get_ingoing_edges(const linkaddr_t *dst_addr, uint8_t *count)
  * void add_node(const p_node_t node)
- * void remove_node(const rimeaddr_t *addr)
+ * void remove_node(const linkaddr_t *addr)
  * p_node_t **get_all_nodes(uint8_t * count)
  * uint8_t get_node_count()
  */
@@ -784,34 +784,34 @@ UNIT_TEST(in_out_edges)
 
 	UNIT_TEST_BEGIN();
 
-	n1.addr = rimeaddr_null;
-	n2.addr = rimeaddr_null;
-	n3.addr = rimeaddr_null;
-	n4.addr = rimeaddr_null;
-	n5.addr = rimeaddr_null;
+	n1.addr = linkaddr_null;
+	n2.addr = linkaddr_null;
+	n3.addr = linkaddr_null;
+	n4.addr = linkaddr_null;
+	n5.addr = linkaddr_null;
 	n1.addr.u8[0] = 0x01;
 	n2.addr.u8[0] = 0x02;
 	n3.addr.u8[0] = 0x03;
 	n4.addr.u8[0] = 0x04;
 	n5.addr.u8[0] = 0x05;
-	e11.dst = rimeaddr_null;
-	e11.src = rimeaddr_null;
-	e12.dst = rimeaddr_null;
-	e12.src = rimeaddr_null;
-	e13.dst = rimeaddr_null;
-	e13.src = rimeaddr_null;
-	e14.dst = rimeaddr_null;
-	e14.src = rimeaddr_null;
-	e21.dst = rimeaddr_null;
-	e21.src = rimeaddr_null;
-	e23.dst = rimeaddr_null;
-	e23.src = rimeaddr_null;
-	e31.dst = rimeaddr_null;
-	e31.src = rimeaddr_null;
-	e32.dst = rimeaddr_null;
-	e32.src = rimeaddr_null;
-	e41.dst = rimeaddr_null;
-	e41.src = rimeaddr_null;
+	e11.dst = linkaddr_null;
+	e11.src = linkaddr_null;
+	e12.dst = linkaddr_null;
+	e12.src = linkaddr_null;
+	e13.dst = linkaddr_null;
+	e13.src = linkaddr_null;
+	e14.dst = linkaddr_null;
+	e14.src = linkaddr_null;
+	e21.dst = linkaddr_null;
+	e21.src = linkaddr_null;
+	e23.dst = linkaddr_null;
+	e23.src = linkaddr_null;
+	e31.dst = linkaddr_null;
+	e31.src = linkaddr_null;
+	e32.dst = linkaddr_null;
+	e32.src = linkaddr_null;
+	e41.dst = linkaddr_null;
+	e41.src = linkaddr_null;
 	e11.src.u8[0] = 0x01;
 	e11.dst.u8[0] = 0x01;
 	e12.src.u8[0] = 0x01;
@@ -911,14 +911,14 @@ UNIT_TEST(in_out_edges)
 	out_edge_array = get_outgoing_edges(&(n1.addr), &counter2);
 	UNIT_TEST_ASSERT(counter1 == 4);
 	UNIT_TEST_ASSERT(counter2 == 4);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(in_edge_array[0]->src), &(e11.src)) && rimeaddr_cmp(&(in_edge_array[0]->dst), &(e11.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(in_edge_array[1]->src), &(e21.src)) && rimeaddr_cmp(&(in_edge_array[1]->dst), &(e21.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(in_edge_array[2]->src), &(e31.src)) && rimeaddr_cmp(&(in_edge_array[2]->dst), &(e31.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(in_edge_array[3]->src), &(e41.src)) && rimeaddr_cmp(&(in_edge_array[3]->dst), &(e41.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(out_edge_array[0]->src), &(e11.src)) && rimeaddr_cmp(&(out_edge_array[0]->dst), &(e11.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(out_edge_array[1]->src), &(e12.src)) && rimeaddr_cmp(&(out_edge_array[1]->dst), &(e12.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(out_edge_array[2]->src), &(e13.src)) && rimeaddr_cmp(&(out_edge_array[2]->dst), &(e13.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(out_edge_array[3]->src), &(e14.src)) && rimeaddr_cmp(&(out_edge_array[3]->dst), &(e14.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(in_edge_array[0]->src), &(e11.src)) && linkaddr_cmp(&(in_edge_array[0]->dst), &(e11.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(in_edge_array[1]->src), &(e21.src)) && linkaddr_cmp(&(in_edge_array[1]->dst), &(e21.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(in_edge_array[2]->src), &(e31.src)) && linkaddr_cmp(&(in_edge_array[2]->dst), &(e31.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(in_edge_array[3]->src), &(e41.src)) && linkaddr_cmp(&(in_edge_array[3]->dst), &(e41.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(out_edge_array[0]->src), &(e11.src)) && linkaddr_cmp(&(out_edge_array[0]->dst), &(e11.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(out_edge_array[1]->src), &(e12.src)) && linkaddr_cmp(&(out_edge_array[1]->dst), &(e12.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(out_edge_array[2]->src), &(e13.src)) && linkaddr_cmp(&(out_edge_array[2]->dst), &(e13.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(out_edge_array[3]->src), &(e14.src)) && linkaddr_cmp(&(out_edge_array[3]->dst), &(e14.dst)));
 	free(in_edge_array);
 	free(out_edge_array);
 
@@ -926,10 +926,10 @@ UNIT_TEST(in_out_edges)
 	out_edge_array = get_outgoing_edges(&(n2.addr), &counter2);
 	UNIT_TEST_ASSERT(counter1 == 2);
 	UNIT_TEST_ASSERT(counter2 == 2);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(in_edge_array[0]->src), &(e12.src)) && rimeaddr_cmp(&(in_edge_array[0]->dst), &(e12.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(in_edge_array[1]->src), &(e32.src)) && rimeaddr_cmp(&(in_edge_array[1]->dst), &(e32.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(out_edge_array[0]->src), &(e21.src)) && rimeaddr_cmp(&(out_edge_array[0]->dst), &(e21.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(out_edge_array[1]->src), &(e23.src)) && rimeaddr_cmp(&(out_edge_array[1]->dst), &(e23.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(in_edge_array[0]->src), &(e12.src)) && linkaddr_cmp(&(in_edge_array[0]->dst), &(e12.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(in_edge_array[1]->src), &(e32.src)) && linkaddr_cmp(&(in_edge_array[1]->dst), &(e32.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(out_edge_array[0]->src), &(e21.src)) && linkaddr_cmp(&(out_edge_array[0]->dst), &(e21.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(out_edge_array[1]->src), &(e23.src)) && linkaddr_cmp(&(out_edge_array[1]->dst), &(e23.dst)));
 	free(in_edge_array);
 	free(out_edge_array);
 
@@ -937,10 +937,10 @@ UNIT_TEST(in_out_edges)
 	out_edge_array = get_outgoing_edges(&(n3.addr), &counter2);
 	UNIT_TEST_ASSERT(counter1 == 2);
 	UNIT_TEST_ASSERT(counter2 == 2);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(in_edge_array[0]->src), &(e13.src)) && rimeaddr_cmp(&(in_edge_array[0]->dst), &(e13.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(in_edge_array[1]->src), &(e23.src)) && rimeaddr_cmp(&(in_edge_array[1]->dst), &(e23.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(out_edge_array[0]->src), &(e31.src)) && rimeaddr_cmp(&(out_edge_array[0]->dst), &(e31.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(out_edge_array[1]->src), &(e32.src)) && rimeaddr_cmp(&(out_edge_array[1]->dst), &(e32.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(in_edge_array[0]->src), &(e13.src)) && linkaddr_cmp(&(in_edge_array[0]->dst), &(e13.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(in_edge_array[1]->src), &(e23.src)) && linkaddr_cmp(&(in_edge_array[1]->dst), &(e23.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(out_edge_array[0]->src), &(e31.src)) && linkaddr_cmp(&(out_edge_array[0]->dst), &(e31.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(out_edge_array[1]->src), &(e32.src)) && linkaddr_cmp(&(out_edge_array[1]->dst), &(e32.dst)));
 	free(in_edge_array);
 	free(out_edge_array);
 
@@ -948,8 +948,8 @@ UNIT_TEST(in_out_edges)
 	out_edge_array = get_outgoing_edges(&(n4.addr), &counter2);
 	UNIT_TEST_ASSERT(counter1 == 1);
 	UNIT_TEST_ASSERT(counter2 == 1);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(in_edge_array[0]->src), &(e14.src)) && rimeaddr_cmp(&(in_edge_array[0]->dst), &(e14.dst)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(out_edge_array[0]->src), &(e41.src)) && rimeaddr_cmp(&(out_edge_array[0]->dst), &(e41.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(in_edge_array[0]->src), &(e14.src)) && linkaddr_cmp(&(in_edge_array[0]->dst), &(e14.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(out_edge_array[0]->src), &(e41.src)) && linkaddr_cmp(&(out_edge_array[0]->dst), &(e41.dst)));
 	free(in_edge_array);
 	free(out_edge_array);
 
@@ -999,16 +999,16 @@ UNIT_TEST(in_out_edges)
  * Test if functions return without doing anything if a parameter is NULL
  * Tests the functions:
  * void add_node(const p_node_t node)
- * void remove_node(const rimeaddr_t *addr)
+ * void remove_node(const linkaddr_t *addr)
  * p_node_t **get_all_nodes(uint8_t * count)
  * uint8_t get_node_count()
- * p_node_t *find_node(const rimeaddr_t *addr)
+ * p_node_t *find_node(const linkaddr_t *addr)
  * void add_edge(const p_edge_t edge)
- * void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+ * void remove_edge(const linkaddr_t *src, const linkaddr_t *dst)
  * p_edge_t **get_all_edges(uint8_t *count)
- * p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
- * p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count)
- * p_edge_t *find_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+ * p_edge_t **get_outgoing_edges(const linkaddr_t *src_addr, uint8_t *count)
+ * p_edge_t **get_ingoing_edges(const linkaddr_t *dst_addr, uint8_t *count)
+ * p_edge_t *find_edge(const linkaddr_t *src, const linkaddr_t *dst)
  * uint8_t get_edge_count()
  */
 UNIT_TEST(test_NULL_param)
@@ -1021,14 +1021,14 @@ UNIT_TEST(test_NULL_param)
 
 	UNIT_TEST_BEGIN();
 
-	n1.addr = rimeaddr_null;
+	n1.addr = linkaddr_null;
 	n1.addr.u8[0] = 0x01;
-	e1.dst = rimeaddr_null;
-	e1.src = rimeaddr_null;
+	e1.dst = linkaddr_null;
+	e1.src = linkaddr_null;
 	e1.dst.u8[0] = 0x01;
 	e1.src.u8[0] = 0x02;
 	e1.ttl = 0;
-	n2.addr = rimeaddr_null;
+	n2.addr = linkaddr_null;
 	n2.addr.u8[0] = 0x02;
 	node_array = get_all_nodes(&counter1);
 	edge_array = get_all_edges(&counter2);
@@ -1107,19 +1107,19 @@ UNIT_TEST(test_NULL_param)
  * Test if all members of the node and edge struct are saved correctly
  * Tests the functions:
  * void add_node(const p_node_t node)
- * void remove_node(const rimeaddr_t *addr)
- * p_node_t *find_node(const rimeaddr_t *addr)
+ * void remove_node(const linkaddr_t *addr)
+ * p_node_t *find_node(const linkaddr_t *addr)
  * void add_edge(const p_edge_t edge)
- * void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
- * p_edge_t *find_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+ * void remove_edge(const linkaddr_t *src, const linkaddr_t *dst)
+ * p_edge_t *find_edge(const linkaddr_t *src, const linkaddr_t *dst)
  */
 UNIT_TEST(test_members)
 {
 	position_t pos = {0, 0};
-	p_node_t n1 = {rimeaddr_null, pos};
-	p_node_t n2 = {rimeaddr_null, pos};
+	p_node_t n1 = {linkaddr_null, pos};
+	p_node_t n2 = {linkaddr_null, pos};
 	n2.addr.u8[0] = 2;
-	p_edge_t e1 = {rimeaddr_null, n2.addr, 0, 0, 0};
+	p_edge_t e1 = {linkaddr_null, n2.addr, 0, 0, 0};
 
 	UNIT_TEST_BEGIN();
 
@@ -1134,11 +1134,11 @@ UNIT_TEST(test_members)
 	p_node_t *node = find_node(&(n1.addr));
 	UNIT_TEST_ASSERT(node->pos.x == pos.x);
 	UNIT_TEST_ASSERT(node->pos.y == pos.y);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node->addr), &rimeaddr_null));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(node->addr), &linkaddr_null));
 
 	p_edge_t *edge = find_edge(&(e1.src), &(e1.dst));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge->src), &rimeaddr_null));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge->dst), &(n2.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge->src), &linkaddr_null));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge->dst), &(n2.addr)));
 	UNIT_TEST_ASSERT(edge->ttl == 0);
 	UNIT_TEST_ASSERT(edge->rssi == 0);
 	UNIT_TEST_ASSERT(edge->lqi == 0);
@@ -1160,11 +1160,11 @@ UNIT_TEST(test_members)
 	node = find_node(&(n1.addr));
 	UNIT_TEST_ASSERT(node->pos.x == pos.x);
 	UNIT_TEST_ASSERT(node->pos.y == pos.y);
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(node->addr), &(n1.addr)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(node->addr), &(n1.addr)));
 
 	edge = find_edge(&(e1.src), &(e1.dst));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge->src), &(e1.src)));
-	UNIT_TEST_ASSERT(rimeaddr_cmp(&(edge->dst), &(e1.dst)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge->src), &(e1.src)));
+	UNIT_TEST_ASSERT(linkaddr_cmp(&(edge->dst), &(e1.dst)));
 	UNIT_TEST_ASSERT(edge->ttl == 3);
 	UNIT_TEST_ASSERT(edge->rssi == 4);
 	UNIT_TEST_ASSERT(edge->lqi == 5);

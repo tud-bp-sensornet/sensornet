@@ -13,12 +13,12 @@ AUTOSTART_PROCESSES(&simple_process);
 
 /**
  * Prints the graph by printing Node informations and Edge informations while iterating it
- * Testcase:Node:%d,%d\n	with the rimeaddr.u8[0] and the depth
- * Testcase:Edge:%d,%d\n	with the rimeaddr.u8[0] of the source and the rimeaddr.u8[0] of the drain
+ * Testcase:Node:%d,%d\n	with the linkaddr.u8[0] and the depth
+ * Testcase:Edge:%d,%d\n	with the linkaddr.u8[0] of the source and the linkaddr.u8[0] of the drain
  */
 static void debug_k_hop_timer_event(void *ptr)
 {
-	printf("Print Graph for Node %d\n", rimeaddr_node_addr.u8[0]);
+	printf("Print Graph for Node %d\n", linkaddr_node_addr.u8[0]);
 	uint8_t count = 0;
 
 	uint8_t i = 0;
@@ -29,7 +29,7 @@ static void debug_k_hop_timer_event(void *ptr)
 	p_hop_t *hops = get_hop_counts(&count);
 	printf("Count Node hops:%d\n", count);
 	//also print root
-	printf("Testcase:Node:%d,%d\n", rimeaddr_node_addr.u8[0], 0);
+	printf("Testcase:Node:%d,%d\n", linkaddr_node_addr.u8[0], 0);
 	for (i = 0; i < count; i++)
 	{
 		printf("Testcase:Node:%d,%d\n", hops[i].addr.u8[0], hops[i].hop_count);
@@ -49,9 +49,9 @@ PROCESS_THREAD(simple_process, ev, data)
 {
 	PROCESS_BEGIN();
 	
-	//After 60 seconds, call debug_k_hop_timer_event
+	//After 80 seconds, call debug_k_hop_timer_event
 	static struct ctimer ct;
-	ctimer_set(&ct, CLOCK_SECOND * 60, debug_k_hop_timer_event, NULL);
+	ctimer_set(&ct, CLOCK_SECOND * 80, debug_k_hop_timer_event, NULL);
 	
 	process_start(&neighbor_discovery_process, NULL);
 

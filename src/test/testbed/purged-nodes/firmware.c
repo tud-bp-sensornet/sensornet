@@ -14,7 +14,7 @@ AUTOSTART_PROCESSES(&simple_process);
 
 void disable_some_nodes()
 {
-	if (rimeaddr_node_addr.u8[0] % 2 == 0)
+	if (linkaddr_node_addr.u8[0] % 2 == 0)
 	{
 		printf("[firmware.c] --- Mote ID is even --> Turning off neighbor-discovery! ---\n");
 		process_exit(&neighbor_discovery_process);
@@ -33,7 +33,7 @@ PROCESS_THREAD(simple_process, ev, data)
 	
 	process_start(&neighbor_discovery_process, NULL);
 
-	printf("K = %d, MAX_NODES = %d, MAX_EDGES = %d, RIMEADDR = %d.%d\n", (int) K, (int) MAX_NODES, (int) MAX_EDGES, rimeaddr_node_addr.u8[0], rimeaddr_node_addr.u8[1]);
+	printf("K = %d, MAX_NODES = %d, MAX_EDGES = %d, linkaddr = %d.%d\n", (int) K, (int) MAX_NODES, (int) MAX_EDGES, linkaddr_node_addr.u8[0], linkaddr_node_addr.u8[1]);
 	printf("NODE_MEM = %dB, EDGE_MEM = %dB\n", (int)(sizeof(p_node_t) * MAX_NODES), (int)(sizeof(p_edge_t) * MAX_EDGES));
 	printf("PACKETBUF_SIZE = %d, TXPOWER = %d, INTERVAL = %d - %d\n", PACKETBUF_SIZE, cc2420_get_txpower(), DISCOVERY_INTERVAL_MIN, DISCOVERY_INTERVAL_MAX);
 

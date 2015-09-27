@@ -54,7 +54,7 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length), 
 		return;
 	}
 
-	p_node_t *root = find_node(&rimeaddr_node_addr);
+	p_node_t *root = find_node(&linkaddr_node_addr);
 
 	if (root == NULL)
 	{
@@ -133,7 +133,7 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 	PRINTF("[serialize.c] Node has %d edges.\n", edge_count);
 
 	//Root without outgoing edges has to be sent
-	if ((edge_count == 0x00 || edges == NULL) && rimeaddr_cmp(&(root->addr), &rimeaddr_node_addr))
+	if ((edge_count == 0x00 || edges == NULL) && linkaddr_cmp(&(root->addr), &linkaddr_node_addr))
 	{
 		PRINTF("[serialize.c] Send package.\n");
 		packet_complete(memory_base, sizeof(p_node_t));
@@ -156,14 +156,14 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 		//If node is a leaf (level K-1)...
 		if (hop == K - 1)
 		{
-			if (!rimeaddr_cmp(&(edges[k]->dst), &rimeaddr_node_addr))
+			if (!linkaddr_cmp(&(edges[k]->dst), &linkaddr_node_addr))
 			{
 				//...pack only edges to level K-2...
 				uint8_t i;
 				packable = 0;
 				for (i = 0; i < reachable_count; i++)
 				{
-					if (rimeaddr_cmp(&(hops[i].addr), &(edges[k]->dst)))
+					if (linkaddr_cmp(&(hops[i].addr), &(edges[k]->dst)))
 					{
 						if (hops[i].hop_count == K - 2)
 						{
@@ -234,13 +234,13 @@ void package_and_send_edges_and_nodes(void *memory_base, p_node_t *root, p_hop_t
 	packet_complete(memory_base, (size_t)j);
 }
 /*---------------------------------------------------------------------------*/
-void deserialize(const rimeaddr_t *sender, const void *packet, size_t length)
+void deserialize(const linkaddr_t *sender, const void *packet, size_t length)
 {
 
 	//Create and add the edge to the sender
 	p_edge_t edge;
 	edge.src = *sender;
-	edge.dst = rimeaddr_node_addr;
+	edge.dst = linkaddr_node_addr;
 	edge.ttl = TTL;
 	edge.rssi = packetbuf_attr(PACKETBUF_ATTR_RSSI);
 	edge.lqi = packetbuf_attr(PACKETBUF_ATTR_LINK_QUALITY);

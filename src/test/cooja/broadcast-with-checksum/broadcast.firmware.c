@@ -1,5 +1,5 @@
 #include "contiki.h"
-#include "net/rime.h"
+#include "net/rime/rime.h"
 #include "pbroadcast.h"
 
 #include <stdlib.h>
@@ -26,9 +26,12 @@ void fill_with_data(void *data, size_t length, uint16_t base)
 // the hash and should therefore discard the packet as it is obviously not correct.
 static struct abc_conn abc;
 static const struct abc_callbacks callbacks = {NULL};
+static const struct packetbuf_attrlist attributes[] = { BROADCAST_ATTRIBUTES PACKETBUF_ATTR_LAST };
 void broadcast_faulty_message()
 {
 	abc_open(&abc, 128, &callbacks);
+	channel_set_attributes(128, attributes);
+
 	void *packet = malloc(64);
 
 	if (packet == NULL)
@@ -38,13 +41,18 @@ void broadcast_faulty_message()
 	}
 
 	fill_with_data(packet, 64, 64);
+
+	packetbuf_clear();
+	packetbuf_set_addr(PACKETBUF_ADDR_SENDER, &linkaddr_node_addr);
+	packetbuf_set_datalen(64);
+
 	memcpy(packetbuf_dataptr(), packet, 64);
 	free(packet);
 	abc_send(&abc);
 	abc_close(&abc);
 }
 
-void broadcast_received(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, const void *data, size_t length)
+void broadcast_received(const struct p_broadcast_conn *bc, const linkaddr_t *sender, const void *data, size_t length)
 {
 
 	if (data == NULL)
@@ -90,7 +98,7 @@ PROCESS_THREAD(broadcast_test_process, ev, data)
 	PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
 
 	// only the first node sends a packet
-	if (rimeaddr_node_addr.u8[0] == 1)
+	if (linkaddr_node_addr.u8[0] == 1)
 	{
 		printf("BEGIN SEND CORRECT PACKET\n");
 
@@ -116,7 +124,7 @@ PROCESS_THREAD(broadcast_test_process, ev, data)
 	PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
 
 	// only the first node sends a packet
-	if (rimeaddr_node_addr.u8[0] == 1)
+	if (linkaddr_node_addr.u8[0] == 1)
 	{
 		p_broadcast_close(&c);
 

@@ -22,9 +22,9 @@ AUTOSTART_PROCESSES(&simple_application_process);
 //\endcond
 
 /**
- * \brief The destination rimeaddr_t to send routing packages to.
+ * \brief The destination linkaddr_t to send routing packages to.
 */
-rimeaddr_t node_destination = {{0x04}};
+linkaddr_t node_destination = {{0x04}};
 
 //\cond
 PROCESS_THREAD(simple_application_process, ev, data)

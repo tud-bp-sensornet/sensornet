@@ -56,10 +56,10 @@ static void recv_from_abc(struct abc_conn *bc)
 		return;
 	}
 
-	rimeaddr_t sender;
+	linkaddr_t sender;
 	struct p_broadcast_conn *c = (struct p_broadcast_conn *)bc;
 
-	rimeaddr_copy(&sender, packetbuf_addr(PACKETBUF_ADDR_SENDER));
+	linkaddr_copy(&sender, packetbuf_addr(PACKETBUF_ADDR_SENDER));
 
 	uint16_t actual_hash = packet_hash(packetbuf_dataptr(), packetbuf_datalen() - sizeof(uint16_t));
 	uint8_t *hash_ptr = packetbuf_dataptr() + (uintptr_t)(packetbuf_datalen() - sizeof(uint16_t));
@@ -127,7 +127,7 @@ int p_broadcast_send(struct p_broadcast_conn *c, const void *data, size_t length
 	}
 
 	packetbuf_clear();
-	packetbuf_set_addr(PACKETBUF_ADDR_SENDER, &rimeaddr_node_addr);
+	packetbuf_set_addr(PACKETBUF_ADDR_SENDER, &linkaddr_node_addr);
 	packetbuf_set_datalen(length + sizeof(uint16_t));
 
 	// copy payload into packet
