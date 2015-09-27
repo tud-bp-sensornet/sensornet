@@ -13,7 +13,7 @@
 PROCESS(simple_application_process, "Simple application process");
 AUTOSTART_PROCESSES(&simple_application_process);
 
-rimeaddr_t node_destination = {{0x04}};
+linkaddr_t node_destination = {{0x04}};
 
 PROCESS_THREAD(simple_application_process, ev, data)
 {

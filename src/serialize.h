@@ -9,7 +9,7 @@
 
 #include <stdlib.h>
 
-#include "rimeaddr.h"
+#include "linkaddr.h"
 
 /**
  * \brief Serializes the graph (local view) into several (sub) graphs (up to K-1 hops).
@@ -47,6 +47,6 @@ void serialize(void (*packet_complete)(const void *packet_data, size_t length), 
  * Function will create a new edge to the neighbour we got the informations from.
  *
  */
-void deserialize(const rimeaddr_t *sender, const void *packet, size_t length);
+void deserialize(const linkaddr_t *sender, const void *packet, size_t length);
 
 #endif /* __SERIALIZE_H__ */

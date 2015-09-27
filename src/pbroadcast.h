@@ -8,7 +8,7 @@
 #define __PBROADCAST_H__
 
 #include <stdlib.h>
-#include "net/rime.h"
+#include "net/rime/rime.h"
 
 /**
  * \def MAX_BROADCAST_PAYLOAD_SIZE
@@ -38,11 +38,11 @@ struct p_broadcast_conn
 	/**
 	 * \brief Function will be called on received package.
 	 * \param bc A pointer to a struct p_broadcast_conn.
-	 * \param sender The rimeaddr_t of the sender of this data.
+	 * \param sender The linkaddr_t of the sender of this data.
 	 * \param data A pointer to the data part of the packetbuf.
 	 * \param length The size of the data part of the packetbuf.
 	 */
-	void (*received)(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, const void *data, size_t length); ///< A pointer to a function which will be called on received package.
+	void (*received)(const struct p_broadcast_conn *bc, const linkaddr_t *sender, const void *data, size_t length); ///< A pointer to a function which will be called on received package.
 };
 
 /**

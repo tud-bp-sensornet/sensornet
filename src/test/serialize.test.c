@@ -139,9 +139,9 @@ UNIT_TEST(root_test)
 {
 
 	p_node_t r;
-	r.addr = rimeaddr_null;
+	r.addr = linkaddr_null;
 	r.addr.u8[0] = 0x01;
-	rimeaddr_set_node_addr(&(r.addr));
+	linkaddr_set_node_addr(&(r.addr));
 	add_node(r);
 
 	UNIT_TEST_BEGIN();
@@ -166,9 +166,9 @@ UNIT_TEST(null_test)
 {
 
 	p_node_t r;
-	r.addr = rimeaddr_null;
+	r.addr = linkaddr_null;
 	r.addr.u8[0] = 0x01;
-	rimeaddr_set_node_addr(&(r.addr));
+	linkaddr_set_node_addr(&(r.addr));
 
 	UNIT_TEST_BEGIN();
 
@@ -184,14 +184,14 @@ UNIT_TEST(null_test)
  * Test serialize and deserialize with a graph creating subgraphs not fitting into one package
  * Tests the functions:
  * void serialize(void (*packet_complete)(const void *packet_data, size_t length));
- * void deserialize(const rimeaddr_t *sender, const void *packet, size_t length);
+ * void deserialize(const linkaddr_t *sender, const void *packet, size_t length);
  */
 UNIT_TEST(multi_sub_graph_test)
 {
 	p_node_t root;
-	root.addr = rimeaddr_null;
+	root.addr = linkaddr_null;
 	root.addr.u8[0] = 0x01;
-	rimeaddr_set_node_addr(&(root.addr));
+	linkaddr_set_node_addr(&(root.addr));
 	add_node(root);
 	
 	//Create a graph which serialization is bigger than the PACKETBUF_SIZE (128)
@@ -199,7 +199,7 @@ UNIT_TEST(multi_sub_graph_test)
 	for (size = 2; size < 11; size++) //9 edges and nodes
 	{
 		p_node_t node;
-		node.addr = rimeaddr_null;
+		node.addr = linkaddr_null;
 		node.addr.u8[0] = size;
 		add_node(node);
 
@@ -226,20 +226,20 @@ UNIT_TEST(multi_sub_graph_test)
 	uint8_t i;
 	for (i = 1; i < size; i++)
 	{
-		rimeaddr_t node = rimeaddr_null;
+		linkaddr_t node = linkaddr_null;
 		node.u8[0] = (uint8_t)i;
 		remove_node(&node);
 
-		rimeaddr_t node2 = rimeaddr_null;
+		linkaddr_t node2 = linkaddr_null;
 		node2.u8[0] = 0x01;
 		remove_edge(&node2, &node);
 
 	}
 	
 	//add new root
-	p_node_t new_root = {rimeaddr_null};
+	p_node_t new_root = {linkaddr_null};
 	new_root.addr.u8[0] = 0x07; //Node number 7
-	rimeaddr_set_node_addr(&(new_root.addr));
+	linkaddr_set_node_addr(&(new_root.addr));
 	add_node(new_root);
 
 	//Deserialize everything
@@ -261,7 +261,7 @@ UNIT_TEST(multi_sub_graph_test)
 	//cleanup and test if every edge/node was correctly de/serialized
 	for (i = 1; i < size; i++)
 	{
-		rimeaddr_t node = rimeaddr_null;
+		linkaddr_t node = linkaddr_null;
 		node.u8[0] = i;
 
 		UNIT_TEST_ASSERT(find_node(&node) != NULL);
@@ -292,18 +292,18 @@ UNIT_TEST(multi_sub_graph_test)
  * and (some) bidirectional edges producing a graph
  * Tests the functions:
  * void serialize(void (*packet_complete)(const void *packet_data, size_t length));
- * void deserialize(const rimeaddr_t *sender, const void *packet, size_t length);
+ * void deserialize(const linkaddr_t *sender, const void *packet, size_t length);
  */
 UNIT_TEST(long_graph_test)
 {
 	p_node_t root, n11, n12, n21, n22, n31, n32;
-	root.addr = rimeaddr_null;
-	n11.addr = rimeaddr_null;
-	n12.addr = rimeaddr_null;
-	n21.addr = rimeaddr_null;
-	n22.addr = rimeaddr_null;
-	n31.addr = rimeaddr_null;
-	n32.addr = rimeaddr_null;
+	root.addr = linkaddr_null;
+	n11.addr = linkaddr_null;
+	n12.addr = linkaddr_null;
+	n21.addr = linkaddr_null;
+	n22.addr = linkaddr_null;
+	n31.addr = linkaddr_null;
+	n32.addr = linkaddr_null;
 	root.addr.u8[0] = 0x01;
 	n11.addr.u8[0] = 0x02;
 	n12.addr.u8[0] = 0x03;
@@ -311,7 +311,7 @@ UNIT_TEST(long_graph_test)
 	n22.addr.u8[0] = 0x05;
 	n31.addr.u8[0] = 0x06;
 	n32.addr.u8[0] = 0x07;
-	rimeaddr_set_node_addr(&(root.addr));
+	linkaddr_set_node_addr(&(root.addr));
 	add_node(root);
 	add_node(n11);
 	add_node(n12);
@@ -395,10 +395,10 @@ UNIT_TEST(long_graph_test)
 
 	//Create new root
 	p_node_t new_root;
-	new_root.addr = rimeaddr_null;
+	new_root.addr = linkaddr_null;
 	new_root.addr.u8[0] = 0x0A;
 	add_node(new_root);
-	rimeaddr_set_node_addr(&(new_root.addr));
+	linkaddr_set_node_addr(&(new_root.addr));
 
 	//Deserialize everything
 	UNIT_TEST_ASSERT(tmp_1_ptr != NULL);

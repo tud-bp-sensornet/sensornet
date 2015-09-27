@@ -4,9 +4,6 @@
  * \author tud-bp-sensornet
  */
 
-#include "contiki.h"
-#include "net/rime.h"
-
 #include <stdlib.h>
 #include <string.h>
 
@@ -109,7 +106,7 @@ void add_node(const p_node_t node)
 #endif
 }
 /*---------------------------------------------------------------------------*/
-void remove_node(const rimeaddr_t *addr)
+void remove_node(const linkaddr_t *addr)
 {
 	// Don't do anything if parameters are NULL
 	if (addr == NULL)
@@ -120,7 +117,7 @@ void remove_node(const rimeaddr_t *addr)
 	uint8_t i;
 	for (i = 0; i < node_count; i++)
 	{
-		if (rimeaddr_cmp(&(node_memory_array[i]->addr), addr))
+		if (linkaddr_cmp(&(node_memory_array[i]->addr), addr))
 		{
 			node_count--;
 			memb_free (&node_memory, node_memory_array[i]);
@@ -150,7 +147,7 @@ p_node_t **get_all_nodes(uint8_t *count)
 	return node_memory_array;
 }
 /*---------------------------------------------------------------------------*/
-p_node_t *find_node(const rimeaddr_t *addr)
+p_node_t *find_node(const linkaddr_t *addr)
 {
 	// Don't do anything if parameters are NULL
 	if (addr == NULL)
@@ -161,7 +158,7 @@ p_node_t *find_node(const rimeaddr_t *addr)
 	uint8_t i;
 	for (i = 0; i < node_count; i++)
 	{
-		if (rimeaddr_cmp(&(node_memory_array[i]->addr), addr))
+		if (linkaddr_cmp(&(node_memory_array[i]->addr), addr))
 		{
 			return node_memory_array[i];
 		}
@@ -238,7 +235,7 @@ void add_edge(const p_edge_t edge)
 #endif
 }
 /*---------------------------------------------------------------------------*/
-void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+void remove_edge(const linkaddr_t *src, const linkaddr_t *dst)
 {
 	// Don't do anything if parameters are NULL
 	if (src == NULL || dst == NULL)
@@ -249,7 +246,7 @@ void remove_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
 	uint8_t i;
 	for (i = 0; i < edge_count; i++)
 	{
-		if ((rimeaddr_cmp(&(edge_memory_array[i]->src), src)) && (rimeaddr_cmp(&(edge_memory_array[i]->dst), dst)))
+		if ((linkaddr_cmp(&(edge_memory_array[i]->src), src)) && (linkaddr_cmp(&(edge_memory_array[i]->dst), dst)))
 		{
 			edge_count--;
 			memb_free (&edge_memory, edge_memory_array[i]);
@@ -282,7 +279,7 @@ p_edge_t **get_all_edges(uint8_t *count)
 	return edge_memory_array;
 }
 /*---------------------------------------------------------------------------*/
-p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
+p_edge_t **get_outgoing_edges(const linkaddr_t *src_addr, uint8_t *count)
 {
 	// Don't do anything if parameters are NULL
 	if (src_addr == NULL || count == NULL)
@@ -295,7 +292,7 @@ p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
 	uint8_t i;
 	for (i = 0; i < edge_count; i++)
 	{
-		if (rimeaddr_cmp(&(edge_memory_array[i]->src), src_addr))
+		if (linkaddr_cmp(&(edge_memory_array[i]->src), src_addr))
 		{
 			*count = (*count) + 1;
 		}
@@ -321,7 +318,7 @@ p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
 	// Insert the outgoing edges into the array to be returned
 	for (i = 0; i < edge_count; i++)
 	{
-		if (rimeaddr_cmp(&(edge_memory_array[i]->src), src_addr))
+		if (linkaddr_cmp(&(edge_memory_array[i]->src), src_addr))
 		{
 			outgoing_edge_array[current_num] = edge_memory_array[i];
 			current_num++;
@@ -331,7 +328,7 @@ p_edge_t **get_outgoing_edges(const rimeaddr_t *src_addr, uint8_t *count)
 	return outgoing_edge_array;
 }
 /*---------------------------------------------------------------------------*/
-p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count)
+p_edge_t **get_ingoing_edges(const linkaddr_t *dst_addr, uint8_t *count)
 {
 	// Don't do anything if parameters are NULL
 	if (dst_addr == NULL || count == NULL)
@@ -344,7 +341,7 @@ p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count)
 	uint8_t i;
 	for (i = 0; i < edge_count; i++)
 	{
-		if (rimeaddr_cmp(&(edge_memory_array[i]->dst), dst_addr))
+		if (linkaddr_cmp(&(edge_memory_array[i]->dst), dst_addr))
 		{
 			*count = (*count) + 1;
 		}
@@ -370,7 +367,7 @@ p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count)
 	// Insert the ingoing edges into the array to be returned
 	for (i = 0; i < edge_count; i++)
 	{
-		if (rimeaddr_cmp(&(edge_memory_array[i]->dst), dst_addr))
+		if (linkaddr_cmp(&(edge_memory_array[i]->dst), dst_addr))
 		{
 			ingoing_edge_array[current_num] = edge_memory_array[i];
 			current_num++;
@@ -380,7 +377,7 @@ p_edge_t **get_ingoing_edges(const rimeaddr_t *dst_addr, uint8_t *count)
 	return ingoing_edge_array;
 }
 /*---------------------------------------------------------------------------*/
-p_edge_t *find_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
+p_edge_t *find_edge(const linkaddr_t *src, const linkaddr_t *dst)
 {
 	// Don't do anything if parameters are NULL
 	if (src == NULL || dst == NULL)
@@ -391,7 +388,7 @@ p_edge_t *find_edge(const rimeaddr_t *src, const rimeaddr_t *dst)
 	uint8_t i;
 	for (i = 0; i < edge_count; i++)
 	{
-		if ((rimeaddr_cmp(&(edge_memory_array[i]->src), src)) && (rimeaddr_cmp(&(edge_memory_array[i]->dst), dst)))
+		if ((linkaddr_cmp(&(edge_memory_array[i]->src), src)) && (linkaddr_cmp(&(edge_memory_array[i]->dst), dst)))
 		{
 			return edge_memory_array[i];
 		}

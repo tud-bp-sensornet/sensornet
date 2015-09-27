@@ -73,7 +73,7 @@ PROCESS(neighbor_discovery_process, "K Hop Neighbor Discovery process");
 /*---------------------------------------------------------------------------*/
 static struct p_broadcast_conn broadcast;
 /*---------------------------------------------------------------------------*/
-static void recv(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, const void *data, size_t length)
+static void recv(const struct p_broadcast_conn *bc, const linkaddr_t *sender, const void *data, size_t length)
 {
 	//Update graph
 	deserialize(sender, data, length);
@@ -102,7 +102,7 @@ PROCESS_THREAD(neighbor_discovery_process, ev, data)
 	init_graph();
 
 	//We are root
-	p_node_t root = {rimeaddr_node_addr, get_stored_position_of(&rimeaddr_node_addr)};
+	p_node_t root = {linkaddr_node_addr, get_stored_position_of(&linkaddr_node_addr)};
 	add_node(root);
 
 	while (1)

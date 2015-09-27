@@ -9,7 +9,7 @@
 
 #include <stdlib.h>
 #include "contiki.h"
-#include "rimeaddr.h"
+#include "linkaddr.h"
 
 /**
  * \def NEIGHBOR_DISCOVERY_CHANNEL
@@ -22,15 +22,15 @@
 /**
  * \brief Returns the nearest neighbour of root to the provided node.
  * \param dst The node the nearest neighbour should be found to.
- * \return The rimeaddr_t of the nearest neighbour.
+ * \return The linkaddr_t of the nearest neighbour.
  *
- * This function returns the rimeaddr_t of the nearest
+ * This function returns the linkaddr_t of the nearest
  * neighbour of root to the provided node calculated
  * with (quadratic) euclidean distance.
  *
- * Returns rimeaddr_null when no neighbour is found.
+ * Returns linkaddr_null when no neighbour is found.
  */
-rimeaddr_t get_nearest_neighbour(rimeaddr_t *dst);
+linkaddr_t get_nearest_neighbour(linkaddr_t *dst);
 
 /**
  * \brief Initializes the message router.
@@ -55,6 +55,6 @@ void close_router();
  * beforehand, if there is no neighbor to send the message to, or if
  * the position of the target node is unknown.
  */
-int8_t send_message(const void *packet_data, size_t length, rimeaddr_t *dst);
+int8_t send_message(const void *packet_data, size_t length, linkaddr_t *dst);
 
 #endif /* __ROUTING_H__ */

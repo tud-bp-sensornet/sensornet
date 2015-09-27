@@ -62,7 +62,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	}
 
 	//Initialize with zero values
-	p_hop_t null_hop = {rimeaddr_null, 0x00};
+	p_hop_t null_hop = {linkaddr_null, 0x00};
 	uint8_t i;
 	for (i = 0; i < node_count - 1; i++)
 	{
@@ -74,14 +74,14 @@ p_hop_t *get_hop_counts(uint8_t *count)
 	for (i = 0; i < edge_count; i++)
 	{
 		//Edge from root to neighbour
-		if (rimeaddr_cmp(&(all_edges[i]->src), &rimeaddr_node_addr))
+		if (linkaddr_cmp(&(all_edges[i]->src), &linkaddr_node_addr))
 		{
 			//Check if node is already in our hopcounts
 			uint8_t k;
 			uint8_t is_in = 0;
 			for (k = 0; k < (tmp_hop_ptr - hop_dict); k++)
 			{
-				if (rimeaddr_cmp(&(all_edges[i]->dst), &(hop_dict[k].addr)))
+				if (linkaddr_cmp(&(all_edges[i]->dst), &(hop_dict[k].addr)))
 				{
 					PRINTF("[graph-operations.c/get_hop_counts] %d already in hop_count (outgoing direct)\n", all_edges[i]->dst.u8[0]);
 					//...if the node is not in our hop_dict have not seen it yet...
@@ -101,7 +101,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 		}
 		else
 			//Edge from neighbour to root
-			if (rimeaddr_cmp(&(all_edges[i]->dst), &rimeaddr_node_addr))
+			if (linkaddr_cmp(&(all_edges[i]->dst), &linkaddr_node_addr))
 			{
 
 				//Check if node is already in our hopcounts
@@ -109,7 +109,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 				uint8_t is_in = 0;
 				for (k = 0; k < (tmp_hop_ptr - hop_dict); k++)
 				{
-					if (rimeaddr_cmp(&(all_edges[i]->src), &(hop_dict[k].addr)))
+					if (linkaddr_cmp(&(all_edges[i]->src), &(hop_dict[k].addr)))
 					{
 						//...if the node is not in our hop_dict have not seen it yet...
 						PRINTF("[graph-operations.c/get_hop_counts] %d already in hop_count (ingoing direct)\n", all_edges[i]->src.u8[0]);
@@ -157,7 +157,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 				for (k = 0; k < (tmp_hop_ptr - hop_dict); k++)
 				{
 					//...except root...
-					if (rimeaddr_cmp(&(tmp_outgoing[j]->dst), &(hop_dict[k].addr)) || rimeaddr_cmp(&(tmp_outgoing[j]->dst), &rimeaddr_node_addr))
+					if (linkaddr_cmp(&(tmp_outgoing[j]->dst), &(hop_dict[k].addr)) || linkaddr_cmp(&(tmp_outgoing[j]->dst), &linkaddr_node_addr))
 					{
 						//...if the node is not in our hop_dict we weren't able to reach it yet...
 						PRINTF("[graph-operations.c/get_hop_counts] %d already in hop_count (outgoing)\n", tmp_outgoing[j]->dst.u8[0]);
@@ -183,7 +183,7 @@ p_hop_t *get_hop_counts(uint8_t *count)
 				uint8_t is_in = 0;
 				for (k = 0; k < (tmp_hop_ptr - hop_dict); k++)
 				{
-					if (rimeaddr_cmp(&(tmp_ingoing[j]->src), &(hop_dict[k].addr)) || rimeaddr_cmp(&(tmp_ingoing[j]->src), &rimeaddr_node_addr))
+					if (linkaddr_cmp(&(tmp_ingoing[j]->src), &(hop_dict[k].addr)) || linkaddr_cmp(&(tmp_ingoing[j]->src), &linkaddr_node_addr))
 					{
 						PRINTF("[graph-operations.c/get_hop_counts] %d already in hop_count (ingoing)\n", tmp_ingoing[j]->src.u8[0]);
 						is_in = 1;
@@ -231,15 +231,15 @@ void purge()
 		//If ttl is over
 		if (all_edges[i]->ttl <= diff)
 		{
-			//Save rimeaddr
-			rimeaddr_t src = all_edges[i]->src;
-			rimeaddr_t dst = all_edges[i]->dst;
+			//Save linkaddr
+			linkaddr_t src = all_edges[i]->src;
+			linkaddr_t dst = all_edges[i]->dst;
 
 			//Remove this edge
 			remove_edge(&(all_edges[i]->src), &(all_edges[i]->dst));
 
 			//Do not delete root
-			if (!rimeaddr_cmp(&src, &rimeaddr_node_addr))
+			if (!linkaddr_cmp(&src, &linkaddr_node_addr))
 			{
 				//Check for orphan nodes
 				uint8_t src_out_count;
@@ -267,7 +267,7 @@ void purge()
 				}
 			}
 
-			if (!rimeaddr_cmp(&dst, &rimeaddr_node_addr))
+			if (!linkaddr_cmp(&dst, &linkaddr_node_addr))
 			{
 				uint8_t dst_out_count;
 				p_edge_t **dst_out = get_outgoing_edges(&dst, &dst_out_count);

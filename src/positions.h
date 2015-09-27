@@ -5,7 +5,7 @@
  */
 
 #include "contiki.h"
-#include "net/rime.h"
+#include "net/rime/rime.h"
 
 #ifndef __POSITIONS_H__
 #define __POSITIONS_H__
@@ -27,11 +27,11 @@
 #endif
 
 /**
- * \def POSITION_ARRAY_RIMEADDR_OFFSET
+ * \def POSITION_ARRAY_linkaddr_OFFSET
  * \brief Smallest rime address of the array above.
 */
-#ifndef POSITION_ARRAY_RIMEADDR_OFFSET
-#define POSITION_ARRAY_RIMEADDR_OFFSET 1
+#ifndef POSITION_ARRAY_linkaddr_OFFSET
+#define POSITION_ARRAY_linkaddr_OFFSET 1
 #endif
 
 /**
@@ -46,9 +46,9 @@ typedef struct
 
 /**
  * \brief      Returns the stored position of a node.
- * \param addr Rimeaddr_t of the node you want to know the position of.
+ * \param addr linkaddr_t of the node you want to know the position of.
  * \return     The x and y position of the node.
  */
-position_t get_stored_position_of(const rimeaddr_t *addr);
+position_t get_stored_position_of(const linkaddr_t *addr);
 
 #endif /* __POSITIONS_H__ */

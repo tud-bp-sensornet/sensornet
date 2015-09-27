@@ -7,7 +7,7 @@ UNIT_TEST_REGISTER(stored_position_test, "Correct positions are returned for def
 
 UNIT_TEST(stored_position_test)
 {
-	rimeaddr_t addr;
+	linkaddr_t addr;
 	addr.u8[1] = 0;
 	position_t pos;
 

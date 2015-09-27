@@ -70,13 +70,13 @@ UNIT_TEST(cyclic_hop)
 {
 	p_node_t r, n11, n12, n21, n22, n23, n0;
 
-	r.addr = rimeaddr_null;
-	n11.addr = rimeaddr_null;
-	n12.addr = rimeaddr_null;
-	n21.addr = rimeaddr_null;
-	n22.addr = rimeaddr_null;
-	n23.addr = rimeaddr_null;
-	n0.addr = rimeaddr_null;
+	r.addr = linkaddr_null;
+	n11.addr = linkaddr_null;
+	n12.addr = linkaddr_null;
+	n21.addr = linkaddr_null;
+	n22.addr = linkaddr_null;
+	n23.addr = linkaddr_null;
+	n0.addr = linkaddr_null;
 	r.addr.u8[0] = 0x01;
 	n11.addr.u8[0] = 0x02;
 	n12.addr.u8[0] = 0x03;
@@ -92,7 +92,7 @@ UNIT_TEST(cyclic_hop)
 	p_edge_t e2122 = {n21.addr, n22.addr, 0x00};
 	p_edge_t e2322 = {n23.addr, n22.addr, 0x00};
 
-	rimeaddr_set_node_addr(&(r.addr));
+	linkaddr_set_node_addr(&(r.addr));
 
 	//Randomly add the nodes and edges
 	add_node(r);
@@ -168,11 +168,11 @@ UNIT_TEST(omnidirectional_hop)
 {
 	p_node_t r, n11, n12, n21, n22;
 
-	r.addr = rimeaddr_null;
-	n11.addr = rimeaddr_null;
-	n12.addr = rimeaddr_null;
-	n21.addr = rimeaddr_null;
-	n22.addr = rimeaddr_null;
+	r.addr = linkaddr_null;
+	n11.addr = linkaddr_null;
+	n12.addr = linkaddr_null;
+	n21.addr = linkaddr_null;
+	n22.addr = linkaddr_null;
 	r.addr.u8[0] = 0x01;
 	n11.addr.u8[0] = 0x02;
 	n12.addr.u8[0] = 0x03;
@@ -194,7 +194,7 @@ UNIT_TEST(omnidirectional_hop)
 	p_edge_t e2122 = {n21.addr, n22.addr, 0x00};
 	p_edge_t e2221 = {n22.addr, n21.addr, 0x00};
 
-	rimeaddr_set_node_addr(&(r.addr));
+	linkaddr_set_node_addr(&(r.addr));
 
 	//Randomly add the nodes and edges
 	add_node(r);
@@ -269,16 +269,16 @@ UNIT_TEST(no_hop)
 {
 	p_node_t r, n11, n12;
 
-	r.addr = rimeaddr_null;
-	n11.addr = rimeaddr_null;
-	n12.addr = rimeaddr_null;
+	r.addr = linkaddr_null;
+	n11.addr = linkaddr_null;
+	n12.addr = linkaddr_null;
 	r.addr.u8[0] = 0x01;
 	n11.addr.u8[0] = 0x02;
 	n12.addr.u8[0] = 0x03;
 
 	p_edge_t e1112 = {n11.addr, n12.addr, 0x00};
 
-	rimeaddr_set_node_addr(&(r.addr));
+	linkaddr_set_node_addr(&(r.addr));
 
 	add_node(r);
 	add_node(n11);
@@ -315,10 +315,10 @@ UNIT_TEST(no_hop)
 UNIT_TEST(empty_purge)
 {
 	p_node_t r;
-	r.addr = rimeaddr_null;
+	r.addr = linkaddr_null;
 	r.addr.u8[0] = 0x01;
 
-	rimeaddr_set_node_addr(&(r.addr));
+	linkaddr_set_node_addr(&(r.addr));
 
 	UNIT_TEST_BEGIN();
 
@@ -355,11 +355,11 @@ UNIT_TEST(delete_and_decrement_purge)
 
 	p_node_t r, n11, n12, n0, n1;
 
-	r.addr = rimeaddr_null;
-	n11.addr = rimeaddr_null;
-	n12.addr = rimeaddr_null;
-	n0.addr = rimeaddr_null;
-	n1.addr = rimeaddr_null;
+	r.addr = linkaddr_null;
+	n11.addr = linkaddr_null;
+	n12.addr = linkaddr_null;
+	n0.addr = linkaddr_null;
+	n1.addr = linkaddr_null;
 	r.addr.u8[0] = 0x01;
 	n11.addr.u8[0] = 0x02;
 	n12.addr.u8[0] = 0x03;
@@ -370,7 +370,7 @@ UNIT_TEST(delete_and_decrement_purge)
 	p_edge_t er12 = {r.addr, n12.addr, 600}; //10 minute ttl
 	p_edge_t e10 = {n1.addr, n0.addr, 60}; //1 minute ttl
 
-	rimeaddr_set_node_addr(&(r.addr));
+	linkaddr_set_node_addr(&(r.addr));
 
 	add_node(r);
 	add_node(n12);

@@ -1,5 +1,5 @@
 #include "contiki.h"
-#include "net/rime.h"
+#include "net/rime/rime.h"
 #include "pbroadcast.h"
 
 #include <stdlib.h>
@@ -44,7 +44,7 @@ void broadcast_faulty_message()
 	abc_close(&abc);
 }
 
-void broadcast_received(const struct p_broadcast_conn *bc, const rimeaddr_t *sender, const void *data, size_t length)
+void broadcast_received(const struct p_broadcast_conn *bc, const linkaddr_t *sender, const void *data, size_t length)
 {
 
 	if (data == NULL)
@@ -90,7 +90,7 @@ PROCESS_THREAD(broadcast_test_process, ev, data)
 	PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
 
 	// only the first node sends a packet
-	if (rimeaddr_node_addr.u8[0] == 1)
+	if (linkaddr_node_addr.u8[0] == 1)
 	{
 		printf("BEGIN SEND CORRECT PACKET\n");
 
@@ -116,7 +116,7 @@ PROCESS_THREAD(broadcast_test_process, ev, data)
 	PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
 
 	// only the first node sends a packet
-	if (rimeaddr_node_addr.u8[0] == 1)
+	if (linkaddr_node_addr.u8[0] == 1)
 	{
 		p_broadcast_close(&c);
 

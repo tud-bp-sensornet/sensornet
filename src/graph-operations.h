@@ -14,11 +14,11 @@
  * \struct p_hop_t
  * \brief This struct represents an association between a node and it's hop count to root (this node).
  *
- * The node is represented with its rimeaddr_t.
+ * The node is represented with its linkaddr_t.
  */
 typedef struct
 {
-	rimeaddr_t addr; ///< The rimeaddr-t of the node.
+	linkaddr_t addr; ///< The linkaddr-t of the node.
 	uint8_t hop_count; ///< The hop count to root.
 } p_hop_t;
 
